@@ -9,11 +9,10 @@ part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
   RegistrationBloc() : super(RegistrationInitial()) {
-    String uri = 'https://dev.taskpareto.com/api/';
-    on<RegistrationButtonPressed>(Registerfunction);
+    on<RegistrationButtonPressed>(registerFunction);
   }
 
-  void Registerfunction(RegistrationButtonPressed event, Emitter<RegistrationState> emit) async {
+  void registerFunction(RegistrationButtonPressed event, Emitter<RegistrationState> emit) async {
     emit(RegistrationLoading()); // Emit loading state
     const String apiUrl = 'https://dev.taskpareto.com/api/register';
 
@@ -33,17 +32,17 @@ class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
         headers: {'Content-Type': 'application/json'}, // Set content type to JSON
         body: json.encode(formData), // Convert formData to a JSON string
       );
-      print(response.body);
-      print(response.statusCode);
+
+
       if (response.statusCode == 201) {
-        var decodedData = json.decode(response.body);
-        print('Response: $decodedData');
+        // var decodedData = json.decode(response.body);
+ 
         emit(RegistrationSuccess());
       } else {
         throw Exception('Failed to register user');
       }
     } catch (error) {
-      print('Error: $error');
+
       emit(RegistrationFailure(error: error.toString()));
     }
   }

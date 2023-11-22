@@ -7,7 +7,6 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
-    String uri = 'https://dev.taskpareto.com/api/';
     on<LoginButtonPressed>(Apis().login);
   }
 }

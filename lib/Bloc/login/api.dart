@@ -28,7 +28,7 @@ class Apis {
         emit(LoginFailure(error: response.contentLength.toString()));
       }
     } catch (e) {
-      print(e.toString());
+
       emit(LoginFailure(error: e.toString())); // Emit failure state with exception
     }
   }

@@ -22,8 +22,8 @@ class RegistrationPage extends StatelessWidget {
 
 class RegistrationForm extends StatelessWidget {
   RegistrationForm({super.key});
-  ImagePicker imagePicker = ImagePicker();
-  var _image;
+  final ImagePicker imagePicker = ImagePicker();
+  final _image = null;
 
   @override
   Widget build(BuildContext context) {
@@ -171,10 +171,10 @@ class RegistrationForm extends StatelessWidget {
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () async {
-                    XFile? image = await imagePicker.pickImage(
-                        source: ImageSource.gallery,
-                        imageQuality: 50,
-                        preferredCameraDevice: CameraDevice.front);
+                    // XFile? image = await imagePicker.pickImage(
+                    //     source: ImageSource.gallery,
+                    //     imageQuality: 50,
+                    //     preferredCameraDevice: CameraDevice.front);
                     // setState(() {
                     //   _image = File(image.path);
                     // });
