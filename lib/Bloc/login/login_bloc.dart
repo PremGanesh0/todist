@@ -7,6 +7,6 @@ part 'login_state.dart';
 
 class LoginBloc extends Bloc<LoginEvent, LoginState> {
   LoginBloc() : super(LoginInitial()) {
-    on<LoginButtonPressed>(Apis().login);
+    on<LoginButtonPressed>(loginApi);
   }
 }

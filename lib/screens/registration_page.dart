@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todist/screens/drawer_page.dart';
+import 'package:todist/screens/otp_page.dart';
+import 'package:todist/screens/task_add_page.dart';
 
 import '../Bloc/registration/registration_bloc.dart';
 
@@ -30,7 +35,8 @@ class RegistrationForm extends StatelessWidget {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final TextEditingController profileImagePathController = TextEditingController();
+    final TextEditingController profileImagePathController =
+        TextEditingController();
     return BlocConsumer<RegistrationBloc, RegistrationState>(
       listener: (context, state) {
         if (state is RegistrationSuccess) {
@@ -39,6 +45,14 @@ class RegistrationForm extends StatelessWidget {
               content: Text('Registration successful!'),
             ),
           );
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => TaskAddPage()),
+          );
+          // Navigator.push(
+          //   context,
+          //   MaterialPageRoute(builder: (context) => const OtpPage()),
+          // );
         } else if (state is RegistrationFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -60,6 +74,19 @@ class RegistrationForm extends StatelessWidget {
                 //     Image.asset(height: 100,width: 100,'assert/Screenshot 2023-11-20 105857.png')
                 //   ],
                 // ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                        height: 50,
+                        width: 50,
+                        'assert/Screenshot 2023-11-15 151801.png'),
+                    Image.asset(
+                        height: 40,
+                        width: 100,
+                        'assert/Screenshot 2023-11-23 113906.png')
+                  ],
+                ),
                 const Text(
                   'Unlock Productivity with Task Pareto',
                   style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
@@ -73,13 +100,12 @@ class RegistrationForm extends StatelessWidget {
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.grey)),
-                  child: const Padding(
+                  child: Padding(
                     padding: EdgeInsets.all(2.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
-                        // Image.asset('assert/Google.png'),
-                        SizedBox(width: 70),
+                        Image.asset('assert/Google.png'),
                         Text(
                           " Login with Gmail Account",
                           style: TextStyle(
@@ -116,7 +142,8 @@ class RegistrationForm extends StatelessWidget {
                     Text(
                       'What should we call you?',
                       textAlign: TextAlign.start,
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -135,7 +162,8 @@ class RegistrationForm extends StatelessWidget {
                   children: [
                     Text(
                       'Email',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -154,7 +182,8 @@ class RegistrationForm extends StatelessWidget {
                   children: [
                     Text(
                       'Password',
-                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ],
                 ),
@@ -171,34 +200,27 @@ class RegistrationForm extends StatelessWidget {
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () async {
-                    // XFile? image = await imagePicker.pickImage(
-                    //     source: ImageSource.gallery,
-                    //     imageQuality: 50,
-                    //     preferredCameraDevice: CameraDevice.front);
+                    XFile? image = await imagePicker.pickImage(
+                        source: ImageSource.gallery,
+                        imageQuality: 50,
+                        preferredCameraDevice: CameraDevice.front);
                     // setState(() {
-                    //   _image = File(image.path);
+                    //   _image = File(image!.path);
                     // });
                   },
                   child: Container(
                     width: 200,
                     height: 200,
                     decoration: BoxDecoration(color: Colors.red[200]),
-                    child: _image != null
-                        ? Image.file(
-                            _image,
-                            width: 200.0,
-                            height: 200.0,
-                            fit: BoxFit.fitHeight,
-                          )
-                        : Container(
-                            decoration: BoxDecoration(color: Colors.red[200]),
-                            width: 200,
-                            height: 200,
-                            child: Icon(
-                              Icons.camera_alt,
-                              color: Colors.grey[800],
-                            ),
-                          ),
+                    child: Container(
+                      decoration: BoxDecoration(color: Colors.red[200]),
+                      width: 200,
+                      height: 200,
+                      child: Icon(
+                        Icons.camera_alt,
+                        color: Colors.grey[800],
+                      ),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 32),
@@ -219,7 +241,8 @@ class RegistrationForm extends StatelessWidget {
                                   username: usernameController.text,
                                   email: emailController.text,
                                   password: passwordController.text,
-                                  profileImagePath: profileImagePathController.text,
+                                  profileImagePath:
+                                      profileImagePathController.text,
                                 ),
                               );
                         },

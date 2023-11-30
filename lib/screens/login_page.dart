@@ -30,53 +30,109 @@ class LoginPage extends StatelessWidget {
               }
               if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text('Login Failure'),
+                  SnackBar(
+                    content: Text(state.error),
                   ),
                 );
               }
             },
             builder: (context, state) {
-              return Column(
-                mainAxisAlignment: MainAxisAlignment.start,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Text(
-                    'Email',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                  ),
-                  TextField(
-                    controller: emailController,
-                    decoration: InputDecoration(
-                      labelText: 'Email',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
+              return SingleChildScrollView(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Image.asset(
+                            height: 50,
+                            width: 50,
+                            'assert/Screenshot 2023-11-15 151801.png'),
+                        Image.asset(
+                            height: 40,
+                            width: 100,
+                            'assert/Screenshot 2023-11-23 113906.png')
+                      ],
+                    ),
+                    SizedBox(height: 20),
+                    Container(
+                      height: 40,
+                      width: 300,
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          border: Border.all(color: Colors.grey)),
+                      child: Padding(
+                        padding: const EdgeInsets.all(2.0),
+                        child: Row(
+                          children: [
+                            Image.asset('assert/Google.png'),
+                            Text(
+                              'Login with Gmail',
+                              style: TextStyle(
+                                  fontSize: 14, fontWeight: FontWeight.w400),
+                            )
+                          ],
+                        ),
                       ),
                     ),
-                  ),
-                  const Text(
-                    'Password',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
-                  ),
-                  TextField(
-                    controller: passwordController,
-                    decoration: InputDecoration(
-                      labelText: 'Password',
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(5),
+                    SizedBox(height: 20),
+                    Container(
+                      child: Row(
+                        children: [
+                          Container(height: 1, width: 130, color: Colors.black),
+                          Text('OR'),
+                          Container(height: 1, width: 130, color: Colors.black)
+                        ],
                       ),
                     ),
-                  ),
-                  Align(
-                    child: ElevatedButton(
-                      onPressed: () {
-                        context.read<LoginBloc>().add(LoginButtonPressed(
-                            email: emailController.text, password: passwordController.text));
-                      },
-                      child: const Text('Login'),
+                    SizedBox(height: 20),
+                    Text(
+                      'Unlock Productivity with Task Pareto',
+                      style:
+                          TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
                     ),
-                  )
-                ],
+                    SizedBox(height: 20),
+                    const Text(
+                      'Email',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                    TextField(
+                      controller: emailController,
+                      decoration: InputDecoration(
+                        labelText: 'Email',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                    const Text(
+                      'Password',
+                      style:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    ),
+                    TextField(
+                      controller: passwordController,
+                      decoration: InputDecoration(
+                        labelText: 'Password',
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(5),
+                        ),
+                      ),
+                    ),
+                    Align(
+                      child: ElevatedButton(
+                        onPressed: () {
+                          context.read<LoginBloc>().add(LoginButtonPressed(
+                              email: emailController.text,
+                              password: passwordController.text));
+                        },
+                        child: const Text('Login'),
+                      ),
+                    )
+                  ],
+                ),
               );
             },
           ),

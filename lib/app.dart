@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
+import 'package:todist/screens/home_page.dart';
+import 'package:todist/screens/task_add_page.dart';
 import 'Bloc/login/login_bloc.dart';
 import 'Bloc/registration/registration_bloc.dart';
-import 'screens/login_page.dart';
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
             create: (context) => LoginBloc(),
           ),
         ],
-        child: const LoginPage(),
+        child: const HomePage(),
       ),
     );
   }

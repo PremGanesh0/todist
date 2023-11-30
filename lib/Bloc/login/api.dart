@@ -3,33 +3,36 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:todist/Bloc/login/login_bloc.dart';
+import 'package:todist/utils.dart';
 
-class Apis {
-  Future<void> login(LoginButtonPressed event, Emitter<LoginState> emit) async {
-    emit(LoginLoading());
+Future<void> loginApi(
+    LoginButtonPressed event, Emitter<LoginState> emit) async {
+  emit(LoginLoading());
 
-    var headers = {'Content-Type': 'application/json'};
+  var headers = {'Content-Type': 'application/json'};
 
-    var request = http.Request('POST', Uri.parse('https://dev.taskpareto.com/api/login'));
-    // request.body = json.encode({"email": event.email, "password": event.password, "type": 1});
+  var request = http.Request('POST', Uri.parse('${BaseUrl}login'));
+  // request.body = json.encode({"email": event.email, "password": event.password, "type": 1});
 
-    request.body = json.encode({"email": 'afzal.sk@krify.com', "password": 'Krify@123', "type": 1});
+  request.body = json.encode(
+      {"email": 'afzal.sk@krify.com', "password": 'Krify@123', "type": 1});
 
-    request.headers.addAll(headers);
+  request.headers.addAll(headers);
 
-    try {
-      http.StreamedResponse response = await request.send();
+  try {
+    http.StreamedResponse response = await request.send();
 
-      if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        jsonDecode(responseBody);
-        emit(LoginSuccess());
-      } else {
-        emit(LoginFailure(error: response.contentLength.toString()));
-      }
-    } catch (e) {
+    if (response.statusCode == 200) {
+      String responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+      emit(LoginSuccess());
+    } else {
+      var error = await response.stream.bytesToString();
+      var data = jsonDecode(error);
 
-      emit(LoginFailure(error: e.toString())); // Emit failure state with exception
+      emit(LoginFailure(error: data['message']));
     }
+  } catch (e) {
+    emit(LoginFailure(error: e.toString()));
   }
 }
