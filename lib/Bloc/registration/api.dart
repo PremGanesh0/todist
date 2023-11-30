@@ -5,6 +5,7 @@ import 'dart:convert';
 
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
+import 'package:todist/Bloc/repo/local_storage.dart';
 import 'package:todist/utils.dart';
 
 import '../../screens/task_add_page.dart';
@@ -49,6 +50,7 @@ import '../../screens/task_add_page.dart';
 //     emit(RegistrationFailure(error: error.toString()));
 //   }
 // }
+
 void registerApi(
     RegistrationButtonPressed event, Emitter<RegistrationState> emit) async {
   emit(RegistrationLoading()); // Emit loading state
@@ -64,20 +66,24 @@ void registerApi(
       'type': '1'
     };
 
-    print('Request Body: $formData');
-
     var response = await http.post(
       Uri.parse(apiUrl),
       headers: {'Content-Type': 'application/json'},
       body: json.encode(formData),
     );
 
-    print('Response: ${response.body}');
-
     if (response.statusCode == 201) {
-      emit(RegistrationSuccess());
+      var decodedData = json.decode(response.body);
+      var userData = decodedData['data']['user'];
+      emit(RegistrationSuccess(
+        username: userData['username'],
+        email: userData['email'],
+      ));
       // Call the verifyEmail function here
-      // verifyEmail();
+      //verifyEmail();
+      LocalStorage.saveUserData(decodedData['user']);
+      LocalStorage.saveTokens(
+          decodedData['accessToken'], decodedData['refreshToken']);
     } else {
       var decodedData = json.decode(response.body);
       print(decodedData['message']);
@@ -112,6 +118,7 @@ Future<void> verifyEmail(String email, String otp) async {
 
       if (success) {
         print('Email verified successfully');
+        
         // Perform any further actions here after successful verification
       } else {
         // Handle cases where email verification was not successful

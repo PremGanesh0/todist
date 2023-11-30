@@ -11,7 +11,11 @@ class RegistrationInitial extends RegistrationState {}
 
 class RegistrationLoading extends RegistrationState {}
 
-class RegistrationSuccess extends RegistrationState {}
+class RegistrationSuccess extends RegistrationState {
+  late final String username;
+  late final String email;
+  RegistrationSuccess({required this.email, required this.username});
+}
 
 class VerifyEmail extends RegistrationState {
   final bool requireEmailVerification; // New flag
