@@ -4,8 +4,8 @@ import 'package:todist/model/task_model.dart';
 
 class CustomBottomSheet extends StatelessWidget {
   CustomBottomSheet({Key? key}) : super(key: key);
-  TextEditingController title = TextEditingController();
-  TextEditingController description = TextEditingController();
+ final TextEditingController title = TextEditingController();
+ final TextEditingController description = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -20,12 +20,12 @@ class CustomBottomSheet extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.start,
             children: <Widget>[
               Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: const EdgeInsets.only(left: 16.0),
                 child: TextField(
                   controller: title,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                   autofocus: true,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Task Name',
                     hintStyle:
@@ -34,12 +34,12 @@ class CustomBottomSheet extends StatelessWidget {
                 ),
               ),
               Padding(
-                padding: EdgeInsets.only(left: 16.0),
+                padding: const EdgeInsets.only(left: 16.0),
                 child: TextField(
                   controller: description,
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                  style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                   maxLines: null,
-                  decoration: InputDecoration(
+                  decoration: const InputDecoration(
                     border: InputBorder.none,
                     hintText: 'Description',
                     hintStyle:
@@ -68,7 +68,7 @@ class CustomBottomSheet extends StatelessWidget {
 
                         await databaseProvider.insertTask(newTask);
                       },
-                      icon: Icon(Icons.save))
+                      icon: const Icon(Icons.save))
                 ],
               ),
             ],

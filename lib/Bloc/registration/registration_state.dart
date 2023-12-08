@@ -24,7 +24,9 @@ class VerifyEmail extends RegistrationState {
 }
 
 class RegistrationSuccess extends RegistrationState {
-  final String username;
+  
+
+   final String username;
   final String email;
   RegistrationSuccess({required this.email, required this.username});
 }

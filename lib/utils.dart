@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String BaseUrl = 'https://dev.taskpareto.com/api/';
+String baseUrl = 'https://dev.taskpareto.com/api/';
 
 ColorScheme myColorScheme = const ColorScheme.light(
   primary: Colors.blue,

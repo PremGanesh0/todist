@@ -1,7 +1,7 @@
 part of 'login_bloc.dart';
 
 sealed class LoginState extends Equatable {
-  LoginState();
+  const LoginState();
 
   @override
   List<Object> get props => [];
@@ -16,7 +16,7 @@ class LoginLoading extends LoginState {}
 class LoginFailure extends LoginState {
   final String error;
 
-  LoginFailure({required this.error});
+  const LoginFailure({required this.error});
 
   @override
   List<Object> get props => [error];

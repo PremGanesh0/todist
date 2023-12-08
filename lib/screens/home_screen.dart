@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todist/screens/browse_page.dart';
-import 'package:todist/screens/inbox_Page.dart';
+import 'package:todist/screens/inbox_page.dart';
 import 'package:todist/screens/searching_page.dart';
 import 'package:todist/screens/today_page.dart';
 
@@ -75,13 +75,13 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget _buildPage(int index) {
     switch (index) {
       case 0:
-        return TodayPage();
+        return const TodayPage();
       case 1:
-        return InboxPage();
+        return const InboxPage();
       case 2:
         return const SearchingPage();
       case 3:
-        return BrowsePage();
+        return const BrowsePage();
       default:
         return Container();
     }

@@ -39,12 +39,12 @@ class InboxPage extends StatelessWidget {
             isScrollControlled: true,
             context: context,
             builder: (BuildContext context) {
-              return   CustomBottomSheet();
+              return CustomBottomSheet();
             },
           );
         },
-        child: Icon(Icons.add),
         backgroundColor: Colors.blue,
+        child: const Icon(Icons.add),
       ),
     );
   }

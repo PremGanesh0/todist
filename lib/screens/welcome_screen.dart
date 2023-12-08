@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/login_page.dart';
 import 'package:todist/screens/registration_page.dart';
-import 'package:todist/screens/bin/task_add_page.dart';
-
+ 
 class WelcomeScreen extends StatefulWidget {
   const WelcomeScreen({super.key});
 

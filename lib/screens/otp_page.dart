@@ -24,7 +24,7 @@ class OtpPage extends StatelessWidget {
           }
           if (state is VerifyEmailFailed) {
             ScaffoldMessenger.of(context).showSnackBar(
-              SnackBar(
+              const SnackBar(
                 content: Text('Wrong OTP'),
               ),
             );
@@ -33,7 +33,7 @@ class OtpPage extends StatelessWidget {
         builder: (context, state) {
           return Scaffold(
             appBar: AppBar(
-              title: Text('Verify OTP'),
+              title: const Text('Verify OTP'),
             ),
             body: Padding(
               padding: const EdgeInsets.all(16.0),
@@ -41,13 +41,13 @@ class OtpPage extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Hello'),
+                  const Text('Hello'),
                   Text(
                       'Email: ${state.email}'), // Use 'state.email' to get the email from the state
                   const SizedBox(height: 20),
                   TextField(
                     controller: otpController,
-                    decoration: InputDecoration(labelText: 'Enter OTP'),
+                    decoration: const InputDecoration(labelText: 'Enter OTP'),
                     keyboardType: TextInputType.number,
                   ),
                   const SizedBox(height: 20),

@@ -41,7 +41,7 @@ class MyApp extends StatelessWidget {
             //     return const HomePage();
             //   },
             // ),
-            child: WelcomeScreen(),
+            child: const WelcomeScreen(),
           ),
         ));
   }

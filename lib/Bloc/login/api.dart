@@ -15,7 +15,7 @@ Future<void> loginApi(
     'Content-Type': 'application/json'
   };
 
-  var request = http.Request('POST', Uri.parse('${BaseUrl}login'));
+  var request = http.Request('POST', Uri.parse('${baseUrl}login'));
   request.body = json
       .encode({"email": event.email, "password": event.password, "type": 1});
 
@@ -28,9 +28,9 @@ Future<void> loginApi(
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      String responseBody = await response.stream.bytesToString();
-      var data = jsonDecode(responseBody);
-      print(data);
+      // String responseBody = await response.stream.bytesToString();
+      // var data = jsonDecode(responseBody);
+      // print(data);
       emit(LoginSuccess());
     } else {
       var error = await response.stream.bytesToString();

@@ -1,5 +1,5 @@
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:todist/model/userModel.dart';
+import 'package:todist/model/user_model.dart';
 
 class LocalStorage {
   static Future<void> saveUserData(User userData) async {
@@ -11,9 +11,9 @@ class LocalStorage {
     prefs.setString('email', userData.email);
     // Add more fields as needed
 
-    print('user Id(local storage function):-${userData.id}');
-    print('user username(local storage function):-${userData.username}');
-    print('user email(local storage function):-${userData.email}');
+    // print('user Id(local storage function):-${userData.id}');
+    // print('user username(local storage function):-${userData.username}');
+    // print('user email(local storage function):-${userData.email}');
   }
 
   static Future<void> saveTokens(String accessToken) async {
@@ -21,7 +21,7 @@ class LocalStorage {
 
     // Save tokens locally
     prefs.setString('accessToken', accessToken);
-    print('access token :- ${accessToken}');
+    // print('access token :- ${accessToken}');
   }
 
   static Future<User> getUserData() async {

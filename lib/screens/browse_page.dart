@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todist/screens/upComePage.dart';
+import 'package:todist/screens/up_coming_page.dart';
 import 'package:todist/widgets/bottom_sheet.dart';
 
 class BrowsePage extends StatelessWidget {
@@ -101,8 +101,8 @@ class BrowsePage extends StatelessWidget {
                 },
               );
             },
-            child: Icon(Icons.add),
             backgroundColor: Colors.blue,
+            child: const Icon(Icons.add),
           )),
     );
   }

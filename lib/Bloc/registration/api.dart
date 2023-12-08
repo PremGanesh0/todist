@@ -1,5 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todist/model/userModel.dart';
+import 'package:todist/model/user_model.dart';
 import 'package:todist/Bloc/registration/registration_bloc.dart';
 import 'dart:convert';
 
@@ -35,20 +35,20 @@ void registerApi(
       savedata(userdata, decodedData['data']);
       emit(VerifyEmail());
     } else if (response.statusCode == 400) {
-      print(decodedData['message']);
+      // print(decodedData['message']);
       emit(RegistrationFailure(error: decodedData['message']));
     } else {
       emit(RegistrationFailure(error: decodedData['message']));
     }
   } catch (error) {
-    print('catch');
+    // print('catch');
 
     emit(RegistrationFailure(error: error.toString()));
   }
 }
 
 savedata(User user, decodedData) async {
-  print("savedata function");
+  // print("savedata function");
   await LocalStorage.saveUserData(user);
   await LocalStorage.saveTokens(decodedData['accessToken']);
 }
@@ -68,20 +68,20 @@ void verifyEmail(
         json.encode({"email": event.email, "otp": event.otp.toString()});
     request.headers.addAll(headers);
     http.StreamedResponse response = await request.send();
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
-      var responseData = json.decode(response.stream.toString());
-      print(responseData);
+      // var responseData = json.decode(response.stream.toString());
+      // print(responseData);
       emit(RegistrationSuccess(
         username: event.email,
         email: event.email,
       ));
     } else {
       emit(VerifyEmailFailed());
-      print('Failed to verify email. Status code: ${response.statusCode}');
-      print('Response body: ${response}');
+      // print('Failed to verify email. Status code: ${response.statusCode}');
+      // print('Response body: ${response}');
     }
   } catch (error) {
-    print('Error: $error');
+    // print('Error: $error');
   }
 }

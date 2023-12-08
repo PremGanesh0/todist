@@ -1,21 +1,23 @@
 import 'package:flutter/material.dart';
 
 class SearchingPage extends StatelessWidget {
-  const SearchingPage({Key? key});
+  const SearchingPage({
+    super.key,
+  });
 
   @override
   Widget build(BuildContext context) {
-    ThemeData theme = Theme.of(context);
+    // ThemeData theme = Theme.of(context);
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(
+        title: const Text(
           'Search for task',
-          style: TextStyle(fontSize: 20  ),
+          style: TextStyle(fontSize: 20),
         ),
       ),
       body: SafeArea(
-        child: Container(
+        child: SizedBox(
           height: 70,
           width: double.infinity, // Adjust the width as needed
           child: Padding(
@@ -29,7 +31,7 @@ class SearchingPage extends StatelessWidget {
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        suffixIcon: Icon(Icons.search)),
+                        suffixIcon: const Icon(Icons.search)),
                   ),
                 ),
               ],

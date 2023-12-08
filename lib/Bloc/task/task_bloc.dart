@@ -1,5 +1,4 @@
 import 'package:bloc/bloc.dart';
-import 'package:equatable/equatable.dart';
 import 'package:todist/Bloc/task/repo.dart';
 
 import '../../model/task_model.dart';
@@ -12,8 +11,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
   TaskBloc(this._taskRepository) : super(TaskInitialState());
 
-  @override
-  Stream<TaskState> mapEventToState(TaskEvent event) async* {
+   Stream<TaskState> mapEventToState(TaskEvent event) async* {
     if (event is CreateTaskEvent) {
       yield TaskLoadingState();
       try {

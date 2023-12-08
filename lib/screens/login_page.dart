@@ -61,7 +61,7 @@ class LoginPage extends StatelessWidget {
                             'assert/Screenshot 2023-11-23 113906.png')
                       ],
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     Container(
                       height: 40,
                       width: 300,
@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
                         child: Row(
                           children: [
                             Image.asset('assert/Google.png'),
-                            Text(
+                            const Text(
                               'Login with Gmail',
                               style: TextStyle(
                                   fontSize: 14, fontWeight: FontWeight.w400),
@@ -82,23 +82,21 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 20),
-                    Container(
-                      child: Row(
-                        children: [
-                          Container(height: 1, width: 130, color: Colors.black),
-                          Text('OR'),
-                          Container(height: 1, width: 130, color: Colors.black)
-                        ],
-                      ),
+                    const SizedBox(height: 20),
+                    Row(
+                      children: [
+                        Container(height: 1, width: 130, color: Colors.black),
+                        const Text('OR'),
+                        Container(height: 1, width: 130, color: Colors.black)
+                      ],
                     ),
-                    SizedBox(height: 20),
-                    Text(
+                    const SizedBox(height: 20),
+                    const Text(
                       'Unlock Productivity with Task Pareto',
                       style:
                           TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
                     ),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                     const Text(
                       'Email',
                       style:
@@ -125,7 +123,7 @@ class LoginPage extends StatelessWidget {
                         ),
                       ),
                     ),
-                    SizedBox(height: 10),
+                    const SizedBox(height: 10),
                     Align(
                       child: ElevatedButton(
                         onPressed: () {
@@ -139,16 +137,16 @@ class LoginPage extends StatelessWidget {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Text("Don't have an Account?"),
+                        const Text("Don't have an Account?"),
                         TextButton(
                             onPressed: () {
                               Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => RegistrationPage()),
+                                    builder: (context) => const RegistrationPage()),
                               );
                             },
-                            child: Text(
+                            child: const Text(
                               'Sign up',
                               style: TextStyle(color: Colors.red),
                             ))
@@ -159,7 +157,7 @@ class LoginPage extends StatelessWidget {
                       children: [
                         TextButton(
                             onPressed: () {},
-                            child: Text(
+                            child: const Text(
                               'Forgot password!',
                               style: TextStyle(color: Colors.red),
                             )),

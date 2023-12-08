@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:todist/screens/bin/create_task_page.dart';
 import 'package:todist/screens/searching_page.dart';
 import 'package:todist/screens/bin/task_add_page.dart';
-import 'package:todist/screens/upComePage.dart';
+import 'package:todist/screens/up_coming_page.dart';
 
 class DrawerPage extends StatelessWidget {
   const DrawerPage({super.key});
