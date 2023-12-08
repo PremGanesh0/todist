@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
-import 'package:todist/screens/create_task_page.dart';
+import 'package:todist/screens/bin/create_task_page.dart';
+import 'package:todist/widgets/bottom_sheet.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -45,11 +46,11 @@ class _CalendarPageState extends State<CalendarPage> {
                   _focusedDay = focusedDay;
                 });
               },
-              headerStyle:const HeaderStyle(
+              headerStyle: const HeaderStyle(
                 formatButtonVisible: false,
               ),
             ),
-           const SizedBox(height: 16),
+            const SizedBox(height: 16),
             Expanded(
               child: ListView.builder(
                 itemCount: 7,
@@ -83,10 +84,12 @@ class _CalendarPageState extends State<CalendarPage> {
                         subtitle: const Text('0 tasks'),
                         trailing: ElevatedButton(
                           onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) =>const CreateTaskPage()),
+                            showModalBottomSheet(
+                              isScrollControlled: true,
+                              context: context,
+                              builder: (BuildContext context) {
+                                return   CustomBottomSheet();
+                              },
                             );
                           },
                           child: const Text('Add task'),

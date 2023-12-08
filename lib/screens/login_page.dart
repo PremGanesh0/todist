@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todist/screens/registration_page.dart';
+import 'package:todist/screens/bin/task_add_page.dart';
 
 import '../Bloc/login/login_bloc.dart';
 
@@ -26,6 +28,10 @@ class LoginPage extends StatelessWidget {
                   const SnackBar(
                     content: Text('Login successful'),
                   ),
+                );
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const TaskAddPage()),
                 );
               }
               if (state is LoginFailure) {
@@ -101,7 +107,6 @@ class LoginPage extends StatelessWidget {
                     TextField(
                       controller: emailController,
                       decoration: InputDecoration(
-                        labelText: 'Email',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
@@ -115,12 +120,12 @@ class LoginPage extends StatelessWidget {
                     TextField(
                       controller: passwordController,
                       decoration: InputDecoration(
-                        labelText: 'Password',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(5),
                         ),
                       ),
                     ),
+                    SizedBox(height: 10),
                     Align(
                       child: ElevatedButton(
                         onPressed: () {
@@ -130,6 +135,35 @@ class LoginPage extends StatelessWidget {
                         },
                         child: const Text('Login'),
                       ),
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text("Don't have an Account?"),
+                        TextButton(
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => RegistrationPage()),
+                              );
+                            },
+                            child: Text(
+                              'Sign up',
+                              style: TextStyle(color: Colors.red),
+                            ))
+                      ],
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        TextButton(
+                            onPressed: () {},
+                            child: Text(
+                              'Forgot password!',
+                              style: TextStyle(color: Colors.red),
+                            )),
+                      ],
                     )
                   ],
                 ),

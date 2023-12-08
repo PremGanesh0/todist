@@ -1,53 +1,74 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todist/Bloc/registration/registration_bloc.dart';
-import 'package:todist/screens/home_page.dart';
+import 'package:todist/screens/bin/task_add_page.dart';
 
 class OtpPage extends StatelessWidget {
-  const OtpPage({super.key});
+  final String email;
+
+  OtpPage({Key? key, required this.email}) : super(key: key);
+
+ final TextEditingController otpController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
-    String username = '';
-    String email = '';
-    return BlocListener<RegistrationBloc, RegistrationState>(
+    return BlocProvider(
+      create: (context) => RegistrationBloc(),
+      child: BlocConsumer<RegistrationBloc, RegistrationState>(
         listener: (context, state) {
-          if (state is VerifyEmail && state.requireEmailVerification) {
-            String username = state.username;
-            String email = state.email;
+          if (state is RegistrationSuccess) {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => HomePage()),
+              MaterialPageRoute(builder: (context) => const TaskAddPage()),
+            );
+          }
+          if (state is VerifyEmailFailed) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text('Wrong OTP'),
+              ),
             );
           }
         },
-        child: Scaffold(
-          appBar: AppBar(
-            title: Text('Verify OTP'),
-          ),
-          body: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                Text('Hello $username'),
-                Text('Email: $email'),
-                const SizedBox(height: 20),
-                // Add OTP fields here
-                const TextField(
-                  decoration: InputDecoration(labelText: 'Enter OTP'),
-                ),
-                const SizedBox(height: 20),
-                ElevatedButton(
-                  onPressed: () {
-                    // Implement OTP verification logic here
-                  },
-                  child: const Text('Verify'),
-                ),
-              ],
+        builder: (context, state) {
+          return Scaffold(
+            appBar: AppBar(
+              title: Text('Verify OTP'),
             ),
-          ),
-        ));
+            body: Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  Text('Hello'),
+                  Text(
+                      'Email: ${state.email}'), // Use 'state.email' to get the email from the state
+                  const SizedBox(height: 20),
+                  TextField(
+                    controller: otpController,
+                    decoration: InputDecoration(labelText: 'Enter OTP'),
+                    keyboardType: TextInputType.number,
+                  ),
+                  const SizedBox(height: 20),
+                  if (state is VerifyEmailloading)
+                    ElevatedButton(
+                      onPressed: () {
+                        context.read<RegistrationBloc>().add(
+                              VerifyEmailButtonPressed(
+                                email: email,
+                                otp: int.parse(otpController.text),
+                              ),
+                            );
+                      },
+                      child: const Text('Verify'),
+                    ),
+                ],
+              ),
+            ),
+          );
+        },
+      ),
+    );
   }
 }

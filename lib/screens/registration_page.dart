@@ -1,12 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:todist/screens/drawer_page.dart';
+import 'package:todist/screens/login_page.dart';
 import 'package:todist/screens/otp_page.dart';
-import 'package:todist/screens/task_add_page.dart';
-
 import '../Bloc/registration/registration_bloc.dart';
 
 class RegistrationPage extends StatelessWidget {
@@ -28,7 +24,7 @@ class RegistrationPage extends StatelessWidget {
 class RegistrationForm extends StatelessWidget {
   RegistrationForm({super.key});
   final ImagePicker imagePicker = ImagePicker();
-  final _image = null;
+  // final _image = null;
 
   @override
   Widget build(BuildContext context) {
@@ -37,22 +33,21 @@ class RegistrationForm extends StatelessWidget {
     final TextEditingController passwordController = TextEditingController();
     final TextEditingController profileImagePathController =
         TextEditingController();
+
     return BlocConsumer<RegistrationBloc, RegistrationState>(
       listener: (context, state) {
-        if (state is RegistrationSuccess) {
+        if (state is VerifyEmail) {
           ScaffoldMessenger.of(context).showSnackBar(
             const SnackBar(
               content: Text('Registration successful!'),
             ),
           );
+
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => TaskAddPage()),
+            MaterialPageRoute(
+                builder: (context) => OtpPage(email: state.email)),
           );
-          // Navigator.push(
-          //   context,
-          //   MaterialPageRoute(builder: (context) => const OtpPage()),
-          // );
         } else if (state is RegistrationFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
@@ -101,12 +96,12 @@ class RegistrationForm extends StatelessWidget {
                       borderRadius: BorderRadius.circular(5),
                       border: Border.all(color: Colors.grey)),
                   child: Padding(
-                    padding: EdgeInsets.all(2.0),
+                    padding: const EdgeInsets.all(2.0),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: <Widget>[
                         Image.asset('assert/Google.png'),
-                        Text(
+                        const Text(
                           " Login with Gmail Account",
                           style: TextStyle(
                             fontSize: 14,
@@ -200,10 +195,10 @@ class RegistrationForm extends StatelessWidget {
                 const SizedBox(height: 16),
                 InkWell(
                   onTap: () async {
-                    XFile? image = await imagePicker.pickImage(
-                        source: ImageSource.gallery,
-                        imageQuality: 50,
-                        preferredCameraDevice: CameraDevice.front);
+                    // XFile? image = await imagePicker.pickImage(
+                    //     source: ImageSource.gallery,
+                    //     imageQuality: 50,
+                    //     preferredCameraDevice: CameraDevice.front);
                     // setState(() {
                     //   _image = File(image!.path);
                     // });
@@ -251,6 +246,24 @@ class RegistrationForm extends StatelessWidget {
                     }
                   },
                 ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Text('Already signed up?'),
+                    TextButton(
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const LoginPage()),
+                          );
+                        },
+                        child: const Text(
+                          'Go to login',
+                          style: TextStyle(color: Colors.red),
+                        ))
+                  ],
+                )
               ],
             ),
           ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:todist/screens/drawer_page.dart';
-import 'package:todist/screens/create_task_page.dart';
+import 'package:todist/screens/bin/drawer_page.dart';
+import 'package:todist/screens/bin/create_task_page.dart';
 
 class TaskAddPage extends StatelessWidget {
   const TaskAddPage({super.key});

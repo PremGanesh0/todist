@@ -1,5 +1,3 @@
-// registration_event.dart
-
 part of 'registration_bloc.dart';
 
 abstract class RegistrationEvent extends Equatable {
@@ -24,4 +22,13 @@ class RegistrationButtonPressed extends RegistrationEvent {
 
   @override
   List<Object> get props => [username, email, password, profileImagePath];
+}
+
+class VerifyEmailButtonPressed extends RegistrationEvent {
+  final String email;
+  final int otp;
+
+  const VerifyEmailButtonPressed({required this.email, required this.otp});
+  @override
+  List<Object> get props => [email, otp];
 }

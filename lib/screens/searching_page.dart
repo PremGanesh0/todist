@@ -5,10 +5,13 @@ class SearchingPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    ThemeData theme = Theme.of(context);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
           'Search for task',
+          style: TextStyle(fontSize: 20  ),
         ),
       ),
       body: SafeArea(

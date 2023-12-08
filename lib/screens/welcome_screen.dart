@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
+import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/login_page.dart';
 import 'package:todist/screens/registration_page.dart';
+import 'package:todist/screens/bin/task_add_page.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+class WelcomeScreen extends StatefulWidget {
+  const WelcomeScreen({super.key});
 
   @override
-  State<HomePage> createState() => _homePageState();
+  State<WelcomeScreen> createState() => _WelcomeScreenState();
 }
 
-class _homePageState extends State<HomePage> {
+class _WelcomeScreenState extends State<WelcomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.white,
-      appBar: AppBar(title: Text('Task Pareto')),
+      appBar: AppBar(title: const Text('Task Pareto')),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -66,6 +68,18 @@ class _homePageState extends State<HomePage> {
                       );
                     },
                     child: const Text('Register')),
+                TextButton(
+                    onPressed: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const HomeScreen()),
+                      );
+                    },
+                    child: const Text(
+                      'skip',
+                      style: TextStyle(color: Colors.red),
+                    ))
               ],
             ),
           ],

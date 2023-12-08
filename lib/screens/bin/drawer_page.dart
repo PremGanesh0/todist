@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:todist/screens/create_task_page.dart';
+import 'package:todist/screens/bin/create_task_page.dart';
 import 'package:todist/screens/searching_page.dart';
-import 'package:todist/screens/task_add_page.dart';
+import 'package:todist/screens/bin/task_add_page.dart';
 import 'package:todist/screens/upComePage.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -57,7 +57,13 @@ class DrawerPage extends StatelessWidget {
                         height: 40,
                         width: 250,
                         child: ElevatedButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.push(
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) =>const  CreateTaskPage()),
+                              );
+                            },
                             child: const Text(
                               '+  Add Task',
                               style: TextStyle(
