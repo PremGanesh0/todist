@@ -87,25 +87,28 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                     buildCard('Priority', Icons.flag_outlined),
                     buildCard('Reminder', Icons.alarm_on_outlined),
                     IconButton(
-                        onPressed: () async {
-                          Task newTask = Task(
-                            title: title.text,
-                            description: description.text,
-                            date: selectedDate,
-                            priority: 'High',
-                            label: 'Work',
-                            remember: true,
-                          );
+                      onPressed: () async {
+                        final taskBloc = context.read<TaskBloc>();
 
-                          // Access the TaskBloc and add the CreateTaskEvent
-                          context
-                              .read<TaskBloc>()
-                              .add(CreateTaskEvent(newTask));
-                          Navigator.pop(context);
-                          title.clear();
-                          description.clear();
-                        },
-                        icon: const Icon(Icons.save))
+                        Task newTask = Task(
+                          title: title.text,
+                          description: description.text,
+                          date: DateTime.now(),
+                          priority: 'High',
+                          label: 'Work',
+                          remember: true,
+                        );
+
+                        taskBloc.add(
+                          CreateTaskEvent(newTask),
+                        );
+
+                        Navigator.pop(context);
+                        title.clear();
+                        description.clear();
+                      },
+                      icon: const Icon(Icons.save),
+                    )
                   ],
                 ),
               ],

@@ -252,7 +252,7 @@ class RegistrationForm extends StatelessWidget {
                     const Text('Already signed up?'),
                     TextButton(
                         onPressed: () {
-                          Navigator.push(
+                          Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
                                 builder: (context) => const LoginPage()),

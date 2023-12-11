@@ -1,10 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todist/Bloc/task/database_provider.dart';
+ import 'package:todist/Bloc/task/database_provider.dart';
 import 'package:todist/Bloc/task/repo.dart';
-import 'package:todist/Bloc/task/task_bloc.dart';
-import 'package:todist/widgets/bottom_sheet.dart';
+ import 'package:todist/widgets/bottom_sheet.dart';
+
+class Todaypage1 extends StatelessWidget {
+  const Todaypage1({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return BlocProvider(
+      create: (context) => TaskBloc(
+        TaskRepository(context.read<DatabaseProvider>()),
+      ),
+      child: TodayPage(),
+    );
+  }
+}
 
 class Todaypage1 extends StatelessWidget {
   const Todaypage1({super.key});

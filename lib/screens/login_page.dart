@@ -140,7 +140,7 @@ class LoginPage extends StatelessWidget {
                         const Text("Don't have an Account?"),
                         TextButton(
                             onPressed: () {
-                              Navigator.push(
+                              Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
                                     builder: (context) => const RegistrationPage()),
