@@ -82,17 +82,77 @@ class TodayPage extends StatelessWidget {
                         itemCount: state.tasks.length,
                         itemBuilder: (context, index) {
                           final task = state.tasks[index];
-                          return Card(
-                            child: ListTile(
-                              title: Text(
-                                task.title,
-                                style: TextStyle(fontWeight: FontWeight.w600),
+
+                          // Check if the task date is today
+                          bool isToday = task.date.day == DateTime.now().day &&
+                              task.date.month == DateTime.now().month &&
+                              task.date.year == DateTime.now().year;
+
+                          // Display only today's tasks
+                          if (isToday) {
+                            return Card(
+                              child: ListTile(
+                                title: Text(
+                                  task.title,
+                                  style: TextStyle(fontWeight: FontWeight.w600),
+                                ),
+                                subtitle: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceAround,
+                                  children: [
+                                    Text(task.description),
+                                    SizedBox(
+                                      width: 10,
+                                    ),
+                                    Text(
+                                      '${task.date.day} - ${task.date.month} - ${task.date.year}',
+                                      style: TextStyle(fontSize: 10),
+                                    )
+                                  ],
+                                ),
                               ),
-                              subtitle: Text(task.description),
-                            ),
-                          );
+                            );
+                          } else {
+                            return Container();
+                          }
                         },
                       ),
+
+                      // child: ListView.builder(
+                      //   shrinkWrap: true,
+                      //   physics: NeverScrollableScrollPhysics(),
+                      //   itemCount: state.tasks.length,
+                      //   itemBuilder: (context, index) {
+                      //     final task = state.tasks[index];
+
+                      //     return Card(
+                      //       child: ListTile(
+                      //         title: Text(
+                      //           task.title,
+                      //           style: TextStyle(fontWeight: FontWeight.w600),
+                      //         ),
+                      //         subtitle: Row(
+                      //           mainAxisAlignment:
+                      //               MainAxisAlignment.spaceAround,
+                      //           children: [
+                      //             Text(task.description),
+                      //             SizedBox(
+                      //               width: 10,
+                      //             ),
+                      //             Text(
+                      //               task.date.day.toString() +
+                      //                   ' - ' +
+                      //                   task.date.month.toString() +
+                      //                   ' - ' +
+                      //                   task.date.year.toString(),
+                      //               style: TextStyle(fontSize: 10),
+                      //             )
+                      //           ],
+                      //         ),
+                      //       ),
+                      //     );
+                      //   },
+                      // ),
                     );
                   } else if (state is TaskErrorState) {
                     return Text('Error: ${state.errorMessage}');

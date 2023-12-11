@@ -8,7 +8,6 @@ import 'package:todist/utils.dart';
 import 'Bloc/login/login_bloc.dart';
 import 'Bloc/registration/registration_bloc.dart';
 
- 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
@@ -20,8 +19,7 @@ class MyApp extends StatelessWidget {
           create: (context) => DatabaseProvider.instance,
         ),
         RepositoryProvider<TaskRepository>(
-          create: (context) =>
-              TaskRepository(context.read<DatabaseProvider>()),
+          create: (context) => TaskRepository(context.read<DatabaseProvider>()),
         ),
       ],
       child: MultiBlocProvider(
