@@ -9,7 +9,7 @@ class BrowsePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Column(
+          body: Column( 
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),

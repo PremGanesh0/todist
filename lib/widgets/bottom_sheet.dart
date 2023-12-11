@@ -59,8 +59,6 @@ class CustomBottomSheet extends StatelessWidget {
                     buildCard('Reminder', Icons.alarm_on_outlined),
                     IconButton(
                         onPressed: () async {
-                          final taskBloc = context.read<TaskBloc>();
-
                           Task newTask = Task(
                             title: title.text,
                             description: description.text,
@@ -70,8 +68,10 @@ class CustomBottomSheet extends StatelessWidget {
                             remember: true,
                           );
 
-                          taskBloc.add(CreateTaskEvent(newTask));
-
+                          // Access the TaskBloc and add the CreateTaskEvent
+                          context
+                              .read<TaskBloc>()
+                              .add(CreateTaskEvent(newTask));
                           Navigator.pop(context);
                           title.clear();
                           description.clear();
