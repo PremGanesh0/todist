@@ -5,16 +5,17 @@ import 'package:todist/model/task_model.dart';
 import '../Bloc/task/task_bloc.dart';
 
 class CustomBottomSheet extends StatefulWidget {
-  CustomBottomSheet({Key? key}) : super(key: key);
+  final Task? task;
+  const CustomBottomSheet({Key? key, this.task}) : super(key: key);
 
   @override
   State<CustomBottomSheet> createState() => _CustomBottomSheetState();
 }
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
-  final TextEditingController title = TextEditingController();
+  TextEditingController title = TextEditingController();
 
-  final TextEditingController description = TextEditingController();
+  TextEditingController description = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
 
@@ -34,11 +35,19 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    if (widget.task != null) {
+      title.text = widget.task!.title;
+      description.text = widget.task!.description;
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding:
-            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           child: Center(
             child: Column(
@@ -49,14 +58,12 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   padding: const EdgeInsets.only(left: 16.0),
                   child: TextField(
                     controller: title,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w700),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     autofocus: true,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Task Name',
-                      hintStyle:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                      hintStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
                     ),
                   ),
                 ),
@@ -64,14 +71,12 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   padding: const EdgeInsets.only(left: 16.0),
                   child: TextField(
                     controller: description,
-                    style: const TextStyle(
-                        fontSize: 16, fontWeight: FontWeight.w400),
+                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
                     maxLines: null,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Description',
-                      hintStyle:
-                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                      hintStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),
@@ -93,15 +98,25 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         Task newTask = Task(
                           title: title.text,
                           description: description.text,
-                          date: DateTime.now(),
+                          date: selectedDate,
                           priority: 'High',
                           label: 'Work',
                           remember: true,
                         );
+                        print("-------------------------------------");
+                        print(title.text);
+                        print(description.text);
 
-                        taskBloc.add(
-                          CreateTaskEvent(newTask),
-                        );
+                        print("-------------------------------------");
+
+                        if (widget.task != null) {
+                          print("updating the task ${widget.task!.id}");
+                          taskBloc.add(UpdateTaskEvent(newTask));
+                        } else {         
+                          taskBloc.add(
+                            CreateTaskEvent(newTask),
+                          );
+                        }
 
                         Navigator.pop(context);
                         title.clear();

@@ -24,6 +24,4 @@ class DeleteTaskEvent extends TaskEvent {
 
 class FetchTasksEvent extends TaskEvent {}
 
-
-
 class LoadTasksEvent extends TaskEvent {}

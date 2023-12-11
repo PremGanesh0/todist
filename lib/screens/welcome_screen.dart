@@ -69,7 +69,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                     child: const Text('Register')),
                 TextButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const HomeScreen()),

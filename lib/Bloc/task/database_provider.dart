@@ -1,5 +1,5 @@
-import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
+import 'package:sqflite/sqflite.dart';
 import 'package:todist/model/task_model.dart';
 
 class DatabaseProvider {
@@ -40,29 +40,5 @@ class DatabaseProvider {
       task.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    printAllTasks();
-  }
-
-  Future<List<Task>> getAllTasks() async {
-    final db = await database;
-    final List<Map<String, dynamic>> maps = await db.query('tasks');
-    return List.generate(maps.length, (i) {
-      return Task(
-        id: maps[i]['id'],
-        title: maps[i]['title'],
-        description: maps[i]['description'],
-        date: DateTime.fromMillisecondsSinceEpoch(maps[i]['date']),
-        priority: maps[i]['priority'],
-        label: maps[i]['label'],
-        remember: maps[i]['remember'] == 1,
-      );
-    });
-  }
-
-  Future<void> printAllTasks() async {
-    final tasks = await getAllTasks();
-    for (var task in tasks) {
-      // print(task.toMap());
-    }
   }
 }

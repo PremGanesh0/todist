@@ -1,25 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
- import 'package:todist/Bloc/task/database_provider.dart';
+import 'package:todist/Bloc/task/database_provider.dart';
 import 'package:todist/Bloc/task/repo.dart';
- import 'package:todist/widgets/bottom_sheet.dart';
+import 'package:todist/Bloc/task/task_bloc.dart';
+import 'package:todist/Widgets/task_card.dart';
+import 'package:todist/widgets/bottom_sheet.dart';
 
-class Todaypage1 extends StatelessWidget {
-  const Todaypage1({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => TaskBloc(
-        TaskRepository(context.read<DatabaseProvider>()),
-      ),
-      child: TodayPage(),
-    );
-  }
-}
-
-class Todaypage1 extends StatelessWidget {
-  const Todaypage1({super.key});
+class Todaypage extends StatelessWidget {
+  const Todaypage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -27,14 +16,19 @@ class Todaypage1 extends StatelessWidget {
       create: (context) => TaskBloc(
         TaskRepository(context.read<DatabaseProvider>()),
       ),
-      child: TodayPage(),
+      child: const TodayPage(),
     );
   }
 }
 
-class TodayPage extends StatelessWidget {
+class TodayPage extends StatefulWidget {
   const TodayPage({Key? key}) : super(key: key);
 
+  @override
+  State<TodayPage> createState() => _TodayPageState();
+}
+
+class _TodayPageState extends State<TodayPage> {
   @override
   Widget build(BuildContext context) {
     DateTime currentDate = DateTime.now();
@@ -84,102 +78,45 @@ class TodayPage extends StatelessWidget {
               BlocBuilder<TaskBloc, TaskState>(
                 builder: (context, state) {
                   if (state is TaskLoadingState) {
-                    return CircularProgressIndicator();
+                    return const CircularProgressIndicator();
                   } else if (state is TaskSuccessState) {
                     return Padding(
                       padding: const EdgeInsets.all(20.0),
                       child: ListView.builder(
                         shrinkWrap: true,
-                        physics: NeverScrollableScrollPhysics(),
+                        physics: const NeverScrollableScrollPhysics(),
                         itemCount: state.tasks.length,
                         itemBuilder: (context, index) {
                           final task = state.tasks[index];
-
-                          // Check if the task date is today
                           bool isToday = task.date.day == DateTime.now().day &&
                               task.date.month == DateTime.now().month &&
                               task.date.year == DateTime.now().year;
 
-                          // Display only today's tasks
                           if (isToday) {
-                            return Card(
-                              child: ListTile(
-                                title: Text(
-                                  task.title,
-                                  style: TextStyle(fontWeight: FontWeight.w600),
-                                ),
-                                subtitle: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceAround,
-                                  children: [
-                                    Text(task.description),
-                                    SizedBox(
-                                      width: 10,
-                                    ),
-                                    Text(
-                                      '${task.date.day} - ${task.date.month} - ${task.date.year}',
-                                      style: TextStyle(fontSize: 10),
-                                    )
-                                  ],
-                                ),
-                              ),
+                            return TaskCard(
+                              task: task,
+                              index: index,
                             );
                           } else {
                             return Container();
                           }
                         },
                       ),
-
-                      // child: ListView.builder(
-                      //   shrinkWrap: true,
-                      //   physics: NeverScrollableScrollPhysics(),
-                      //   itemCount: state.tasks.length,
-                      //   itemBuilder: (context, index) {
-                      //     final task = state.tasks[index];
-
-                      //     return Card(
-                      //       child: ListTile(
-                      //         title: Text(
-                      //           task.title,
-                      //           style: TextStyle(fontWeight: FontWeight.w600),
-                      //         ),
-                      //         subtitle: Row(
-                      //           mainAxisAlignment:
-                      //               MainAxisAlignment.spaceAround,
-                      //           children: [
-                      //             Text(task.description),
-                      //             SizedBox(
-                      //               width: 10,
-                      //             ),
-                      //             Text(
-                      //               task.date.day.toString() +
-                      //                   ' - ' +
-                      //                   task.date.month.toString() +
-                      //                   ' - ' +
-                      //                   task.date.year.toString(),
-                      //               style: TextStyle(fontSize: 10),
-                      //             )
-                      //           ],
-                      //         ),
-                      //       ),
-                      //     );
-                      //   },
-                      // ),
                     );
                   } else if (state is TaskErrorState) {
                     return Text('Error: ${state.errorMessage}');
                   } else {
-                    return Text('Unknown state');
+                    return const Text('Unknown state');
                   }
                 },
               ),
-              InkWell(
+              GestureDetector(
                 onTap: () {
                   showModalBottomSheet(
                     isScrollControlled: true,
                     context: context,
                     builder: (BuildContext context) {
-                      return CustomBottomSheet();
+                      return const CustomBottomSheet();
                     },
                   );
                 },
@@ -193,15 +130,12 @@ class TodayPage extends StatelessWidget {
                         Text(
                           '+',
                           style: TextStyle(
-                              fontSize: 20,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.blue),
+                              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.blue),
                         ),
                         SizedBox(width: 10),
                         Text(
                           'Add Task',
-                          style: TextStyle(
-                              fontSize: 14, fontWeight: FontWeight.w400),
+                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                         )
                       ]),
                     ),
