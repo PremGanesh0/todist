@@ -40,7 +40,6 @@ class DatabaseProvider {
       task.toMap(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-    printAllTasks();
   }
 
   Future<void> updateTask(Task task) async {
@@ -62,12 +61,5 @@ class DatabaseProvider {
         remember: maps[i]['remember'] == 1,
       );
     });
-  }
-
-  Future<void> printAllTasks() async {
-    final tasks = await getAllTasks();
-    for (var task in tasks) {
-      print(task.toMap());
-    }
   }
 }

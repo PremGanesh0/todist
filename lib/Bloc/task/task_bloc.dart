@@ -55,7 +55,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
           toastLength: Toast.LENGTH_SHORT,
           gravity: ToastGravity.TOP,
         );
-
         emit(TaskSuccessState(listtask));
       } catch (e) {
         emit(TaskErrorState('Failed to delete task'));

@@ -1,5 +1,3 @@
-// task_state.dart
-
 part of 'task_bloc.dart';
 
 abstract class TaskState {}
@@ -21,5 +19,3 @@ class TaskErrorState extends TaskState {
 
   TaskErrorState(this.errorMessage);
 }
-
-

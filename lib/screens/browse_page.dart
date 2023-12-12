@@ -97,7 +97,7 @@ class BrowsePage extends StatelessWidget {
                 isScrollControlled: true,
                 context: context,
                 builder: (BuildContext context) {
-                  return CustomBottomSheet();
+                  return const CustomBottomSheet();
                 },
               );
             },
