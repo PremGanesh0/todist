@@ -39,6 +39,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<UpdateTaskEvent>(((event, emit) async {
       try {
         await _taskRepository.updateTask(event.task);
+        List<Task> listtask = await _taskRepository.fetchTasks();
+        emit(TaskSuccessState(listtask));
       } catch (e) {
         emit(TaskErrorState("Failed to update the task"));
       }

@@ -1,5 +1,5 @@
 class Task {
-  final int? id; // Nullable for newly created tasks
+  late final int? id;
   final String title;
   final String description;
   final DateTime date;

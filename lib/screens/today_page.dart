@@ -29,12 +29,18 @@ class TodayPage extends StatefulWidget {
 }
 
 class _TodayPageState extends State<TodayPage> {
+  String? formattedDate;
+  DateTime currentDate = DateTime.now();
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    formattedDate = DateFormat('d MMM. EEEE').format(currentDate);
+    BlocProvider.of<TaskBloc>(context).add(LoadTasksEvent());
+  }
+
   @override
   Widget build(BuildContext context) {
-    DateTime currentDate = DateTime.now();
-    String formattedDate = DateFormat('d MMM. EEEE').format(currentDate);
-    BlocProvider.of<TaskBloc>(context).add(LoadTasksEvent());
-
     return SafeArea(
       child: Scaffold(
         resizeToAvoidBottomInset: true,
@@ -91,7 +97,6 @@ class _TodayPageState extends State<TodayPage> {
                           bool isToday = task.date.day == DateTime.now().day &&
                               task.date.month == DateTime.now().month &&
                               task.date.year == DateTime.now().year;
-
                           if (isToday) {
                             return TaskCard(
                               task: task,

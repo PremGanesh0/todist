@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todist/Widgets/card.dart';
 import 'package:todist/model/task_model.dart';
 
 import '../Bloc/task/task_bloc.dart';
@@ -18,6 +19,19 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   TextEditingController description = TextEditingController();
 
   DateTime selectedDate = DateTime.now();
+  bool updatecheck = false;
+
+  @override
+  void initState() {
+    super.initState();
+    if (widget.task != null) {
+      title.text = widget.task!.title;
+      description.text = widget.task!.description;
+      selectedDate = widget.task!.date;
+    } else {
+      updatecheck = true;
+    }
+  }
 
   Future<void> _selectDate(BuildContext context) async {
     final DateTime? picked = await showDatePicker(
@@ -31,15 +45,6 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       setState(() {
         selectedDate = picked;
       });
-    }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    if (widget.task != null) {
-      title.text = widget.task!.title;
-      description.text = widget.task!.description;
     }
   }
 
@@ -86,36 +91,36 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         onTap: () {
                           _selectDate(context);
                         },
-                        child: buildCard(
-                            ' ${selectedDate.toLocal().month}/${selectedDate.toLocal().day}/${selectedDate.toLocal().year}',
-                            Icons.today_outlined)),
+                        child: updatecheck == false
+                            ? buildCard(
+                                ' ${widget.task!.date.day}/${widget.task!.date.month}/${widget.task!.date.year}',
+                                Icons.today_outlined)
+                            : buildCard('Today', Icons.today)),
                     buildCard('Priority', Icons.flag_outlined),
                     buildCard('Reminder', Icons.alarm_on_outlined),
                     IconButton(
                       onPressed: () async {
-                        final taskBloc = context.read<TaskBloc>();
-
-                        Task newTask = Task(
-                          title: title.text,
-                          description: description.text,
-                          date: selectedDate,
-                          priority: 'High',
-                          label: 'Work',
-                          remember: true,
-                        );
-                        print("-------------------------------------");
-                        print(title.text);
-                        print(description.text);
-
-                        print("-------------------------------------");
-
                         if (widget.task != null) {
-                          print("updating the task ${widget.task!.id}");
-                          taskBloc.add(UpdateTaskEvent(newTask));
-                        } else {         
-                          taskBloc.add(
-                            CreateTaskEvent(newTask),
+                          Task updatetask = Task(
+                            id: widget.task!.id,
+                            title: title.text,
+                            description: description.text,
+                            date: selectedDate,
+                            priority: 'High',
+                            label: 'Work',
+                            remember: true,
                           );
+                          BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(updatetask));
+                        } else {
+                          Task createtask = Task(
+                            title: title.text,
+                            description: description.text,
+                            date: selectedDate,
+                            priority: 'High',
+                            label: 'Work',
+                            remember: true,
+                          );
+                          BlocProvider.of<TaskBloc>(context).add(CreateTaskEvent(createtask));
                         }
 
                         Navigator.pop(context);
@@ -128,29 +133,6 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                 ),
               ],
             ),
-          ),
-        ),
-      ),
-    );
-  }
-
-  Widget buildCard(String label, IconData icon) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.only(left: 8.0, right: 8),
-        child: SizedBox(
-          height: 40,
-          child: Row(
-            children: [
-              Icon(
-                icon,
-                size: 20,
-              ),
-              Text(
-                label,
-                style: const TextStyle(fontSize: 10),
-              )
-            ],
           ),
         ),
       ),

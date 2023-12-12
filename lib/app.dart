@@ -12,7 +12,7 @@ import 'Bloc/registration/registration_bloc.dart';
 
 class MyApp extends StatelessWidget {
   MyApp({super.key});
-  GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
 
   @override
   Widget build(BuildContext context) {

@@ -30,10 +30,17 @@ class TaskRepository {
   Future<void> createTask(Task task) async {
     final db = await _databaseProvider.database;
     await db.insert('tasks', task.toMap());
+    // final db = await _databaseProvider.database;
+    // await db.insert(
+    //   'tasks',
+    //   task.toMap(),
+    //   conflictAlgorithm: ConflictAlgorithm.replace,
+    // );
   }
 
   Future<void> updateTask(Task task) async {
     try {
+      print(task.toMap());
       final db = await _databaseProvider.database;
       await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
     } catch (e) {
