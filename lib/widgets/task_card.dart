@@ -6,8 +6,8 @@ import 'package:todist/model/task_model.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
-  final int index;
-  const TaskCard({super.key, required this.task, required this.index});
+ final int? index;
+  TaskCard({super.key, required this.task, this.index});
 
   @override
   Widget build(BuildContext context) {
@@ -66,6 +66,7 @@ class TaskCard extends StatelessWidget {
         },
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
+            
           } else if (direction == DismissDirection.endToStart) {
             BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task.id!));
             // ScaffoldMessenger.of(context).showSnackBar(

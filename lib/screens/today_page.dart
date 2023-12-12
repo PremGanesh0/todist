@@ -33,7 +33,6 @@ class _TodayPageState extends State<TodayPage> {
   DateTime currentDate = DateTime.now();
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
     formattedDate = DateFormat('d MMM. EEEE').format(currentDate);
     BlocProvider.of<TaskBloc>(context).add(LoadTasksEvent());
@@ -61,7 +60,7 @@ class _TodayPageState extends State<TodayPage> {
                 ),
               ),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 8.0),
                 child: Align(
                   alignment: Alignment.bottomLeft,
                   child: Text(
@@ -70,14 +69,13 @@ class _TodayPageState extends State<TodayPage> {
                   ),
                 ),
               ),
-              const SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.all(8.0),
+                padding: const EdgeInsets.only(left: 16, bottom: 0.0),
                 child: Align(
                   alignment: Alignment.centerLeft,
                   child: Text(
                     ' $formattedDate',
-                    style: const TextStyle(fontSize: 18),
+                    style: const TextStyle(fontSize: 18, color: Colors.grey),
                   ),
                 ),
               ),
@@ -125,24 +123,25 @@ class _TodayPageState extends State<TodayPage> {
                     },
                   );
                 },
-                child: const Card(
-                  child: SizedBox(
-                    height: 40,
-                    width: 300,
+                child: const Padding(
+                  padding: EdgeInsets.only(top: 8.0),
+                  child: Card(
                     child: Padding(
-                      padding: EdgeInsets.only(left: 20.0),
-                      child: Row(children: [
-                        Text(
-                          '+',
-                          style: TextStyle(
-                              fontSize: 20, fontWeight: FontWeight.w600, color: Colors.blue),
-                        ),
-                        SizedBox(width: 10),
-                        Text(
-                          'Add Task',
-                          style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
-                        )
-                      ]),
+                      padding: EdgeInsets.all(8.0),
+                      child: SizedBox(
+                        child: Row(mainAxisSize: MainAxisSize.min, children: [
+                          Text(
+                            '+',
+                            style: TextStyle(
+                                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.blue),
+                          ),
+                          SizedBox(width: 10),
+                          Text(
+                            'Create Task',
+                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                          )
+                        ]),
+                      ),
                     ),
                   ),
                 ),
