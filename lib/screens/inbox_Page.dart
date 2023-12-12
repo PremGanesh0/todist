@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:table_calendar/table_calendar.dart'; // Import the table_calendar package
 import 'package:todist/Bloc/task/task_bloc.dart';
 import 'package:todist/Widgets/bottom_sheet.dart';
 import 'package:todist/Widgets/task_card.dart';
@@ -26,20 +25,29 @@ class InboxPage extends StatelessWidget {
 
             return ListView(
               children: [
-                TableCalendar(
-                  firstDay: DateTime.now(),
-                  lastDay: DateTime.utc(2030, 3, 14),
-                  focusedDay: DateTime.now(),
-                  // Configure other properties as needed
-                ),
+                // TableCalendar(
+                //   firstDay: DateTime.now(),
+                //   lastDay: DateTime.utc(2030, 3, 14),
+                //   focusedDay: DateTime.now(),
+                //   // Configure other properties as needed
+                // ),
                 ...groupedTasks.entries
                     .map((entry) {
                       return Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Text(DateFormat('dd-MMMM').format(entry.key)),
+                          Align(
+                            alignment: Alignment.centerRight,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text(
+                                DateFormat('dd-MMMM').format(entry.key),
+                                style: const TextStyle(
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.w700,
+                                ),
+                              ),
+                            ),
                           ),
                           ...entry.value
                               .map((task) => TaskCard(
@@ -76,6 +84,9 @@ class InboxPage extends StatelessWidget {
   }
 
   Map<DateTime, List<Task>> groupTasksByDate(List<Task> tasks) {
+    // Sort tasks by date in ascending order
+    tasks.sort((a, b) => b.date.compareTo(a.date));
+
     Map<DateTime, List<Task>> groupedTasks = {};
     for (var task in tasks) {
       DateTime date = DateTime(task.date.year, task.date.month, task.date.day);
