@@ -28,7 +28,9 @@ class DatabaseProvider {
         date INTEGER,
         priority TEXT,
         label TEXT,
-        remember INTEGER
+        remember INTEGER,
+        completed INTEGER
+
       )
     ''');
   }
@@ -44,7 +46,8 @@ class DatabaseProvider {
 
   Future<void> updateTask(Task task) async {
     final db = await database;
-    await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
+    await db
+        .update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
   }
 
   Future<List<Task>> getAllTasks() async {
@@ -52,14 +55,14 @@ class DatabaseProvider {
     final List<Map<String, dynamic>> maps = await db.query('tasks');
     return List.generate(maps.length, (i) {
       return Task(
-        id: maps[i]['id'],
-        title: maps[i]['title'],
-        description: maps[i]['description'],
-        date: DateTime.fromMillisecondsSinceEpoch(maps[i]['date']),
-        priority: maps[i]['priority'],
-        label: maps[i]['label'],
-        remember: maps[i]['remember'] == 1,
-      );
+          id: maps[i]['id'],
+          title: maps[i]['title'],
+          description: maps[i]['description'],
+          date: DateTime.fromMillisecondsSinceEpoch(maps[i]['date']),
+          priority: maps[i]['priority'],
+          label: maps[i]['label'],
+          remember: maps[i]['remember'] == 1,
+          completed: maps[i]['completed'] == 0);
     });
   }
 }

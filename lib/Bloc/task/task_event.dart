@@ -1,5 +1,3 @@
-// task_event.dart
-
 part of 'task_bloc.dart';
 
 abstract class TaskEvent {}
@@ -22,4 +20,10 @@ class DeleteTaskEvent extends TaskEvent {
   DeleteTaskEvent(this.taskId);
 }
 
-class LoadTasksEvent extends TaskEvent {}
+class CompleteTaskEvent extends TaskEvent {
+  final int taskId;
+
+  CompleteTaskEvent(this.taskId);
+}
+
+class ReadTasksEvent extends TaskEvent {}

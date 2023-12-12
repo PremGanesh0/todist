@@ -35,7 +35,7 @@ class _TodayPageState extends State<TodayPage> {
   void initState() {
     super.initState();
     formattedDate = DateFormat('d MMM. EEEE').format(currentDate);
-    BlocProvider.of<TaskBloc>(context).add(LoadTasksEvent());
+    BlocProvider.of<TaskBloc>(context).add(ReadTasksEvent());
   }
 
   @override
@@ -133,12 +133,15 @@ class _TodayPageState extends State<TodayPage> {
                           Text(
                             '+',
                             style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.w600, color: Colors.blue),
+                                fontSize: 20,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.blue),
                           ),
                           SizedBox(width: 10),
                           Text(
                             'Create Task',
-                            style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                            style: TextStyle(
+                                fontSize: 14, fontWeight: FontWeight.w400),
                           )
                         ]),
                       ),

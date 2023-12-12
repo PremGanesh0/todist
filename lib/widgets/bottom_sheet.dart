@@ -52,7 +52,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           child: Center(
             child: Column(
@@ -63,12 +64,14 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   padding: const EdgeInsets.only(left: 16.0),
                   child: TextField(
                     controller: title,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w700),
                     autofocus: true,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Task Name',
-                      hintStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                      hintStyle:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
                     ),
                   ),
                 ),
@@ -76,12 +79,14 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   padding: const EdgeInsets.only(left: 16.0),
                   child: TextField(
                     controller: description,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w400),
                     maxLines: null,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Description',
-                      hintStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                      hintStyle:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),
@@ -102,25 +107,27 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       onPressed: () async {
                         if (widget.task != null) {
                           Task updatetask = Task(
-                            id: widget.task!.id,
-                            title: title.text,
-                            description: description.text,
-                            date: selectedDate,
-                            priority: 'High',
-                            label: 'Work',
-                            remember: true,
-                          );
-                          BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(updatetask));
+                              id: widget.task!.id,
+                              title: title.text,
+                              description: description.text,
+                              date: selectedDate,
+                              priority: 'High',
+                              label: 'Work',
+                              remember: true,
+                              completed: false);
+                          BlocProvider.of<TaskBloc>(context)
+                              .add(UpdateTaskEvent(updatetask));
                         } else {
                           Task createtask = Task(
-                            title: title.text,
-                            description: description.text,
-                            date: selectedDate,
-                            priority: 'High',
-                            label: 'Work',
-                            remember: true,
-                          );
-                          BlocProvider.of<TaskBloc>(context).add(CreateTaskEvent(createtask));
+                              title: title.text,
+                              description: description.text,
+                              date: selectedDate,
+                              priority: 'High',
+                              label: 'Work',
+                              remember: true,
+                              completed: false);
+                          BlocProvider.of<TaskBloc>(context)
+                              .add(CreateTaskEvent(createtask));
                         }
 
                         Navigator.pop(context);

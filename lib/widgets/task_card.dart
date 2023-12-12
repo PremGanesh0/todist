@@ -24,7 +24,7 @@ class TaskCard extends StatelessWidget {
         );
       },
       child: Dismissible(
-        key: Key(task.id.toString()),
+        key: UniqueKey(),
         background: Container(
           color: Colors.green,
           alignment: Alignment.centerLeft,
@@ -66,13 +66,9 @@ class TaskCard extends StatelessWidget {
         },
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
+            BlocProvider.of<TaskBloc>(context).add(CompleteTaskEvent(task.id!));
           } else if (direction == DismissDirection.endToStart) {
             BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task.id!));
-            // ScaffoldMessenger.of(context).showSnackBar(
-            //   SnackBar(
-            //     content: Text('${task.title} task is deleted'),
-            //   ),
-            // );
           }
           // Remove the task from the list
           // setState(() {
@@ -83,7 +79,7 @@ class TaskCard extends StatelessWidget {
           child: ListTile(
             title: Text(
               task.title,
-              style: const TextStyle(fontWeight: FontWeight.w600),
+              style: TextStyle(fontWeight: FontWeight.w600),
             ),
             subtitle: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -93,7 +89,7 @@ class TaskCard extends StatelessWidget {
                   child: Text(
                     task.description,
                     overflow: TextOverflow.ellipsis,
-                    style: const TextStyle(
+                    style: TextStyle(
                       fontSize: 14,
                     ),
                   ),
@@ -105,6 +101,12 @@ class TaskCard extends StatelessWidget {
                 ),
               ],
             ),
+            trailing: task.completed == false
+                ? Icon(
+                    Icons.check_circle,
+                    color: Colors.green,
+                  )
+                : SizedBox(),
           ),
         ),
       ),

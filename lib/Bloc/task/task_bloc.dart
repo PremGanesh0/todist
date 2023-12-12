@@ -10,7 +10,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository _taskRepository;
 
   TaskBloc(this._taskRepository) : super(TaskInitialState()) {
-    on<LoadTasksEvent>((event, emit) async {
+    on<ReadTasksEvent>((event, emit) async { 
       emit(TaskLoadingState());
       try {
         final tasks = await _taskRepository.fetchTasks();
@@ -60,5 +60,25 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskErrorState('Failed to delete task'));
       }
     });
+
+
+
+
+  on<CompleteTaskEvent>((event, emit) async {
+      try {
+        await _taskRepository.completeTask(event.taskId);
+        List<Task> listtask = await _taskRepository.fetchTasks();
+        Fluttertoast.showToast(
+          msg: "Task deleted ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+        );
+        emit(TaskSuccessState(listtask));
+      } catch (e) {
+        emit(TaskErrorState('Failed to delete task'));
+      }
+    });
+
+
   }
 }

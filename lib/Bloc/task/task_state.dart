@@ -3,6 +3,7 @@ part of 'task_bloc.dart';
 abstract class TaskState {}
 
 class TaskInitialState extends TaskState {
+  
   TaskInitialState();
 }
 

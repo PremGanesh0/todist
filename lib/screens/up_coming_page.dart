@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
- import 'package:todist/widgets/bottom_sheet.dart';
+import 'package:todist/widgets/bottom_sheet.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
@@ -21,6 +21,8 @@ class _CalendarPageState extends State<CalendarPage> {
     _selectedDay = DateTime.now();
   }
 
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -33,7 +35,7 @@ class _CalendarPageState extends State<CalendarPage> {
           children: [
             TableCalendar(
               focusedDay: _focusedDay,
-              firstDay: DateTime(2023),
+              firstDay: DateTime.now(),
               lastDay: DateTime(2023, 12, 31),
               calendarFormat: CalendarFormat.week,
               selectedDayPredicate: (day) {
@@ -87,7 +89,7 @@ class _CalendarPageState extends State<CalendarPage> {
                               isScrollControlled: true,
                               context: context,
                               builder: (BuildContext context) {
-                                return   const CustomBottomSheet();
+                                return const CustomBottomSheet();
                               },
                             );
                           },
