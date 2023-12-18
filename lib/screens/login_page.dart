@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/registration_page.dart';
 import 'package:todist/screens/bin/task_add_page.dart';
 
@@ -29,9 +30,9 @@ class LoginPage extends StatelessWidget {
                     content: Text('Login successful'),
                   ),
                 );
-                Navigator.push(
+                Navigator.pushReplacement(
                   context,
-                  MaterialPageRoute(builder: (context) => const TaskAddPage()),
+                  MaterialPageRoute(builder: (context) => const HomeScreen()),
                 );
               }
               if (state is LoginFailure) {
@@ -62,32 +63,37 @@ class LoginPage extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 20),
-                    Container(
-                      height: 40,
-                      width: 300,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          border: Border.all(color: Colors.grey)),
-                      child: Padding(
-                        padding: const EdgeInsets.all(2.0),
-                        child: Row(
-                          children: [
-                            Image.asset('assert/Google.png'),
-                            const Text(
-                              'Login with Gmail',
-                              style: TextStyle(
-                                  fontSize: 14, fontWeight: FontWeight.w400),
-                            )
-                          ],
+                    Align(
+                      alignment: Alignment.center,
+                      child: Container(
+                        height: 40,
+                        width: 300,
+                        decoration: BoxDecoration(
+                            borderRadius: BorderRadius.circular(5),
+                            border: Border.all(color: Colors.grey)),
+                        child: Padding(
+                          padding: const EdgeInsets.all(2.0),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Image.asset('assert/Google.png'),
+                              const Text(
+                                'Login with Gmail',
+                                style: TextStyle(
+                                    fontSize: 14, fontWeight: FontWeight.w400),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),
                     const SizedBox(height: 20),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        Container(height: 1, width: 130, color: Colors.black),
+                        Container(height: 1, width: 150, color: Colors.black),
                         const Text('OR'),
-                        Container(height: 1, width: 130, color: Colors.black)
+                        Container(height: 1, width: 150, color: Colors.black)
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -143,7 +149,8 @@ class LoginPage extends StatelessWidget {
                               Navigator.pushReplacement(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => const RegistrationPage()),
+                                    builder: (context) =>
+                                        const RegistrationPage()),
                               );
                             },
                             child: const Text(

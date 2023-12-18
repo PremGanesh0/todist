@@ -101,7 +101,74 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                                 ' ${widget.task!.date.day}/${widget.task!.date.month}/${widget.task!.date.year}',
                                 Icons.today_outlined)
                             : buildCard('Today', Icons.today)),
-                    buildCard('Priority', Icons.flag_outlined),
+                    GestureDetector(
+                      onTap: () {
+                        final RenderBox overlay = Overlay.of(context)
+                            .context
+                            .findRenderObject() as RenderBox;
+                        final RelativeRect position = RelativeRect.fromRect(
+                          Rect.fromPoints(
+                            overlay.localToGlobal(
+                                overlay.size.bottomRight(Offset.zero),
+                                ancestor: overlay),
+                            overlay.localToGlobal(
+                                    overlay.size.bottomRight(Offset.zero),
+                                    ancestor: overlay) +
+                                const Offset(200.0, 0.0),
+                          ),
+                          Offset.zero & overlay.size,
+                        );
+                        showMenu(
+                          context: context,
+                          position: position,
+                          items: <PopupMenuEntry<int>>[
+                            const PopupMenuItem<int>(
+                              value: 0,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.flag, color: Colors.red),
+                                  Text('Priority 1'),
+                                ],
+                              ),
+                            ),
+                            const PopupMenuItem<int>(
+                              value: 1,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.flag, color: Colors.yellow),
+                                  Text('Priority 2'),
+                                ],
+                              ),
+                            ),
+                            const PopupMenuItem<int>(
+                              value: 1,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.flag, color: Colors.blue),
+                                  Text('Priority 3'),
+                                ],
+                              ),
+                            ),
+                            const PopupMenuItem<int>(
+                              value: 1,
+                              child: Row(
+                                children: [
+                                  Icon(Icons.flag),
+                                  Text('Priority 4'),
+                                ],
+                              ),
+                            ),
+                          ],
+                          elevation: 8.0,
+                        ).then((value) {
+                          if (value != null) {
+                            if (value == 0) {
+                            } else if (value == 1) {}
+                          }
+                        });
+                      },
+                      child: buildCard('Priority', Icons.flag_outlined),
+                    ),
                     buildCard('Reminder', Icons.alarm_on_outlined),
                     IconButton(
                       onPressed: () async {

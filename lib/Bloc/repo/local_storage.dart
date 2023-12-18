@@ -10,10 +10,7 @@ class LocalStorage {
     prefs.setString('username', userData.username);
     prefs.setString('email', userData.email);
     // Add more fields as needed
-
-    // print('user Id(local storage function):-${userData.id}');
-    // print('user username(local storage function):-${userData.username}');
-    // print('user email(local storage function):-${userData.email}');
+ 
   }
 
   static Future<void> saveTokens(String accessToken) async {
@@ -21,8 +18,7 @@ class LocalStorage {
 
     // Save tokens locally
     prefs.setString('accessToken', accessToken);
-    // print('access token :- ${accessToken}');
-  }
+   }
 
   static Future<User> getUserData() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();

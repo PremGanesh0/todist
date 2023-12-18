@@ -1,6 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
-import 'package:todist/Bloc/login/api.dart';
+import 'package:todist/api/login_api.dart';
 
 part 'login_event.dart';
 part 'login_state.dart';

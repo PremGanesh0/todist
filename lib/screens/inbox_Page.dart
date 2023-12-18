@@ -21,7 +21,8 @@ class InboxPage extends StatelessWidget {
           if (state is TaskLoadingState) {
             return const Center(child: CircularProgressIndicator());
           } else if (state is TaskSuccessState) {
-            Map<DateTime, List<Task>> groupedTasks = groupTasksByDate(state.tasks);
+            Map<DateTime, List<Task>> groupedTasks =
+                groupTasksByDate(state.tasks);
 
             return ListView(
               children: [
@@ -50,8 +51,12 @@ class InboxPage extends StatelessWidget {
                             ),
                           ),
                           ...entry.value
-                              .map((task) => TaskCard(
-                                    task: task,
+                              .map((task) => Padding(
+                                    padding: const EdgeInsets.only(
+                                        left: 20.0, right: 20),
+                                    child: TaskCard(
+                                      task: task,
+                                    ),
                                   ))
                               .toList(),
                         ],

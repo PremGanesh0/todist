@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
@@ -21,11 +23,17 @@ class RegistrationPage extends StatelessWidget {
   }
 }
 
-class RegistrationForm extends StatelessWidget {
+class RegistrationForm extends StatefulWidget {
   RegistrationForm({super.key});
-  final ImagePicker imagePicker = ImagePicker();
-  // final _image = null;
 
+  @override
+  State<RegistrationForm> createState() => _RegistrationFormState();
+}
+
+class _RegistrationFormState extends State<RegistrationForm> {
+  final ImagePicker imagePicker = ImagePicker();
+
+  var _image = null;
   @override
   Widget build(BuildContext context) {
     final TextEditingController usernameController = TextEditingController();
@@ -116,20 +124,54 @@ class RegistrationForm extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.all(16.0),
                   child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Container(
                         height: 1,
-                        width: 130,
+                        width: 150,
                         color: Colors.grey,
                       ),
                       const Text("  OR  "),
                       Container(
                         height: 1,
-                        width: 130,
+                        width: 150,
                         color: Colors.grey,
                       )
                     ],
                   ),
+                ),
+                InkWell(
+                    onTap: () async {
+                      final imagePicker = ImagePicker();
+                      XFile? image = await imagePicker.pickImage(
+                        source: ImageSource.gallery,
+                        imageQuality: 50,
+                        // preferredCameraDevice: CameraDevice.front, // Check if your package version supports this
+                      );
+
+                      if (image != null) {
+                        setState(() {
+                          _image = File(image.path!);
+                        });
+                      } else {
+                        // Handle the case where the user canceled image selection.
+                        print('Image selection canceled');
+                      }
+                    },
+                    child: CircleAvatar(
+                      radius: 100,
+                      backgroundImage: _image != null
+                          ? FileImage(_image!) // Assuming _image is a File
+                          : null, // Set to null if _image is null
+                      child: _image == null
+                          ? Icon(
+                              Icons.collections,
+                              color: Colors.grey[800],
+                            )
+                          : null, // Set to null if you don't want to display anything on top of the image
+                    )),
+              const  SizedBox(
+                  height: 10,
                 ),
                 const Row(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -193,31 +235,39 @@ class RegistrationForm extends StatelessWidget {
                   obscureText: true,
                 ),
                 const SizedBox(height: 16),
-                InkWell(
-                  onTap: () async {
-                    // XFile? image = await imagePicker.pickImage(
-                    //     source: ImageSource.gallery,
-                    //     imageQuality: 50,
-                    //     preferredCameraDevice: CameraDevice.front);
-                    // setState(() {
-                    //   _image = File(image!.path);
-                    // });
-                  },
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    decoration: BoxDecoration(color: Colors.red[200]),
-                    child: Container(
-                      decoration: BoxDecoration(color: Colors.red[200]),
-                      width: 200,
-                      height: 200,
-                      child: Icon(
-                        Icons.camera_alt,
-                        color: Colors.grey[800],
-                      ),
-                    ),
-                  ),
-                ),
+
+                // InkWell(
+                //   onTap: () async {
+                //     XFile? image = await imagePicker.pickImage(
+                //       source: ImageSource.gallery,
+                //       imageQuality: 50,
+                //       preferredCameraDevice: CameraDevice.front,
+                //     );
+
+                //     if (image != null) {
+                //       setState(() {
+                //         _image = File(image.path!);
+                //       });
+                //     } else {
+                //       // Handle the case where the user canceled image selection.
+                //       print('Image selection canceled');
+                //     }
+                //   },
+                //   child: Container(
+                //     width: 200,
+                //     height: 200,
+                //     decoration: BoxDecoration(color: Colors.red[200]),
+                //     child: Container(
+                //       decoration: BoxDecoration(color: Colors.red[200]),
+                //       width: 200,
+                //       height: 200,
+                //       child: Icon(
+                //         Icons.camera_alt,
+                //         color: Colors.grey[800],
+                //       ),
+                //     ),
+                //   ),
+                // ),
                 const SizedBox(height: 32),
                 BlocConsumer<RegistrationBloc, RegistrationState>(
                   listener: (context, state) {

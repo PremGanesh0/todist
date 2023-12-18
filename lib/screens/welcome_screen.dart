@@ -48,7 +48,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
               children: [
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const LoginPage()),
@@ -60,7 +60,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                 ),
                 ElevatedButton(
                     onPressed: () {
-                      Navigator.push(
+                      Navigator.pushReplacement(
                         context,
                         MaterialPageRoute(
                             builder: (context) => const RegistrationPage()),
