@@ -105,19 +105,26 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       border: Border.all(color: Colors.grey)),
                   child: Padding(
                     padding: const EdgeInsets.all(2.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Image.asset('assert/Google.png'),
-                        const Text(
-                          " Login with Gmail Account",
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w700,
-                            color: Color(0xff9098B1),
+                    child: GestureDetector(
+                      onTap: () {
+                        context.read<RegistrationBloc>().add(
+                              GoogleSignInButtonPressed(),
+                            );
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Image.asset('assert/Google.png'),
+                          const Text(
+                            " Login with Gmail Account",
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w700,
+                              color: Color(0xff9098B1),
+                            ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),
@@ -128,13 +135,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     children: [
                       Container(
                         height: 1,
-                        width: 150,
+                        width: 140,
                         color: Colors.grey,
                       ),
                       const Text("  OR  "),
                       Container(
                         height: 1,
-                        width: 150,
+                        width: 140,
                         color: Colors.grey,
                       )
                     ],
@@ -170,7 +177,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                             )
                           : null, // Set to null if you don't want to display anything on top of the image
                     )),
-              const  SizedBox(
+                const SizedBox(
                   height: 10,
                 ),
                 const Row(

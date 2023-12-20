@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:todist/screens/lable_page.dart';
 import 'package:todist/screens/up_coming_page.dart';
 import 'package:todist/widgets/bottom_sheet.dart';
 
@@ -9,7 +10,7 @@ class BrowsePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-          body: Column( 
+          body: Column(
             children: [
               Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -51,11 +52,23 @@ class BrowsePage extends StatelessWidget {
                   ),
                 ),
               ),
-              const SizedBox(
-                height: 60,
-                child: Card(
-                  child: Row(
-                    children: [Icon(Icons.bookmark), Text('Filters & Lables')],
+              GestureDetector(
+                onTap: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => const LableScreen()),
+                  );
+                },
+                child: const SizedBox(
+                  height: 60,
+                  child: Card(
+                    child: Row(
+                      children: [
+                        Icon(Icons.bookmark),
+                        Text('Filters & Lables')
+                      ],
+                    ),
                   ),
                 ),
               ),
@@ -67,7 +80,7 @@ class BrowsePage extends StatelessWidget {
                     const Row(
                       children: [
                         Text(
-                          'Projects',
+                          'WorkSpace',
                           style: TextStyle(
                               fontSize: 20, fontWeight: FontWeight.w700),
                         ),

@@ -7,7 +7,6 @@ import 'package:todist/Bloc/repo/local_storage.dart';
 
 Future<void> verifyEmail(
     VerifyEmailButtonPressed event, Emitter<RegistrationState> emit) async {
-  emit(VerifyEmailloading());
   String apiUrl = 'https://dev.taskpareto.com/api/verifyEmail';
   var accesstoken = await LocalStorage.getToken();
   try {
@@ -29,7 +28,7 @@ Future<void> verifyEmail(
         email: event.email,
       ));
     } else {
-      emit(VerifyEmailFailed());
+      emit(VerifyEmailFailed(error: 'failed to verify otp --'));
       // print('Failed to verify email. Status code: ${response.statusCode}');
       // print('Response body: ${response}');
     }

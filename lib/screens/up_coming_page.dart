@@ -21,8 +21,6 @@ class _CalendarPageState extends State<CalendarPage> {
     _selectedDay = DateTime.now();
   }
 
-
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -63,32 +61,19 @@ class _CalendarPageState extends State<CalendarPage> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       if (index == 0) const SizedBox(height: 16),
-                      Text(
-                        isToday ? 'Today' : currentDate.toLocal().toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
-                      Text(
-                        currentDate.toLocal().weekday.toString(),
-                        style: const TextStyle(
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
                       const SizedBox(height: 16),
                       ListTile(
                         title: Text(
-                          '${currentDate.day} ${DateFormat.MMMd().format(currentDate)} . ${DateFormat.EEEE().format(currentDate)}',
+                          '${DateFormat.MMMd().format(currentDate)} . ${DateFormat.EEEE().format(currentDate)} ',
                         ),
-                        subtitle: const Text('0 tasks'),
                         trailing: ElevatedButton(
                           onPressed: () {
                             showModalBottomSheet(
                               isScrollControlled: true,
                               context: context,
                               builder: (BuildContext context) {
+                                // isToday send this isToday to custombottom screen
+                                
                                 return const CustomBottomSheet();
                               },
                             );
@@ -96,7 +81,9 @@ class _CalendarPageState extends State<CalendarPage> {
                           child: const Text('Add task'),
                         ),
                       ),
-                      const Divider(),
+                      Divider(
+                        color: Colors.grey.shade300,
+                      ),
                     ],
                   );
                 },

@@ -29,6 +29,15 @@ class VerifyEmailButtonPressed extends RegistrationEvent {
   final int otp;
 
   const VerifyEmailButtonPressed({required this.email, required this.otp});
+
   @override
   List<Object> get props => [email, otp];
+}
+
+class GoogleSignInButtonPressed extends RegistrationEvent {
+  // You can add any additional parameters needed for Google Sign-In
+  const GoogleSignInButtonPressed();
+
+  @override
+  List<Object> get props => [];
 }

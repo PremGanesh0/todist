@@ -12,24 +12,29 @@ Future<void> loginApi(
   emit(LoginLoading());
   var headers = {'Content-Type': 'application/json'};
 
+  print(event.email);
+  print(event.password);
   var request = http.Request('POST', Uri.parse('${baseUrl}login'));
   // request.body = json
   //     .encode({"email": event.email, "password": event.password, "type": 1});
 
-  request.body = json.encode({
-    "email": 'swamysanthosh.k@krify.com',
-    "password": 'Krify@123',
-    "type": 1
-  });
-
+  // request.body = json.encode({
+  //   "email": 'swamysanthosh.k@krify.com',
+  //   "password": 'Krify@123',
+  //   "type": 1
+  // });
+  request.body = json
+      .encode({"email": event.email, "password": event.password, "type": 1});
   request.headers.addAll(headers);
 
   try {
     http.StreamedResponse response = await request.send();
     print(response.statusCode);
+
     if (response.statusCode == 200) {
       String responseBody = await response.stream.bytesToString();
       var data = jsonDecode(responseBody);
+      print(data);
       User userdata = User.fromJson(data['data']['user']);
       saveUserData(userdata);
       saveAccessToken(data['data']['accessToken']);
