@@ -39,8 +39,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
     final TextEditingController usernameController = TextEditingController();
     final TextEditingController emailController = TextEditingController();
     final TextEditingController passwordController = TextEditingController();
-    final TextEditingController profileImagePathController =
-        TextEditingController();
 
     return BlocConsumer<RegistrationBloc, RegistrationState>(
       listener: (context, state) {
@@ -71,12 +69,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                // Row(mainAxisAlignment: MainAxisAlignment.center,
-                //   children: [
-                //     Image.asset(height: 50,width: 50,'assert/Screenshot 2023-11-15 151801.png'),
-                //     Image.asset(height: 100,width: 100,'assert/Screenshot 2023-11-20 105857.png')
-                //   ],
-                // ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
@@ -135,13 +127,13 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     children: [
                       Container(
                         height: 1,
-                        width: 140,
+                        width: 130,
                         color: Colors.grey,
                       ),
-                      const Text("  OR  "),
+                      const Text("OR"),
                       Container(
                         height: 1,
-                        width: 140,
+                        width: 130,
                         color: Colors.grey,
                       )
                     ],
@@ -159,6 +151,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       if (image != null) {
                         setState(() {
                           _image = File(image.path!);
+                          print("image path ${_image}");
                         });
                       } else {
                         // Handle the case where the user canceled image selection.
@@ -242,40 +235,6 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   obscureText: true,
                 ),
                 const SizedBox(height: 16),
-
-                // InkWell(
-                //   onTap: () async {
-                //     XFile? image = await imagePicker.pickImage(
-                //       source: ImageSource.gallery,
-                //       imageQuality: 50,
-                //       preferredCameraDevice: CameraDevice.front,
-                //     );
-
-                //     if (image != null) {
-                //       setState(() {
-                //         _image = File(image.path!);
-                //       });
-                //     } else {
-                //       // Handle the case where the user canceled image selection.
-                //       print('Image selection canceled');
-                //     }
-                //   },
-                //   child: Container(
-                //     width: 200,
-                //     height: 200,
-                //     decoration: BoxDecoration(color: Colors.red[200]),
-                //     child: Container(
-                //       decoration: BoxDecoration(color: Colors.red[200]),
-                //       width: 200,
-                //       height: 200,
-                //       child: Icon(
-                //         Icons.camera_alt,
-                //         color: Colors.grey[800],
-                //       ),
-                //     ),
-                //   ),
-                // ),
-                const SizedBox(height: 32),
                 BlocConsumer<RegistrationBloc, RegistrationState>(
                   listener: (context, state) {
                     // Handle success or failure states if needed
@@ -294,7 +253,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                                   email: emailController.text,
                                   password: passwordController.text,
                                   profileImagePath:
-                                      profileImagePathController.text,
+                                      '/data/user/0/com.example.todist/cache/scaled_1000000903.jpg',
                                 ),
                               );
                         },

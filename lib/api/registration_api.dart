@@ -18,7 +18,7 @@ Future<void> registerApi(
       'username': event.username,
       'email': event.email,
       'password': event.password,
-      'profileImage': event.profileImagePath,
+      'profileImage': '',
       'type': '1'
     };
 
@@ -67,5 +67,3 @@ saveUserData(
 saveAccessToken(String accessToken) async {
   await LocalStorage.saveTokens(accessToken);
 }
-
-

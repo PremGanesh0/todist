@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-Widget buildCard(String label, IconData icon) {
+Widget buildCard(String label, IconData icon, Color black) {
   return Card(
     child: Padding(
       padding: const EdgeInsets.only(left: 8.0, right: 8),
@@ -10,7 +10,7 @@ Widget buildCard(String label, IconData icon) {
           children: [
             Icon(
               icon,
-              size: 20,
+              size: 20
             ),
             Text(
               label,

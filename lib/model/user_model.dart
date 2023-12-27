@@ -4,12 +4,13 @@ class User {
   final String id;
   final String username;
   final String email;
+  final String profileImage;
 
-  User({
-    required this.id,
-    required this.username,
-    required this.email,
-  });
+  User(
+      {required this.id,
+      required this.username,
+      required this.email,
+      required this.profileImage});
 
   User copyWith({
     String? id,
@@ -21,10 +22,10 @@ class User {
     DateTime? updatedAt,
   }) =>
       User(
-        id: id ?? this.id,
-        username: username ?? this.username,
-        email: email ?? this.email,
-      );
+          id: id ?? this.id,
+          username: username ?? this.username,
+          email: email ?? this.email,
+          profileImage: profileImage ?? this.profileImage);
 
   factory User.fromRawJson(String str) => User.fromJson(json.decode(str));
 
@@ -34,6 +35,7 @@ class User {
         id: json["id"],
         username: json["username"],
         email: json["email"],
+        profileImage: json['profileImage'],
       );
 
   Map<String, dynamic> toJson() => {

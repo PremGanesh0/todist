@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:todist/Bloc/login/login_bloc.dart';
+import 'package:todist/api/getUserDetails_api.dart';
 import 'package:todist/api/registration_api.dart';
 import 'package:todist/model/user_model.dart';
 import 'package:todist/utils.dart';
@@ -34,8 +35,12 @@ Future<void> loginApi(
     if (response.statusCode == 200) {
       String responseBody = await response.stream.bytesToString();
       var data = jsonDecode(responseBody);
-      print(data);
       User userdata = User.fromJson(data['data']['user']);
+      print(userdata);
+      print('userId : ${userdata.id}');
+      print('user name : ${userdata.username}');
+      print('get user details  calling');
+      getUserDetails(userId: userdata.id);
       saveUserData(userdata);
       saveAccessToken(data['data']['accessToken']);
       emit(LoginSuccess());

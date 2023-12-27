@@ -26,6 +26,7 @@ class LocalStorage {
       id: prefs.getString('userId') ?? '',
       username: prefs.getString('username') ?? '',
       email: prefs.getString('email') ?? '',
+      profileImage: prefs.getString('profileImage') ?? '',
       // Add more fields as needed
     );
   }

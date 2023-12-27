@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todist/Widgets/card.dart';
 import 'package:todist/model/task_model.dart';
-
 import '../Bloc/task/task_bloc.dart';
 
 class CustomBottomSheet extends StatefulWidget {
@@ -15,9 +14,7 @@ class CustomBottomSheet extends StatefulWidget {
 
 class _CustomBottomSheetState extends State<CustomBottomSheet> {
   TextEditingController title = TextEditingController();
-
   TextEditingController description = TextEditingController();
-
   DateTime selectedDate = DateTime.now();
   bool updatecheck = false;
 
@@ -93,14 +90,17 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                 Row(
                   children: [
                     GestureDetector(
-                        onTap: () {
-                          _selectDate(context);
-                        },
-                        child: updatecheck == false
-                            ? buildCard(
-                                ' ${widget.task!.date.day}/${widget.task!.date.month}/${widget.task!.date.year}',
-                                Icons.today_outlined)
-                            : buildCard('Today', Icons.today)),
+                      onTap: () {
+                        _selectDate(context);
+                      },
+                      child: updatecheck == false
+                          ? buildCard(
+                              ' ${widget.task!.date.day}/${widget.task!.date.month}/${widget.task!.date.year}',
+                              Icons.today_outlined,
+                              Colors.blue, // Pass the desired color
+                            )
+                          : buildCard('Today', Icons.today, Colors.blue),
+                    ),
                     GestureDetector(
                       onTap: () {
                         final RenderBox overlay = Overlay.of(context)
@@ -109,8 +109,9 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         final RelativeRect position = RelativeRect.fromRect(
                           Rect.fromPoints(
                             overlay.localToGlobal(
-                                overlay.size.bottomRight(Offset.zero),
-                                ancestor: overlay),
+                              overlay.size.bottomRight(Offset.zero),
+                              ancestor: overlay,
+                            ),
                             overlay.localToGlobal(
                                     overlay.size.bottomRight(Offset.zero),
                                     ancestor: overlay) +
@@ -163,36 +164,43 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         ).then((value) {
                           if (value != null) {
                             if (value == 0) {
-                            } else if (value == 1) {}
+                              // Handle Priority 1
+                            } else if (value == 1) {
+                              // Handle Priority 2
+                            }
                           }
                         });
                       },
-                      child: buildCard('Priority', Icons.flag_outlined),
+                      child: buildCard(
+                          'Priority', Icons.flag_outlined, Colors.green),
                     ),
-                    buildCard('Reminder', Icons.alarm_on_outlined),
+                    buildCard(
+                        'Reminder', Icons.alarm_on_outlined, Colors.orange),
                     IconButton(
                       onPressed: () async {
                         if (widget.task != null) {
                           Task updatetask = Task(
-                              id: widget.task!.id,
-                              title: title.text,
-                              description: description.text,
-                              date: selectedDate,
-                              priority: 'High',
-                              label: 'Work',
-                              remember: true,
-                              completed: false);
+                            id: widget.task!.id,
+                            title: title.text,
+                            description: description.text,
+                            date: selectedDate,
+                            priority: 'High',
+                            label: 'Work',
+                            remember: true,
+                            completed: false,
+                          );
                           BlocProvider.of<TaskBloc>(context)
                               .add(UpdateTaskEvent(updatetask));
                         } else {
                           Task createtask = Task(
-                              title: title.text,
-                              description: description.text,
-                              date: selectedDate,
-                              priority: 'High',
-                              label: 'Work',
-                              remember: true,
-                              completed: false);
+                            title: title.text,
+                            description: description.text,
+                            date: selectedDate,
+                            priority: 'High',
+                            label: 'Work',
+                            remember: true,
+                            completed: false,
+                          );
                           BlocProvider.of<TaskBloc>(context)
                               .add(CreateTaskEvent(createtask));
                         }

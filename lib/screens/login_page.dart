@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todist/screens/forgot_page.dart';
 import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/registration_page.dart';
 import 'package:todist/screens/bin/task_add_page.dart';
@@ -163,7 +164,13 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         TextButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) =>  ForgotPage()),
+                          );
+                            },
                             child: const Text(
                               'Forgot password!',
                               style: TextStyle(color: Colors.red),
