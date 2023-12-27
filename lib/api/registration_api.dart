@@ -11,23 +11,41 @@ import 'package:todist/utils.dart';
 Future<void> registerApi(
     RegistrationButtonPressed event, Emitter<RegistrationState> emit) async {
   emit(RegistrationLoading(username: event.username, email: event.email));
-  String apiUrl = '${baseUrl}/register';
+  String apiUrl = '$baseUrl/register';
 
   try {
-    Map<String, dynamic> formData = {
+    // Map<String, dynamic> formData = {
+    //   'username': event.username,
+    //   'email': event.email,
+    //   'password': event.password,
+    //   'profileImage': event.profileImagePath,
+    //   'type': '1'
+    // };
+
+    // var response = await http.post(
+    //   Uri.parse(apiUrl),
+    //   headers: {'Content-Type': 'application/json'},
+    //   body: json.encode(formData),
+    // );
+
+    var request = http.MultipartRequest('POST', Uri.parse(apiUrl));
+    request.fields.addAll({
       'username': event.username,
       'email': event.email,
       'password': event.password,
-      'profileImage': '',
-      'type': '1'
-    };
+      'type': '1',
+    });
 
-    var response = await http.post(
-      Uri.parse(apiUrl),
-      headers: {'Content-Type': 'application/json'},
-      body: json.encode(formData),
-    );
-    var decodedData = json.decode(response.body);
+    // Check if imagePath is provided
+    if (event.profileImagePath.isNotEmpty) {
+      request.files.add(await http.MultipartFile.fromPath(
+          'profileImage', event.profileImagePath));
+    }
+
+    http.StreamedResponse response = await request.send();
+ 
+    var data = await response.stream.bytesToString();
+    var decodedData = json.decode(data);
     print(decodedData);
 
     if (response.statusCode == 201) {
@@ -52,7 +70,6 @@ Future<void> registerApi(
     }
   } catch (error) {
     print('catch');
-
     emit(RegistrationFailure(
         error: error.toString(), username: event.username, email: event.email));
   }

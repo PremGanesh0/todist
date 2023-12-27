@@ -70,10 +70,12 @@ class _TodayPageState extends State<TodayPage> {
                                     )),
                           );
                         } else if (value == 'logout') {
+                          // Call this when the user logs out
+                          // await LocalStorage.clearUserData();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => const WelcomeScreen()),
+                                builder: (context) => WelcomeScreen()),
                           );
                         }
                       },

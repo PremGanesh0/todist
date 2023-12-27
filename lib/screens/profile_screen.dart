@@ -27,6 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
+    print('inside profile page ${widget.user.profileImage}');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Profile'),
@@ -37,9 +38,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CircleAvatar(
-              radius: 50,
-              backgroundColor: Colors.blue,
-              // You can use an image here or any other widget to represent the user's profile picture
+              radius: 50.0,
+              //    backgroundImage: NetworkImage(widget.user.profileImage),
+              backgroundColor: Colors.transparent,
             ),
             SizedBox(height: 20),
             Row(
@@ -84,12 +85,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
             SizedBox(height: 20),
             ElevatedButton(
               onPressed: () {
-              //  updateUserProfile(
-              //    username: usernameController.text,
-              //   email: emailController.text,
-              //    password: passwordController.text,
-              //    // Add the profileImage parameter if needed
-              //  );
+                //  updateUserProfile(
+                //    username: usernameController.text,
+                //   email: emailController.text,
+                //    password: passwordController.text,
+                //    // Add the profileImage parameter if needed
+                //  );
               },
               child: Text('Edit'),
             )
@@ -99,4 +100,3 @@ class _ProfileScreenState extends State<ProfileScreen> {
     );
   }
 }
-

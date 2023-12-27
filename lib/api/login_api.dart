@@ -13,8 +13,8 @@ Future<void> loginApi(
   emit(LoginLoading());
   var headers = {'Content-Type': 'application/json'};
 
-  print(event.email);
-  print(event.password);
+  // print(event.email);
+  // print(event.password);
   var request = http.Request('POST', Uri.parse('${baseUrl}login'));
   // request.body = json
   //     .encode({"email": event.email, "password": event.password, "type": 1});
@@ -30,25 +30,22 @@ Future<void> loginApi(
 
   try {
     http.StreamedResponse response = await request.send();
-    print(response.statusCode);
 
     if (response.statusCode == 200) {
       String responseBody = await response.stream.bytesToString();
       var data = jsonDecode(responseBody);
       User userdata = User.fromJson(data['data']['user']);
-      print(userdata);
-      print('userId : ${userdata.id}');
-      print('user name : ${userdata.username}');
-      print('get user details  calling');
       getUserDetails(userId: userdata.id);
       saveUserData(userdata);
+      print('access token from internet ${data['data']['accessToken']}');
       saveAccessToken(data['data']['accessToken']);
       emit(LoginSuccess());
+      if (response.statusCode == 500) {
+        emit(LoginFailure(error: 'Internal Sever Error \n Status code 500'));
+      }
     } else {
       var error = await response.stream.bytesToString();
-
       var data = jsonDecode(error);
-
       emit(LoginFailure(error: data['message']));
     }
   } catch (e) {

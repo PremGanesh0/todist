@@ -6,34 +6,31 @@ import 'package:todist/model/user_model.dart';
 Future<void> getUserDetails({required String userId}) async {
   String apiUrl = 'https://dev.taskpareto.com/api/getUserDetails';
   var accessToken = await LocalStorage.getToken();
-  print(accessToken.toString());
+  print('access token form the localstorage ${accessToken.toString()}');
+  print(userId);
+
   try {
     var headers = {
-      'Authorization':
-          'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ImNmYmQ2NWJlLWEzYmEtMTFlZS04NjZiLTk3NjA2ZGUyNmFjMCIsImVtYWlsIjoibmFkb3RpNjE1OTFAdXNvcGxheS5jb20iLCJpYXQiOjE3MDM1ODg5MTYsImV4cCI6MTcwMzYxNzcxNn0.qHED5o6AqvBC0-0YW4xOGH6QYH5T36XBHgdf4dCxdQA',
+      'Authorization': accessToken['accessToken'].toString(),
       'Content-Type': 'application/json'
     };
-    var request = http.Request(
-        'GET', Uri.parse('https://dev.taskpareto.com/api/getUserDetails'));
-    request.body =
-        json.encode({"userId": "cfbd65be-a3ba-11ee-866b-97606de26ac0"});
+    var request = http.Request('GET', Uri.parse(apiUrl));
+    request.body = json.encode({"userId": userId});
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      var responseBody = await response.stream.bytesToString();
-      if (responseBody.isNotEmpty) {
-        var data = json.decode(responseBody);
-        User userData = User.fromJson(data['data']);
-      } else {
-        print('Response body is empty');
-      }
-    } else {
+      var data = await response.stream.bytesToString();
+      var decodeData = jsonDecode(data);
+      
+      print(data);
+     } else {
       print(response.reasonPhrase);
     }
+
+  
   } catch (error) {
     print('Error during getUserDetails request: $error');
   }
 }
-

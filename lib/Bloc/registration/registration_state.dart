@@ -30,13 +30,8 @@ class VerifyEmail extends RegistrationState {
 }
 
 class RegistrationSuccess extends RegistrationState {
-  var email;
-  var username;
-
-  RegistrationSuccess({
-    required this.email,
-    required this.username,
-  }) : super(username: username, email: email);
+  RegistrationSuccess({required String username, required String email})
+      : super(username: username, email: email);
 }
 
 class RegistrationFailure extends RegistrationState {
