@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todist/screens/forgot_page.dart';
 import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/registration_page.dart';
-import 'package:todist/screens/bin/task_add_page.dart';
 
 import '../Bloc/login/login_bloc.dart';
 
@@ -39,6 +39,7 @@ class LoginPage extends StatelessWidget {
               if (state is LoginFailure) {
                 ScaffoldMessenger.of(context).showSnackBar(
                   SnackBar(
+                    backgroundColor: Colors.red,
                     content: Text(state.error),
                   ),
                 );
@@ -134,9 +135,17 @@ class LoginPage extends StatelessWidget {
                     Align(
                       child: ElevatedButton(
                         onPressed: () {
-                          context.read<LoginBloc>().add(LoginButtonPressed(
-                              email: emailController.text,
-                              password: passwordController.text));
+                          if (emailController.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: "Please enter the Email");
+                          } else if (passwordController.text.isEmpty) {
+                            Fluttertoast.showToast(
+                                msg: "Please enter the Passwod");
+                          } else {
+                            context.read<LoginBloc>().add(LoginButtonPressed(
+                                email: emailController.text,
+                                password: passwordController.text));
+                          }
                         },
                         child: const Text('Login'),
                       ),
@@ -166,10 +175,10 @@ class LoginPage extends StatelessWidget {
                         TextButton(
                             onPressed: () {
                               Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) =>  ForgotPage()),
-                          );
+                                context,
+                                MaterialPageRoute(
+                                    builder: (context) => ForgotPage()),
+                              );
                             },
                             child: const Text(
                               'Forgot password!',

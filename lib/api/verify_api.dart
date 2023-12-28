@@ -3,11 +3,12 @@ import 'dart:convert';
 import 'package:bloc/bloc.dart';
 import 'package:http/http.dart' as http;
 import 'package:todist/Bloc/registration/registration_bloc.dart';
-import 'package:todist/Bloc/repo/local_storage.dart';
-
+import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
+import 'package:todist/utils.dart';
+ 
 Future<void> verifyEmail(
     VerifyEmailButtonPressed event, Emitter<RegistrationState> emit) async {
-  String apiUrl = 'https://dev.taskpareto.com/api/verifyEmail';
+  String apiUrl = '$baseUrl/verifyEmail';
   var accesstoken = await LocalStorage.getToken();
   try {
     var headers = {

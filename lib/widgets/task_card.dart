@@ -79,7 +79,7 @@ class TaskCard extends StatelessWidget {
           child: ListTile(
             title: Text(
               task.title,
-              style: TextStyle(fontWeight: FontWeight.w600),
+              style: const TextStyle(fontWeight: FontWeight.w600),
             ),
             subtitle: Row(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -89,7 +89,7 @@ class TaskCard extends StatelessWidget {
                   child: Text(
                     task.description,
                     overflow: TextOverflow.ellipsis,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontSize: 14,
                     ),
                   ),
@@ -102,11 +102,11 @@ class TaskCard extends StatelessWidget {
               ],
             ),
             trailing: task.completed == false
-                ? Icon(
+                ? const Icon(
                     Icons.check_circle,
                     color: Colors.green,
                   )
-                : SizedBox(),
+                : const SizedBox(),
           ),
         ),
       ),

@@ -6,7 +6,7 @@ import 'package:todist/screens/home_screen.dart';
 class OtpPage extends StatefulWidget {
   final String email;
 
-  OtpPage({Key? key, required this.email}) : super(key: key);
+  const OtpPage({Key? key, required this.email}) : super(key: key);
 
   @override
   State<OtpPage> createState() => _OtpPageState();
@@ -22,12 +22,15 @@ class _OtpPageState extends State<OtpPage> {
   @override
   void initState() {
     super.initState();
+    _setupFocusNodesAndControllers();
+  }
+
+  void _setupFocusNodesAndControllers() {
     _focusNodes = List.generate(6, (index) => FocusNode());
     _controllers = List.generate(6, (index) => TextEditingController());
 
-    for (int i = 0; i < 5; i++) {
+    for (int i = 0; i < 6; i++) {
       _controllers[i].addListener(() {
-        print(_controllers[i].text);
         if (_controllers[i].text.length == 1) {
           if (i < 5) {
             _focusNodes[i + 1].requestFocus();
@@ -37,6 +40,8 @@ class _OtpPageState extends State<OtpPage> {
             _focusNodes[i - 1].requestFocus();
           }
         }
+
+        print(_controllers);
       });
     }
   }
@@ -86,7 +91,7 @@ class _OtpPageState extends State<OtpPage> {
                           'assert/Screenshot 2023-11-23 113906.png')
                     ],
                   ),
-                  SizedBox(height: 30),
+                  const SizedBox(height: 30),
                   const Text(
                     'Hello',
                     style: TextStyle(
@@ -94,7 +99,7 @@ class _OtpPageState extends State<OtpPage> {
                         fontWeight: FontWeight.w700,
                         color: Colors.green),
                   ),
-                  Text(
+                  const Text(
                     'The verification Code has been send to the',
                     style: TextStyle(
                         fontSize: 16,
@@ -104,13 +109,13 @@ class _OtpPageState extends State<OtpPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text('Email:',
+                      const Text('Email:',
                           style: TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: Colors.black)),
                       Text(' ${widget.email}',
-                          style: TextStyle(
+                          style: const TextStyle(
                               fontSize: 16,
                               fontWeight: FontWeight.w700,
                               color: Colors.red))
@@ -132,7 +137,7 @@ class _OtpPageState extends State<OtpPage> {
                           keyboardType: TextInputType.number,
                           textAlign: TextAlign.center,
                           maxLength: 1,
-                          decoration: InputDecoration(
+                          decoration: const InputDecoration(
                             counter: Offstage(),
                             border: OutlineInputBorder(),
                           ),

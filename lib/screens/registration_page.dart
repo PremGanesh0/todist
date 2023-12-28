@@ -18,14 +18,14 @@ class RegistrationPage extends StatelessWidget {
       ),
       body: BlocProvider(
         create: (context) => RegistrationBloc(),
-        child: RegistrationForm(),
+        child: const RegistrationForm(),
       ),
     );
   }
 }
 
 class RegistrationForm extends StatefulWidget {
-  RegistrationForm({super.key});
+  const RegistrationForm({super.key});
 
   @override
   State<RegistrationForm> createState() => _RegistrationFormState();
@@ -47,18 +47,17 @@ class _RegistrationFormState extends State<RegistrationForm> {
     return confirmPassword == passwordController.text;
   }
 
-  var _image = null;
+  var _image;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegistrationBloc, RegistrationState>(
       listener: (context, state) {
         if (state is VerifyEmail) {
           ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(
-              content: Text('Registration successful!'),
+            SnackBar(
+              content: Text('OTP is Send to Email ${state.email}'),
             ),
           );
-
           Navigator.push(
             context,
             MaterialPageRoute(
@@ -112,7 +111,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       child: GestureDetector(
                         onTap: () {
                           context.read<RegistrationBloc>().add(
-                                GoogleSignInButtonPressed(),
+                                const GoogleSignInButtonPressed(),
                               );
                         },
                         child: Row(
@@ -163,7 +162,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         if (image != null) {
                           setState(() {
                             _image = File(image.path);
-                            print("image path ${_image}");
+                            print("image path $_image");
                           });
                         } else {
                           // Handle the case where the user canceled image selection.
@@ -205,7 +204,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                     ),
-                    keyboardType: TextInputType.emailAddress,
+                    keyboardType: TextInputType.text,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Please Enter Name';
@@ -227,6 +226,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   ),
                   TextFormField(
                     controller: emailController,
+                    keyboardType: TextInputType.emailAddress,
                     decoration: InputDecoration(
                       //  labelText: 'Email',
                       hintText: 'Email',

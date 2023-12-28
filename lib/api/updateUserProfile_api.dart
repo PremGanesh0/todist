@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:todist/utils.dart';
 
 Future<void> updateUserProfile({
   required String username,
@@ -9,7 +10,7 @@ Future<void> updateUserProfile({
   required String password,
   required String profileImage,
 }) async {
-  String apiUrl = 'https://dev.taskpareto.com/api/updateUserProfile';
+  String apiUrl = '$baseUrl/updateUserProfile';
 
   try {
     var headers = {'Content-Type': 'application/json'};

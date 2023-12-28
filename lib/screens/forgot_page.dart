@@ -3,13 +3,14 @@ import 'package:todist/api/forgot_api.dart';
 import 'package:todist/screens/login_page.dart';
 
 class ForgotPage extends StatelessWidget {
-   ForgotPage({super.key});
+  ForgotPage({super.key});
 
-TextEditingController emailController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Forgot Password')),
+      appBar: AppBar(title: const Text('Forgot Password')),
       body: SingleChildScrollView(
         child: Column(
           children: [
@@ -26,45 +27,47 @@ TextEditingController emailController = TextEditingController();
                     'assert/Screenshot 2023-11-23 113906.png')
               ],
             ),
-            SizedBox(height: 30),
-            Text(
+            const SizedBox(height: 30),
+            const Text(
               'Forgot Your Password?',
               style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
             ),
-            Text(
+            const Text(
               'To reset your password,please enter \n    the email address of your Task',
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
             ),
-            Text(
+            const Text(
               'pareto account',
               style: TextStyle(fontSize: 12, fontWeight: FontWeight.w700),
             ),
-            SizedBox(height: 30),
-            Container(
+            const SizedBox(height: 30),
+            SizedBox(
               height: 40,
               width: 320,
               child: TextField(
-                controller:emailController ,
+                  controller: emailController,
                   decoration: InputDecoration(
                       hintText: 'Enter Email',
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(5),
                       ))),
             ),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 forgotPassword(email: emailController.text);
               },
-              child: Text('Submit', style: TextStyle(color: Colors.black)),
               style: ElevatedButton.styleFrom(
-                  primary: Colors.blue, minimumSize: Size(320, 40)),
+                  backgroundColor: Colors.blue,
+                  minimumSize: const Size(320, 40)),
+              child:
+                  const Text('Submit', style: TextStyle(color: Colors.black)),
             ),
-            SizedBox(height: 20),
+            const SizedBox(height: 20),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Text('Already signed up?'),
+                const Text('Already signed up?'),
                 TextButton(
                     onPressed: () {
                       Navigator.pushReplacement(
@@ -73,7 +76,7 @@ TextEditingController emailController = TextEditingController();
                             builder: (context) => const LoginPage()),
                       );
                     },
-                    child: Text(
+                    child: const Text(
                       'Go to login',
                       style: TextStyle(color: Colors.red),
                     ))
@@ -84,4 +87,7 @@ TextEditingController emailController = TextEditingController();
       ),
     );
   }
+
+
+  
 }

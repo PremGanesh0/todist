@@ -1,10 +1,10 @@
 part of 'registration_bloc.dart';
 
 abstract class RegistrationState extends Equatable {
-  late final String username;
-  late final String email;
+  final String username;
+  final String email;
 
-  RegistrationState({required this.username, required this.email});
+  const RegistrationState({required this.username, required this.email});
 
   @override
   List<Object> get props => [username, email];

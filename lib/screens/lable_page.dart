@@ -9,27 +9,27 @@ class LableScreen extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           centerTitle: true,
-          title: Text(
+          title: const Text(
             'New Label',
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
           ),
           actions: [
             TextButton(
               onPressed: () {},
-              child: Text(
+              child: const Text(
                 'Done',
                 style: TextStyle(color: Colors.blue),
               ),
             ),
           ],
         ),
-        body: Column(children: [
+        body: const Column(children: [
           Card(
             child: Column(
               children: [
                 TextField(
                     decoration: InputDecoration(hintText: 'Name your lable')),
-                Container(
+                SizedBox(
                   height: 50,
                   child: Row(
                     children: [

@@ -30,23 +30,29 @@ Future<void> loginApi(
 
   try {
     http.StreamedResponse response = await request.send();
-
-    if (response.statusCode == 200) {
-      String responseBody = await response.stream.bytesToString();
-      var data = jsonDecode(responseBody);
-      User userdata = User.fromJson(data['data']['user']);
-      getUserDetails(userId: userdata.id);
-      saveUserData(userdata);
-      print('access token from internet ${data['data']['accessToken']}');
-      saveAccessToken(data['data']['accessToken']);
-      emit(LoginSuccess());
-      if (response.statusCode == 500) {
-        emit(LoginFailure(error: 'Internal Sever Error \n Status code 500'));
-      }
+    print(response.statusCode);
+    if (response.statusCode == 500) {
+      emit(const LoginFailure(error: 'Internal Sever Error  Status code 500'));
+    } else if (response.statusCode == 401) {
+      emit(const LoginFailure(
+          error:
+              'Too Many Login Attemps from this IP, Please try after 5 minutes'));
     } else {
-      var error = await response.stream.bytesToString();
-      var data = jsonDecode(error);
-      emit(LoginFailure(error: data['message']));
+      if (response.statusCode == 200) {
+        String responseBody = await response.stream.bytesToString();
+        var data = jsonDecode(responseBody);
+        print('user data from ${data}');
+        User userdata = User.fromJson(data['data']['user']);
+        getUserDetails(userId: userdata.id);
+        saveUserData(userdata);
+        print('access token from internet ${data['data']['accessToken']}');
+        saveAccessToken(data['data']['accessToken']);
+        emit(LoginSuccess());
+      } else {
+        var error = await response.stream.bytesToString();
+        var data = jsonDecode(error);
+        emit(LoginFailure(error: data['message']));
+      }
     }
   } catch (e) {
     emit(LoginFailure(error: e.toString()));

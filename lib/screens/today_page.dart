@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:todist/Bloc/repo/local_storage.dart';
+import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/Bloc/task/database_provider.dart';
 import 'package:todist/Bloc/task/repo.dart';
 import 'package:todist/Bloc/task/task_bloc.dart';
@@ -71,11 +71,11 @@ class _TodayPageState extends State<TodayPage> {
                           );
                         } else if (value == 'logout') {
                           // Call this when the user logs out
-                          // await LocalStorage.clearUserData();
+                          await LocalStorage.clearUserData();
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                                builder: (context) => WelcomeScreen()),
+                                builder: (context) => const WelcomeScreen()),
                           );
                         }
                       },

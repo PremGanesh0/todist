@@ -1,10 +1,7 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todist/Bloc/registration/registration_bloc.dart';
-import 'path_to_google_sign_in_button_pressed_file/google_sign_in_button_pressed.dart';
 
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:todist/model/user_model.dart';
 
 // Future<void> googleSignIn(
 //   GoogleSignInButtonPressed event,

@@ -3,7 +3,8 @@ import 'package:http/http.dart' as http;
 import 'package:todist/model/user_model.dart';
 
 Future<void> getUserDetails({required String userId}) async {
-  String apiUrl = 'https://dev.taskpareto.com/api/deleteAccount';
+  var baseUrli;
+  String apiUrl = '$baseUrli/deleteAccount';
 
   try {
     var headers = {'Content-Type': 'application/json'};

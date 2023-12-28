@@ -1,9 +1,11 @@
 import 'dart:convert';
 
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:http/http.dart' as http;
+import 'package:todist/utils.dart';
 
 Future<void> forgotPassword({required String email}) async {
-  String apiUrl = 'https://dev.taskpareto.com/api/requestPasswordReset';
+  String apiUrl = '$baseUrl/requestPasswordReset';
 
   try {
     var headers = {'Content-Type': 'application/json'};
@@ -14,7 +16,13 @@ Future<void> forgotPassword({required String email}) async {
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+      var data = await response.stream.bytesToString();
+      var decodedData = json.decode(data);
+      Fluttertoast.showToast(
+        msg: decodedData['message'],
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
     } else {
       print(response.reasonPhrase);
     }
