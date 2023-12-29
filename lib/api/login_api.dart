@@ -12,47 +12,33 @@ Future<void> loginApi(
     LoginButtonPressed event, Emitter<LoginState> emit) async {
   emit(LoginLoading());
   var headers = {'Content-Type': 'application/json'};
-
-  // print(event.email);
-  // print(event.password);
   var request = http.Request('POST', Uri.parse('${baseUrl}login'));
-  // request.body = json
-  //     .encode({"email": event.email, "password": event.password, "type": 1});
-
-  // request.body = json.encode({
-  //   "email": 'swamysanthosh.k@krify.com',
-  //   "password": 'Krify@123',
-  //   "type": 1
-  // });
   request.body = json
       .encode({"email": event.email, "password": event.password, "type": 1});
   request.headers.addAll(headers);
 
   try {
     http.StreamedResponse response = await request.send();
-    print(response.statusCode);
-    if (response.statusCode == 500) {
+    if (response.statusCode == 200) {
+      String responseBody = await response.stream.bytesToString();
+      var data = jsonDecode(responseBody);
+      print('user data from $data');
+      User userdata = User.fromJson(data['data']['user']);
+      getUserDetails(userId: userdata.id);
+      saveUserData(userdata);
+      print('access token from internet ${data['data']['accessToken']}');
+      saveAccessToken(data['data']['accessToken']);
+      emit(LoginSuccess());
+    } else if (response.statusCode == 500) {
       emit(const LoginFailure(error: 'Internal Sever Error  Status code 500'));
     } else if (response.statusCode == 401) {
       emit(const LoginFailure(
           error:
               'Too Many Login Attemps from this IP, Please try after 5 minutes'));
     } else {
-      if (response.statusCode == 200) {
-        String responseBody = await response.stream.bytesToString();
-        var data = jsonDecode(responseBody);
-        print('user data from ${data}');
-        User userdata = User.fromJson(data['data']['user']);
-        getUserDetails(userId: userdata.id);
-        saveUserData(userdata);
-        print('access token from internet ${data['data']['accessToken']}');
-        saveAccessToken(data['data']['accessToken']);
-        emit(LoginSuccess());
-      } else {
-        var error = await response.stream.bytesToString();
-        var data = jsonDecode(error);
-        emit(LoginFailure(error: data['message']));
-      }
+      var error = await response.stream.bytesToString();
+      var data = jsonDecode(error);
+      emit(LoginFailure(error: data['message']));
     }
   } catch (e) {
     emit(LoginFailure(error: e.toString()));

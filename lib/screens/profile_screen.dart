@@ -53,12 +53,12 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Positioned.fill(
                     child: ClipOval(
                       child: FadeInImage(
-                        placeholder: AssetImage(
+                        placeholder: const AssetImage(
                             'assert/progilr image.webp'), // Placeholder image
                         image: NetworkImage(widget.user.profileImage),
                         imageErrorBuilder: (context, error, stackTrace) {
                           return Image.asset(
-                              'assets/error.png'); // Placeholder for error
+                              'assert/progilr image.webp'); // Placeholder for error
                         },
                         fit: BoxFit.cover,
                         width: 100.0,
@@ -157,10 +157,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                   onPressed: () {
                     deleteAccount(userId: widget.user.id);
-                    // Navigator.pushReplacement(
-                    //     context,
-                    //     MaterialPageRoute(
-                    //         builder: (context) => const WelcomeScreen()));
+                    Navigator.pushReplacement(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const WelcomeScreen()));
                   },
                   child: const Text(
                     'Delete My Account',
