@@ -24,6 +24,7 @@ Future<void> loginApi(LoginButtonPressed event, Emitter<LoginState> emit) async 
       getUserDetails(userId: userdata.id);
       saveUserData(userdata);
       saveAccessToken(data['data']['accessToken']);
+      saveRefreshToken(data['data']['refreshToken']);
       emit(LoginSuccess(user: userdata));
     } else if (response.statusCode == 500) {
       emit(const LoginFailure(error: 'Internal Server Error  Status code 500'));

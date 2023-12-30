@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
-import 'package:todist/api/delete_account_api.dart';
 import 'package:todist/api/get_user_details_api.dart';
+import 'package:todist/api/update_user_profile_api.dart';
 import 'package:todist/model/user_model.dart';
-import 'package:todist/screens/welcome_screen.dart';
 
 class ProfileScreen extends StatefulWidget {
   final User user;
@@ -111,34 +110,16 @@ class ProfileScreenState extends State<ProfileScreen> {
                 ),
               ),
               const SizedBox(height: 20),
-              // Padding(
-              //   padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-              //   child: Row(
-              //     mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //     children: [
-              //       const Text('Password: '),
-              //       SizedBox(
-              //         height: 40,
-              //         width: 250,
-              //         child: TextField(
-              //           controller: passwordController,
-              //           obscureText: true,
-              //           decoration:
-              //               const InputDecoration(border: OutlineInputBorder()),
-              //         ),
-              //       ),
-              //     ],
-              //   ),
-              // ),
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  //  updateUserProfile(
-                  //    username: usernameController.text,
-                  //   email: emailController.text,
-                  //    password: passwordController.text,
-                  //    // Add the profileImage parameter if needed
-                  //  );
+                  updateUserProfile(
+                    username: usernameController.text,
+                    email: emailController.text,
+                    profileImage: widget.user.profileImage,
+
+                    // Add the profileImage parameter if needed
+                  );
                 },
                 child: const Text('Edit'),
               ),
@@ -154,9 +135,32 @@ class ProfileScreenState extends State<ProfileScreen> {
                     foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                   ),
                   onPressed: () {
-                    deleteAccount(userId: widget.user.id);
-                    Navigator.pushReplacement(
-                        context, MaterialPageRoute(builder: (context) => const WelcomeScreen()));
+                    // show dailogbox for confirmation
+                    showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return AlertDialog(
+                          title: const Text('Confirmation'),
+                          content: const Text('Are you sure you want to delete your account?'),
+                          actions: [
+                            TextButton(
+                              onPressed: () {
+                                // Perform the delete account logic here
+                                // ...
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: const Text('Yes'),
+                            ),
+                            TextButton(
+                              onPressed: () {
+                                Navigator.of(context).pop(); // Close the dialog
+                              },
+                              child: const Text('No'),
+                            ),
+                          ],
+                        );
+                      },
+                    );
                   },
                   child: const Text(
                     'Delete My Account',

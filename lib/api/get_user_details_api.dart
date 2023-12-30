@@ -9,7 +9,7 @@ import 'package:todist/utils.dart';
 
 Future<void> getUserDetails({required String userId}) async {
   String apiUrl = '$baseUrl/getUserDetails';
-  var accessToken = await LocalStorage.getToken();
+  var accessToken = await LocalStorage.getAccessToken();
 
   try {
     var headers = {

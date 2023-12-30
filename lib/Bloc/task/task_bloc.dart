@@ -61,9 +61,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       }
     });
 
-
-
-
   on<CompleteTaskEvent>((event, emit) async {
       try {
         await _taskRepository.completeTask(event.taskId);

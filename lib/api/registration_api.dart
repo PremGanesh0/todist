@@ -45,12 +45,14 @@ Future<void> registerApi(RegistrationButtonPressed event, Emitter<RegistrationSt
   }
 }
 
-saveUserData(
-  User user,
-) async {
+saveUserData(User user) async {
   await LocalStorage.saveUserData(user);
 }
 
 saveAccessToken(String accessToken) async {
-  await LocalStorage.saveTokens(accessToken);
+  await LocalStorage.saveAccessTokens(accessToken);
+}
+
+saveRefreshToken(String refreshToken) async {
+  await LocalStorage.saveRefreshToken(refreshToken);
 }

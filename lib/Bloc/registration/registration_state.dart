@@ -55,3 +55,4 @@ class VerifyEmailFailed extends RegistrationState {
 class VerifyEmailLoading extends RegistrationState {
   const VerifyEmailLoading({required super.username, required super.email});
 }
+

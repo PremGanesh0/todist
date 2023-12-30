@@ -7,6 +7,7 @@ class LocalStorage {
   static const String emailKey = 'email';
   static const String profileImageKey = 'profileImage';
   static const String accessTokenKey = 'accessToken';
+  static const String refreshTokenKey = 'refreshToken';
 
   static Future<void> saveUserData(User userData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -19,7 +20,7 @@ class LocalStorage {
     // Add more fields as needed
   }
 
-  static Future<void> saveTokens(String accessToken) async {
+  static Future<void> saveAccessTokens(String accessToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(accessTokenKey, accessToken);
   }
@@ -35,15 +36,20 @@ class LocalStorage {
     );
   }
 
-  static Future<Map<String, String>> getToken() async {
+  static Future<Map<String, String>> getAccessToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-     return {
-      'accessToken': prefs.getString(accessTokenKey) ?? '',
+    return {
+      accessTokenKey: prefs.getString(accessTokenKey) ?? '',
     };
   }
 
   static Future<void> clearUserData() async {
-     SharedPreferences prefs = await SharedPreferences.getInstance();
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
+  }
+
+  static Future<void> saveRefreshToken(String refreshToken) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(refreshTokenKey, refreshToken);
   }
 }

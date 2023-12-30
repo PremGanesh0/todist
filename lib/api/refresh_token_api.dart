@@ -5,9 +5,9 @@ import 'package:http/http.dart' as http;
 import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/utils.dart';
 
-Future<void> deleteAccount({required String userId}) async {
+Future<void> refreshTokenApi({required String userId}) async {
   String apiUrl = '$baseUrl/refresh-token';
-  var refreshToken = await LocalStorage.getToken();
+  var refreshToken = await LocalStorage.getAccessToken();
   try {
     var headers = {
       'Authorization': refreshToken['refreshToken'].toString(),

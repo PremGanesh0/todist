@@ -7,7 +7,7 @@ import 'package:todist/utils.dart';
 
 Future<void> deleteAccount({required String userId}) async {
   String apiUrl = '$baseUrl/deleteAccount';
-  var accessToken = await LocalStorage.getToken();
+  var accessToken = await LocalStorage.getAccessToken();
   try {
     var headers = {
       'Authorization': accessToken['accessToken'].toString(),
