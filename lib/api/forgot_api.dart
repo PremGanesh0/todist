@@ -24,9 +24,9 @@ Future<void> forgotPassword({required String email}) async {
         gravity: ToastGravity.CENTER,
       );
     } else {
-      print(response.reasonPhrase);
+      // print(response.reasonPhrase);
     }
   } catch (error) {
-    print('Error during password reset request: $error');
+    // print('Error during password reset request: $error');
   }
 }

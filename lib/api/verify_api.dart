@@ -29,7 +29,7 @@ Future<void> verifyEmail(
         email: event.email,
       ));
     } else {
-      emit(VerifyEmailFailed(error: 'failed to verify otp --'));
+      emit(const VerifyEmailFailed(error: 'failed to verify otp --'));
       // print('Failed to verify email. Status code: ${response.statusCode}');
       // print('Response body: ${response}');
     }

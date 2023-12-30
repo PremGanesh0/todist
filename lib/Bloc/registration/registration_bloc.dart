@@ -8,7 +8,7 @@ part 'registration_event.dart';
 part 'registration_state.dart';
 
 class RegistrationBloc extends Bloc<RegistrationEvent, RegistrationState> {
-  RegistrationBloc() : super(RegistrationInitial(username: '', email: '')) {
+  RegistrationBloc() : super(const RegistrationInitial(username: '', email: '')) {
     on<RegistrationButtonPressed>(registerApi);
     on<VerifyEmailButtonPressed>(verifyEmail);
     on<GoogleSignInButtonPressed>(googleSignIn);

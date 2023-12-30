@@ -17,26 +17,27 @@ Future<void> deleteAccount({required String userId}) async {
     request.body = json.encode({"userId": userId});
     request.headers.addAll(headers);
     request.headers.addAll(headers);
-
     http.StreamedResponse response = await request.send();
-
-    print(response.statusCode);
-
     if (response.statusCode == 200) {
       var data = await response.stream.bytesToString();
       var decodeData = jsonDecode(data);
-
-      print(data);
-
       Fluttertoast.showToast(
         msg: decodeData['message'],
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.CENTER,
       );
     } else {
-      print(response.reasonPhrase);
+      Fluttertoast.showToast(
+        msg: response.reasonPhrase.toString(),
+        toastLength: Toast.LENGTH_SHORT,
+        gravity: ToastGravity.CENTER,
+      );
     }
   } catch (error) {
-    print('Error during delete account: $error');
+    Fluttertoast.showToast(
+      msg: error.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.CENTER,
+    );
   }
 }

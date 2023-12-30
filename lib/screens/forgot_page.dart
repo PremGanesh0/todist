@@ -5,8 +5,8 @@ import 'package:todist/screens/login_page.dart';
 class ForgotPage extends StatelessWidget {
   ForgotPage({super.key});
 
-  TextEditingController emailController = TextEditingController();
-  
+  final TextEditingController emailController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -17,14 +17,8 @@ class ForgotPage extends StatelessWidget {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Image.asset(
-                    height: 50,
-                    width: 50,
-                    'assert/Screenshot 2023-11-15 151801.png'),
-                Image.asset(
-                    height: 40,
-                    width: 100,
-                    'assert/Screenshot 2023-11-23 113906.png')
+                Image.asset(height: 50, width: 50, 'assert/Screenshot 2023-11-15 151801.png'),
+                Image.asset(height: 40, width: 100, 'assert/Screenshot 2023-11-23 113906.png')
               ],
             ),
             const SizedBox(height: 30),
@@ -58,10 +52,8 @@ class ForgotPage extends StatelessWidget {
                 forgotPassword(email: emailController.text);
               },
               style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.blue,
-                  minimumSize: const Size(320, 40)),
-              child:
-                  const Text('Submit', style: TextStyle(color: Colors.black)),
+                  backgroundColor: Colors.blue, minimumSize: const Size(320, 40)),
+              child: const Text('Submit', style: TextStyle(color: Colors.black)),
             ),
             const SizedBox(height: 20),
             Row(
@@ -72,8 +64,7 @@ class ForgotPage extends StatelessWidget {
                     onPressed: () {
                       Navigator.pushReplacement(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const LoginPage()),
+                        MaterialPageRoute(builder: (context) => const LoginPage()),
                       );
                     },
                     child: const Text(
@@ -87,7 +78,4 @@ class ForgotPage extends StatelessWidget {
       ),
     );
   }
-
-
-  
 }

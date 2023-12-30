@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/login_page.dart';
 import 'package:todist/screens/registration_page.dart';
 
@@ -22,20 +21,11 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Image.asset(
-                  height: 50,
-                  width: 50,
-                  'assert/Screenshot 2023-11-15 151801.png'),
-              Image.asset(
-                  height: 100,
-                  width: 100,
-                  'assert/Screenshot 2023-11-23 113906.png')
+              Image.asset(height: 50, width: 50, 'assert/Screenshot 2023-11-15 151801.png'),
+              Image.asset(height: 100, width: 100, 'assert/Screenshot 2023-11-23 113906.png')
             ],
           ),
-          Image.asset(
-              height: 250,
-              width: 250,
-              'assert/Screenshot 2023-11-15 164716.png'),
+          Image.asset(height: 250, width: 250, 'assert/Screenshot 2023-11-15 164716.png'),
           const Padding(
             padding: EdgeInsets.all(32.0),
             child: Text(
@@ -50,8 +40,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const LoginPage()),
+                      MaterialPageRoute(builder: (context) => const LoginPage()),
                     );
                   },
                   child: const Text('Log in')),
@@ -62,8 +51,7 @@ class _WelcomeScreenState extends State<WelcomeScreen> {
                   onPressed: () {
                     Navigator.pushReplacement(
                       context,
-                      MaterialPageRoute(
-                          builder: (context) => const RegistrationPage()),
+                      MaterialPageRoute(builder: (context) => const RegistrationPage()),
                     );
                   },
                   child: const Text('Register')),

@@ -22,26 +22,28 @@ class _OtpPageState extends State<OtpPage> {
   @override
   void initState() {
     super.initState();
-    _setupFocusNodesAndControllers();
+    _focusNodes = List<FocusNode>.generate(6, (_) => FocusNode());
+    _controllers = List<TextEditingController>.generate(6, (_) => TextEditingController());
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      _setupFocusNodesAndControllers();
+    });
   }
 
   void _setupFocusNodesAndControllers() {
-    _focusNodes = List.generate(6, (index) => FocusNode());
-    _controllers = List.generate(6, (index) => TextEditingController());
-
-    for (int i = 0; i < 6; i++) {
+    for (var i = 0; i < 6; i++) {
+      _focusNodes[i].addListener(() {
+        if (_focusNodes[i].hasFocus) {
+          _controllers[i].clear();
+        }
+      });
       _controllers[i].addListener(() {
-        if (_controllers[i].text.length == 1) {
+        if (_controllers[i].text.isNotEmpty) {
           if (i < 5) {
             _focusNodes[i + 1].requestFocus();
-          }
-        } else if (_controllers[i].text.isEmpty) {
-          if (i > 0) {
-            _focusNodes[i - 1].requestFocus();
+          } else {
+            _focusNodes[i].unfocus();
           }
         }
-
-        print(_controllers);
       });
     }
   }
@@ -81,54 +83,39 @@ class _OtpPageState extends State<OtpPage> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                          height: 50,
-                          width: 50,
-                          'assert/Screenshot 2023-11-15 151801.png'),
-                      Image.asset(
-                          height: 40,
-                          width: 100,
-                          'assert/Screenshot 2023-11-23 113906.png')
+                      Image.asset(height: 50, width: 50, 'assert/Screenshot 2023-11-15 151801.png'),
+                      Image.asset(height: 40, width: 100, 'assert/Screenshot 2023-11-23 113906.png')
                     ],
                   ),
                   const SizedBox(height: 30),
                   const Text(
                     'Hello',
-                    style: TextStyle(
-                        fontSize: 30,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.green),
+                    style:
+                        TextStyle(fontSize: 30, fontWeight: FontWeight.w700, color: Colors.green),
                   ),
                   const Text(
                     'The verification Code has been send to the',
-                    style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w700,
-                        color: Colors.orange),
+                    style:
+                        TextStyle(fontSize: 16, fontWeight: FontWeight.w700, color: Colors.orange),
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       const Text('Email:',
                           style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.black)),
+                              fontSize: 16, fontWeight: FontWeight.w700, color: Colors.black)),
                       Text(' ${widget.email}',
                           style: const TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w700,
-                              color: Colors.red))
+                              fontSize: 16, fontWeight: FontWeight.w700, color: Colors.red))
                     ],
-                  ), // Use 'state.email' to get the email from the state
+                  ),
                   const SizedBox(height: 20),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: List.generate(
                       6,
                       (index) => Container(
-                        decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5)),
+                        decoration: BoxDecoration(borderRadius: BorderRadius.circular(5)),
                         margin: const EdgeInsets.symmetric(horizontal: 8.0),
                         width: 40.0,
                         child: TextField(
@@ -146,7 +133,6 @@ class _OtpPageState extends State<OtpPage> {
                     ),
                   ),
                   const SizedBox(height: 20),
-                  // if (state is VerifyEmailLoading)
                   SizedBox(
                     height: 40,
                     width: 300,
@@ -156,7 +142,7 @@ class _OtpPageState extends State<OtpPage> {
                         for (var i = 0; i < 6; i++) {
                           finalOtp += _controllers[i].text;
                         }
-                        print(finalOtp);
+                        // print(finalOtp);
 
                         context.read<RegistrationBloc>().add(
                               VerifyEmailButtonPressed(

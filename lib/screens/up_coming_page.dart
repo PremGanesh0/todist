@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:table_calendar/table_calendar.dart';
 import 'package:intl/intl.dart';
+import 'package:table_calendar/table_calendar.dart';
 import 'package:todist/widgets/bottom_sheet.dart';
 
 class CalendarPage extends StatefulWidget {
   const CalendarPage({Key? key}) : super(key: key);
 
   @override
-  _CalendarPageState createState() => _CalendarPageState();
+  CalendarPageState createState() => CalendarPageState();
 }
 
-class _CalendarPageState extends State<CalendarPage> {
+class CalendarPageState extends State<CalendarPage> {
   late DateTime _focusedDay;
   late DateTime _selectedDay;
 
@@ -20,12 +20,6 @@ class _CalendarPageState extends State<CalendarPage> {
     _focusedDay = DateTime.now();
     _selectedDay = DateTime.now();
   }
-
-
-
-
-
-  
 
   @override
   Widget build(BuildContext context) {
@@ -61,7 +55,7 @@ class _CalendarPageState extends State<CalendarPage> {
                 itemCount: 7,
                 itemBuilder: (context, index) {
                   final currentDate = _focusedDay.add(Duration(days: index));
-                  final isToday = isSameDay(currentDate, DateTime.now());
+                  // final isToday = isSameDay(currentDate, DateTime.now());
 
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -79,7 +73,7 @@ class _CalendarPageState extends State<CalendarPage> {
                               context: context,
                               builder: (BuildContext context) {
                                 // isToday send this isToday to custombottom screen
-                                
+
                                 return const CustomBottomSheet();
                               },
                             );

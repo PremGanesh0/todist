@@ -20,7 +20,6 @@ class LocalStorage {
   }
 
   static Future<void> saveTokens(String accessToken) async {
-    print("saving accessing token $accessToken");
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(accessTokenKey, accessToken);
   }
@@ -38,15 +37,13 @@ class LocalStorage {
 
   static Future<Map<String, String>> getToken() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    print("reading the access token ${prefs.getString(accessTokenKey)}");
-    return {
+     return {
       'accessToken': prefs.getString(accessTokenKey) ?? '',
     };
   }
 
   static Future<void> clearUserData() async {
-    print("Clearing prefs.clear()");
-    SharedPreferences prefs = await SharedPreferences.getInstance();
+     SharedPreferences prefs = await SharedPreferences.getInstance();
     await prefs.clear();
   }
 }

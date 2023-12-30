@@ -55,13 +55,9 @@ class LoginPage extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Image.asset(
-                            height: 50,
-                            width: 50,
-                            'assert/Screenshot 2023-11-15 151801.png'),
+                            height: 50, width: 50, 'assert/Screenshot 2023-11-15 151801.png'),
                         Image.asset(
-                            height: 40,
-                            width: 100,
-                            'assert/Screenshot 2023-11-23 113906.png')
+                            height: 40, width: 100, 'assert/Screenshot 2023-11-23 113906.png')
                       ],
                     ),
                     const SizedBox(height: 20),
@@ -81,8 +77,7 @@ class LoginPage extends StatelessWidget {
                               Image.asset('assert/Google.png'),
                               const Text(
                                 'Login with Gmail',
-                                style: TextStyle(
-                                    fontSize: 14, fontWeight: FontWeight.w400),
+                                style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
                               )
                             ],
                           ),
@@ -101,14 +96,12 @@ class LoginPage extends StatelessWidget {
                     const SizedBox(height: 20),
                     const Text(
                       'Unlock Productivity with Task Pareto',
-                      style:
-                          TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
+                      style: TextStyle(fontSize: 25, fontWeight: FontWeight.w700),
                     ),
                     const SizedBox(height: 20),
                     const Text(
                       'Email',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     TextField(
                       controller: emailController,
@@ -120,8 +113,7 @@ class LoginPage extends StatelessWidget {
                     ),
                     const Text(
                       'Password',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                     TextField(
                       controller: passwordController,
@@ -136,15 +128,12 @@ class LoginPage extends StatelessWidget {
                       child: ElevatedButton(
                         onPressed: () {
                           if (emailController.text.isEmpty) {
-                            Fluttertoast.showToast(
-                                msg: "Please enter the Email");
+                            Fluttertoast.showToast(msg: "Please enter the Email");
                           } else if (passwordController.text.isEmpty) {
-                            Fluttertoast.showToast(
-                                msg: "Please enter the Passwod");
+                            Fluttertoast.showToast(msg: "Please enter the Passwod");
                           } else {
-                            context.read<LoginBloc>().add(LoginButtonPressed(
-                                email: emailController.text,
-                                password: passwordController.text));
+                            context.read<LoginBloc>().add(
+                                LoginButtonPressed(emailController.text, passwordController.text));
                           }
                         },
                         child: const Text('Login'),
@@ -158,9 +147,7 @@ class LoginPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>
-                                        const RegistrationPage()),
+                                MaterialPageRoute(builder: (context) => const RegistrationPage()),
                               );
                             },
                             child: const Text(
@@ -176,8 +163,7 @@ class LoginPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.pushReplacement(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) => ForgotPage()),
+                                MaterialPageRoute(builder: (context) => ForgotPage()),
                               );
                             },
                             child: const Text(

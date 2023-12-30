@@ -1,4 +1,6 @@
 import 'dart:convert';
+
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/utils.dart';
@@ -17,15 +19,9 @@ Future<void> deleteAccount({required String userId}) async {
 
     http.StreamedResponse response = await request.send();
 
-    print(response.statusCode);
-
     if (response.statusCode == 200) {
-  
-    } else {
-      print('Request failed with status: ${response.statusCode}');
-      print('Response body: ${await response.stream.bytesToString()}');
-    }
+    } else {}
   } catch (error) {
-    print(': $error');
+    debugPrint(error.toString());
   }
 }

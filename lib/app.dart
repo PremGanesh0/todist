@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
-import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/Bloc/task/database_provider.dart';
 import 'package:todist/Bloc/task/repo.dart';
 import 'package:todist/Bloc/task/task_bloc.dart';
-import 'package:todist/model/user_model.dart';
 import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/welcome_screen.dart';
 import 'package:todist/utils.dart';
@@ -14,7 +12,7 @@ import 'Bloc/login/login_bloc.dart';
 import 'Bloc/registration/registration_bloc.dart';
 
 class MyApp extends StatefulWidget {
-  MyApp({super.key});
+  const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
@@ -22,24 +20,6 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
-
-  bool isLoggedIn = false;
-
-  @override
-  void initState() {
-    super.initState();
-    checkLoginStatus();
-  }
-
-  checkLoginStatus() async {
-    User user = await LocalStorage.getUserData();
-    setState(() {
-      isLoggedIn = user.id.isNotEmpty;
-    });
-    print(
-        'user details ${user.email}   ${user.id} ${user.username}  ${user.profileImage}');
-    print('is logedin $isLoggedIn');
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,7 +53,21 @@ class _MyAppState extends State<MyApp> {
           title: 'Todo App',
           theme: lightTheme,
           darkTheme: darkTheme,
-          home: isLoggedIn ? const WelcomeScreen() : const HomeScreen(),
+          home: BlocBuilder<LoginBloc, LoginState>(
+            builder: (context, state) {
+              if (state is LoginInitial) {
+                context.read<LoginBloc>().add(CheckLoginEvent());
+              }
+              if (state is LoggedOutState) {
+                return const WelcomeScreen();
+              }
+              if (state is LoggedInState) {
+                return const HomeScreen();
+              } else {
+                return const WelcomeScreen();
+              }
+            },
+          ),
         ),
       ),
     );

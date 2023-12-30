@@ -1,14 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:intl/intl.dart';
-import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/Bloc/task/database_provider.dart';
 import 'package:todist/Bloc/task/repo.dart';
 import 'package:todist/Bloc/task/task_bloc.dart';
+import 'package:todist/Widgets/popup_button.dart';
 import 'package:todist/Widgets/task_card.dart';
-import 'package:todist/model/user_model.dart';
-import 'package:todist/screens/profile_screen.dart';
-import 'package:todist/screens/welcome_screen.dart';
 import 'package:todist/widgets/bottom_sheet.dart';
 
 class Todaypage extends StatelessWidget {
@@ -56,44 +53,7 @@ class _TodayPageState extends State<TodayPage> {
                   alignment: Alignment.centerRight,
                   child: IconButton(
                     onPressed: () {},
-                    icon: PopupMenuButton<String>(
-                      onSelected: (value) async {
-                        // Handle the selected option
-                        if (value == 'profile') {
-                          User userData = await LocalStorage.getUserData();
-
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => ProfileScreen(
-                                      user: userData,
-                                    )),
-                          );
-                        } else if (value == 'logout') {
-                          // Call this when the user logs out
-                          await LocalStorage.clearUserData();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                                builder: (context) => const WelcomeScreen()),
-                          );
-                        }
-                      },
-                      itemBuilder: (BuildContext context) => [
-                        const PopupMenuItem(
-                          value: 'profile',
-                          child: Text('Profile'),
-                        ),
-                        const PopupMenuItem(
-                          value: 'logout',
-                          child: Text('Logout'),
-                        ),
-                      ],
-                      icon: const Icon(
-                        Icons.menu,
-                        color: Colors.blue,
-                      ),
-                    ),
+                    icon: popupMenuButtonCustom(context),
                   ),
                 ),
               ),
@@ -115,8 +75,7 @@ class _TodayPageState extends State<TodayPage> {
                       alignment: Alignment.centerLeft,
                       child: Text(
                         ' $formattedDate',
-                        style:
-                            const TextStyle(fontSize: 18, color: Colors.grey),
+                        style: const TextStyle(fontSize: 18, color: Colors.grey),
                       ),
                     ),
                   ),
@@ -139,24 +98,20 @@ class _TodayPageState extends State<TodayPage> {
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
                             child: SizedBox(
-                              child: Row(
-                                  mainAxisSize: MainAxisSize.min,
-                                  children: [
-                                    Text(
-                                      '+',
-                                      style: TextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.w600,
-                                          color: Colors.blue),
-                                    ),
-                                    SizedBox(width: 10),
-                                    Text(
-                                      'Create Task',
-                                      style: TextStyle(
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.w400),
-                                    )
-                                  ]),
+                              child: Row(mainAxisSize: MainAxisSize.min, children: [
+                                Text(
+                                  '+',
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.w600,
+                                      color: Colors.blue),
+                                ),
+                                SizedBox(width: 10),
+                                Text(
+                                  'Create Task',
+                                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w400),
+                                )
+                              ]),
                             ),
                           ),
                         ),

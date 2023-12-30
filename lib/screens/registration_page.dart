@@ -2,10 +2,11 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:fluttertoast/fluttertoast.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:todist/Widgets/custom_tost.dart';
 import 'package:todist/screens/login_page.dart';
 import 'package:todist/screens/otp_page.dart';
+
 import '../Bloc/registration/registration_bloc.dart';
 
 class RegistrationPage extends StatelessWidget {
@@ -35,8 +36,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   final TextEditingController usernameController = TextEditingController();
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  final TextEditingController conformpasswordController =
-      TextEditingController();
+  final TextEditingController conformpasswordController = TextEditingController();
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final ImagePicker imagePicker = ImagePicker();
@@ -47,7 +47,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
     return confirmPassword == passwordController.text;
   }
 
-  var _image;
+  dynamic _image;
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<RegistrationBloc, RegistrationState>(
@@ -60,13 +60,12 @@ class _RegistrationFormState extends State<RegistrationForm> {
           );
           Navigator.push(
             context,
-            MaterialPageRoute(
-                builder: (context) => OtpPage(email: state.email)),
+            MaterialPageRoute(builder: (context) => OtpPage(email: state.email)),
           );
         } else if (state is RegistrationFailure) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Registration failed: ${state.error}'),
+              content: Text('Registration failed: ${state.email} \n ${state.error}'),
             ),
           );
         }
@@ -83,14 +82,8 @@ class _RegistrationFormState extends State<RegistrationForm> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Image.asset(
-                          height: 50,
-                          width: 50,
-                          'assert/Screenshot 2023-11-15 151801.png'),
-                      Image.asset(
-                          height: 40,
-                          width: 100,
-                          'assert/Screenshot 2023-11-23 113906.png')
+                      Image.asset(height: 50, width: 50, 'assert/Screenshot 2023-11-15 151801.png'),
+                      Image.asset(height: 40, width: 100, 'assert/Screenshot 2023-11-23 113906.png')
                     ],
                   ),
                   const Text(
@@ -162,11 +155,9 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         if (image != null) {
                           setState(() {
                             _image = File(image.path);
-                            print("image path $_image");
                           });
                         } else {
                           // Handle the case where the user canceled image selection.
-                          print('Image selection canceled');
                         }
                       },
                       child: CircleAvatar(
@@ -190,8 +181,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       Text(
                         'What should we call you?',
                         textAlign: TextAlign.start,
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -219,8 +209,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     children: [
                       Text(
                         'Email',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -236,12 +225,10 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     ),
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        print('email is empty');
                         return ('Please enter valied  email id');
                       }
                       // You can add more complex email validation logic here
-                      if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$')
-                          .hasMatch(value)) {
+                      if (!RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$').hasMatch(value)) {
                         return 'Please enter a valid email';
                       }
                       return null;
@@ -253,8 +240,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     children: [
                       Text(
                         'Password',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -268,9 +254,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(passwordObscureText
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                        icon: Icon(passwordObscureText ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
                             passwordObscureText = !passwordObscureText;
@@ -292,8 +276,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                     children: [
                       Text(
                         'Confirm Password',
-                        style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.w700),
+                        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                       ),
                     ],
                   ),
@@ -307,13 +290,11 @@ class _RegistrationFormState extends State<RegistrationForm> {
                         borderRadius: BorderRadius.circular(5),
                       ),
                       suffixIcon: IconButton(
-                        icon: Icon(conformPasswordObscureText
-                            ? Icons.visibility
-                            : Icons.visibility_off),
+                        icon: Icon(
+                            conformPasswordObscureText ? Icons.visibility : Icons.visibility_off),
                         onPressed: () {
                           setState(() {
-                            conformPasswordObscureText =
-                                !conformPasswordObscureText;
+                            conformPasswordObscureText = !conformPasswordObscureText;
                           });
                         },
                       ),
@@ -322,19 +303,15 @@ class _RegistrationFormState extends State<RegistrationForm> {
                       if (value == null || value.isEmpty) {
                         return 'Please enter a password';
                       }
-
                       if (!_isPasswordMatch(value)) {
                         return 'Passwords do not match';
                       }
-
                       return null;
                     },
                   ),
                   const SizedBox(height: 16),
                   BlocConsumer<RegistrationBloc, RegistrationState>(
-                    listener: (context, state) {
-                      // Handle success or failure states if needed
-                    },
+                    listener: (context, state) {},
                     builder: (context, state) {
                       if (state is RegistrationLoading) {
                         // Show loading indicator
@@ -345,8 +322,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                           onPressed: () {
                             if (_formKey.currentState!.validate()) {
                               if (_image == null) {
-                                Fluttertoast.showToast(
-                                    msg: 'Please Select the Profile');
+                                showToast(context, 'Please Select the Profile');
                               } else {
                                 context.read<RegistrationBloc>().add(
                                       RegistrationButtonPressed(
@@ -372,8 +348,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
                           onPressed: () {
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(
-                                  builder: (context) => const LoginPage()),
+                              MaterialPageRoute(builder: (context) => const LoginPage()),
                             );
                           },
                           child: const Text(

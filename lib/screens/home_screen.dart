@@ -32,33 +32,29 @@ class _HomeScreenState extends State<HomeScreen> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.today_outlined,
-                color: _currentIndex == 0
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.secondary),
+                color:
+                    _currentIndex == 0 ? theme.colorScheme.primary : theme.colorScheme.secondary),
             label: 'Today',
             backgroundColor: backgroundColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.inbox_outlined,
-                color: _currentIndex == 1
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.secondary),
+                color:
+                    _currentIndex == 1 ? theme.colorScheme.primary : theme.colorScheme.secondary),
             label: 'Inbox',
             backgroundColor: backgroundColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.search_outlined,
-                color: _currentIndex == 2
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.secondary),
+                color:
+                    _currentIndex == 2 ? theme.colorScheme.primary : theme.colorScheme.secondary),
             label: 'Search',
             backgroundColor: backgroundColor,
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.browser_updated_outlined,
-                color: _currentIndex == 3
-                    ? theme.colorScheme.primary
-                    : theme.colorScheme.secondary),
+                color:
+                    _currentIndex == 3 ? theme.colorScheme.primary : theme.colorScheme.secondary),
             label: 'Browse',
             backgroundColor: backgroundColor,
           ),

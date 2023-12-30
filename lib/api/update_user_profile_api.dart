@@ -29,17 +29,17 @@ Future<void> updateUserProfile({
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       Fluttertoast.showToast(
         msg: response.body,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
       );
-    } else {
-      print('Request failed: ${response.reasonPhrase}');
-    }
+    } else {}
   } catch (error) {
-    print('Error during updateUserProfile request: $error');
+    Fluttertoast.showToast(
+      msg: error.toString(),
+      toastLength: Toast.LENGTH_SHORT,
+      gravity: ToastGravity.TOP,
+    );
   }
 }
-

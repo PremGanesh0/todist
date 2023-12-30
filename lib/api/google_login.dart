@@ -1,7 +1,6 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:todist/Bloc/registration/registration_bloc.dart';
-
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:todist/Bloc/registration/registration_bloc.dart';
 
 // Future<void> googleSignIn(
 //   GoogleSignInButtonPressed event,
@@ -74,30 +73,29 @@ Future<void> googleSignIn(
   Emitter<RegistrationState> emit,
 ) async {
   try {
-    GoogleSignIn googleSignIn = GoogleSignIn();
+    // GoogleSignIn googleSignIn = GoogleSignIn();
     GoogleSignInAccount? googleSignInAccount = await _googleSignIn.signIn();
 
     if (googleSignInAccount != null) {
       // Successfully signed in
-      print('Signed in: ${googleSignInAccount.displayName}');
+      // print('Signed in: ${googleSignInAccount.displayName}');
 
       // Get the authentication details
-      GoogleSignInAuthentication googleSignInAuthentication =
-          await googleSignInAccount.authentication;
+      // GoogleSignInAuthentication googleSignInAuthentication =
+      //     await googleSignInAccount.authentication;
 
       // Retrieve the Google Access Token
-      String? accessToken = googleSignInAuthentication.accessToken;
-      print('Access Token: $accessToken');
+      // String? accessToken = googleSignInAuthentication.accessToken;
+      // print('Access Token: $accessToken');
 
       // Now you can send the accessToken to your backend
-      // TODO: Send the accessToken to your backend API
+      //  Send the accessToken to your backend API
     } else {
       // Handle the case where the user canceled the sign-in process
-      print('Sign-in canceled');
+      // print('Sign-in canceled');
     }
 
-    emit(
-        RegistrationLoading(username: '', email: '')); // Update state as needed
+    emit(const RegistrationLoading(username: '', email: '')); // Update state as needed
 
     // Perform Google Sign-In and update state accordingly
   } catch (error) {
