@@ -174,8 +174,9 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       child: buildCard(
                           'Priority', Icons.flag_outlined, Colors.green),
                     ),
-                    buildCard(
-                        'Reminder', Icons.alarm_on_outlined, Colors.orange),
+                    // buildCard(
+                    //     'Reminder', Icons.alarm_on_outlined, Colors.orange),
+                    const Spacer(),
                     IconButton(
                       onPressed: () async {
                         if (widget.task != null) {
@@ -209,10 +210,21 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         title.clear();
                         description.clear();
                       },
-                      icon: const Icon(Icons.save),
+                      icon: const Icon(Icons.send, color: Colors.blue),
                     )
                   ],
                 ),
+                const Divider(color: Colors.grey),
+                const Padding(
+                  padding: EdgeInsets.all(8.0),
+                  child: Row(
+                    children: [
+                      Icon(Icons.inbox),
+                      Text('inbox'),
+                      Icon(Icons.expand_more)
+                    ],
+                  ),
+                )
               ],
             ),
           ),

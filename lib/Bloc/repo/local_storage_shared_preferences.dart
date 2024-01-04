@@ -11,18 +11,10 @@ class LocalStorage {
 
   static Future<void> saveUserData(User userData) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
-
-    // Save user data locally
     prefs.setString(userIdKey, userData.id);
     prefs.setString(usernameKey, userData.username);
     prefs.setString(emailKey, userData.email);
     prefs.setString(profileImageKey, userData.profileImage);
-    // Add more fields as needed
-  }
-
-  static Future<void> saveAccessTokens(String accessToken) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setString(accessTokenKey, accessToken);
   }
 
   static Future<User> getUserData() async {
@@ -32,8 +24,12 @@ class LocalStorage {
       username: prefs.getString(usernameKey) ?? '',
       email: prefs.getString(emailKey) ?? '',
       profileImage: prefs.getString(profileImageKey) ?? '',
-      // Add more fields as needed
     );
+  }
+
+  static Future<void> saveAccessTokens(String accessToken) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setString(accessTokenKey, accessToken);
   }
 
   static Future<Map<String, String>> getAccessToken() async {
@@ -43,13 +39,20 @@ class LocalStorage {
     };
   }
 
-  static Future<void> clearUserData() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    await prefs.clear();
-  }
-
   static Future<void> saveRefreshToken(String refreshToken) async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
     prefs.setString(refreshTokenKey, refreshToken);
+  }
+
+  static Future<Map<String, String>> getRefreshToken() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    return {
+      refreshTokenKey: prefs.getString(refreshTokenKey) ?? '',
+    };
+  }
+
+  static Future<void> clearUserData() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.clear();
   }
 }

@@ -8,7 +8,8 @@ import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/model/user_model.dart';
 import 'package:todist/utils.dart';
 
-Future<void> registerApi(RegistrationButtonPressed event, Emitter<RegistrationState> emit) async {
+Future<void> registerApi(
+    RegistrationButtonPressed event, Emitter<RegistrationState> emit) async {
   emit(RegistrationLoading(username: event.username, email: event.email));
   String apiUrl = '$baseUrl/register';
 
@@ -21,7 +22,8 @@ Future<void> registerApi(RegistrationButtonPressed event, Emitter<RegistrationSt
       'type': '1',
     });
     if (event.profileImagePath.isNotEmpty) {
-      request.files.add(await http.MultipartFile.fromPath('profileImage', event.profileImagePath));
+      request.files.add(await http.MultipartFile.fromPath(
+          'profileImage', event.profileImagePath));
     }
     http.StreamedResponse response = await request.send();
     var data = await response.stream.bytesToString();
@@ -34,14 +36,23 @@ Future<void> registerApi(RegistrationButtonPressed event, Emitter<RegistrationSt
       emit(VerifyEmail(username: event.username, email: event.email));
     } else if (response.statusCode == 400) {
       emit(RegistrationFailure(
-          email: event.email, username: event.username, error: decodedData['message']));
+          email: event.email,
+          username: event.username,
+          error: decodedData['message']));
+    } else if (response.statusCode == 500) {
+      emit(RegistrationFailure(
+          email: event.email,
+          username: event.username,
+          error: 'Internal Sever Error 500'));
     } else {
       emit(RegistrationFailure(
-          email: event.email, username: event.username, error: decodedData['message']));
+          email: event.email,
+          username: event.username,
+          error: decodedData['message']));
     }
   } catch (error) {
-    emit(
-        RegistrationFailure(error: error.toString(), username: event.username, email: event.email));
+    emit(RegistrationFailure(
+        error: error.toString(), username: event.username, email: event.email));
   }
 }
 

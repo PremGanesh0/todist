@@ -1,4 +1,5 @@
 import 'package:todist/Bloc/task/database_provider.dart';
+import 'package:todist/api/create_task_api.dart';
 import 'package:todist/model/task_model.dart';
 
 class TaskRepository {
@@ -30,6 +31,8 @@ class TaskRepository {
 
   Future<void> createTask(Task task) async {
     final db = await _databaseProvider.database;
+
+    createTaskApi(task: task);
     await db.insert('tasks', task.toMap());
   }
 

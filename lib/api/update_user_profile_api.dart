@@ -31,7 +31,6 @@ Future<void> updateUserProfile({
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
 
       Fluttertoast.showToast(
         msg: response.body,

@@ -76,7 +76,7 @@ class CalendarPageState extends State<CalendarPage> {
 
                                 return const CustomBottomSheet();
                               },
-                            );
+                            ) ;
                           },
                           child: const Text('Add task'),
                         ),

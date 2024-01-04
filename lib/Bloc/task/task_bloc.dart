@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todist/Bloc/task/repo.dart';
+import 'package:todist/api/create_task_api.dart';
 import 'package:todist/model/task_model.dart';
 
 part 'task_event.dart';
@@ -10,7 +12,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
   final TaskRepository _taskRepository;
 
   TaskBloc(this._taskRepository) : super(TaskInitialState()) {
-    on<ReadTasksEvent>((event, emit) async { 
+    on<ReadTasksEvent>((event, emit) async {
       emit(TaskLoadingState());
       try {
         final tasks = await _taskRepository.fetchTasks();
@@ -24,6 +26,14 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       try {
         await _taskRepository.createTask(event.task);
         List<Task> listtask = await _taskRepository.fetchTasks();
+        print('----------------------------------');
+        print("inside bloc create task");
+        print('tital :- ${event.task.title}');
+        print('description :- ${event.task.description}');
+        print('priority :- ${event.task.priority}');
+        print('remember :- ${event.task.remember}');
+        print('Date :- ${event.task.date}');
+        print('----------------------------------');
         Fluttertoast.showToast(
             msg: "This is Top Short Toast",
             toastLength: Toast.LENGTH_SHORT,
@@ -61,7 +71,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       }
     });
 
-  on<CompleteTaskEvent>((event, emit) async {
+    on<CompleteTaskEvent>((event, emit) async {
       try {
         await _taskRepository.completeTask(event.taskId);
         List<Task> listtask = await _taskRepository.fetchTasks();
@@ -75,7 +85,5 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskErrorState('Failed to delete task'));
       }
     });
-
-
   }
 }
