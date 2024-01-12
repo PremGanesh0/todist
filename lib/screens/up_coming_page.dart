@@ -34,7 +34,7 @@ class CalendarPageState extends State<CalendarPage> {
             TableCalendar(
               focusedDay: _focusedDay,
               firstDay: DateTime.now(),
-              lastDay: DateTime(2023, 12, 31),
+              lastDay: DateTime(2024, 12, 31),
               calendarFormat: CalendarFormat.week,
               selectedDayPredicate: (day) {
                 return isSameDay(_selectedDay, day);
@@ -76,7 +76,7 @@ class CalendarPageState extends State<CalendarPage> {
 
                                 return const CustomBottomSheet();
                               },
-                            ) ;
+                            );
                           },
                           child: const Text('Add task'),
                         ),

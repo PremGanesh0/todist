@@ -21,18 +21,18 @@ class DatabaseProvider {
 
   Future<void> _createDatabase(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE tasks(
-        id INTEGER PRIMARY KEY,
-        title TEXT,
-        description TEXT,
-        date INTEGER,
-        priority TEXT,
-        label TEXT,
-        remember INTEGER,
-        completed INTEGER
-
-      )
-    ''');
+    CREATE TABLE tasks (
+      id INTEGER PRIMARY KEY,
+      serverid TEXT,
+      title TEXT,
+      description TEXT,
+      date INTEGER,
+      priority TEXT,
+      label TEXT,
+      remember INTEGER,
+      completed INTEGER
+    )
+''');
   }
 
   Future<void> insertTask(Task task) async {

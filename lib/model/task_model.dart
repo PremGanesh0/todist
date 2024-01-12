@@ -1,5 +1,6 @@
 class Task {
   late final int? id;
+  late final String? serverid;
   final String title;
   final String description;
   final DateTime date;
@@ -21,13 +22,14 @@ class Task {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
+      'serverid': serverid,
       'title': title,
       'description': description,
-      'date': date.millisecondsSinceEpoch, 
+      'date': date.millisecondsSinceEpoch,
       'priority': priority,
       'label': label,
       'remember': remember ? 1 : 0,
-       'completed': completed ? 1 : 0,
+      'completed': completed ? 1 : 0,
     };
   }
 }

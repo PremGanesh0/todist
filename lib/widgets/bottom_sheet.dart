@@ -17,6 +17,20 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   TextEditingController description = TextEditingController();
   DateTime selectedDate = DateTime.now();
   bool updatecheck = false;
+  String priority = 'priority 1';
+  Color flagColor = Colors.red;
+
+  Flagcolor(String priority) {
+    if (priority == 'priority 1') {
+      return Colors.red;
+    } else if (priority == 'priority 2') {
+      return Colors.yellow;
+    } else if (priority == 'priority 3') {
+      return Colors.blue;
+    } else {
+      return Colors.black;
+    }
+  }
 
   @override
   void initState() {
@@ -25,6 +39,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       title.text = widget.task!.title;
       description.text = widget.task!.description;
       selectedDate = widget.task!.date;
+      priority = widget.task!.priority;
+      flagColor = Flagcolor(widget.task!.priority);
     } else {
       updatecheck = true;
     }
@@ -89,139 +105,232 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                 ),
                 Row(
                   children: [
-                    GestureDetector(
-                      onTap: () {
-                        _selectDate(context);
-                      },
-                      child: updatecheck == false
-                          ? buildCard(
-                              ' ${widget.task!.date.day}/${widget.task!.date.month}/${widget.task!.date.year}',
-                              Icons.today_outlined,
-                              Colors.blue, // Pass the desired color
-                            )
-                          : buildCard('Today', Icons.today, Colors.blue),
+                    Padding(
+                      padding: const EdgeInsets.only(
+                        left: 8,
+                      ),
+                      child: GestureDetector(
+                        onTap: () {
+                          _selectDate(context);
+                        },
+                        child: updatecheck == false
+                            ? buildCard(
+                                ' ${widget.task!.date.day}/${widget.task!.date.month}/${widget.task!.date.year}',
+                                Icons.today_outlined,
+                                Colors.blue, // Pass the desired color
+                              )
+                            : buildCard('Today', Icons.today, Colors.blue),
+                      ),
                     ),
-                    GestureDetector(
-                      onTap: () {
-                        final RenderBox overlay = Overlay.of(context)
-                            .context
-                            .findRenderObject() as RenderBox;
-                        final RelativeRect position = RelativeRect.fromRect(
-                          Rect.fromPoints(
-                            overlay.localToGlobal(
-                              overlay.size.bottomRight(Offset.zero),
-                              ancestor: overlay,
-                            ),
-                            overlay.localToGlobal(
-                                    overlay.size.bottomRight(Offset.zero),
-                                    ancestor: overlay) +
-                                const Offset(200.0, 0.0),
+                    SizedBox(width: 10),
+                    Card(
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: GestureDetector(
+                          onTap: () {
+                            final RenderBox overlay = Overlay.of(context)
+                                .context
+                                .findRenderObject() as RenderBox;
+                            final RelativeRect position = RelativeRect.fromRect(
+                              Rect.fromPoints(
+                                overlay.localToGlobal(
+                                  overlay.size.bottomRight(Offset.zero),
+                                  ancestor: overlay,
+                                ),
+                                overlay.localToGlobal(
+                                        overlay.size.bottomRight(Offset.zero),
+                                        ancestor: overlay) +
+                                    const Offset(200.0, 0.0),
+                              ),
+                              Offset.zero & overlay.size,
+                            );
+                            showMenu(
+                              context: context,
+                              position: position,
+                              items: <PopupMenuEntry<int>>[
+                                const PopupMenuItem<int>(
+                                  value: 0,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.flag, color: Colors.red),
+                                      Text('Priority 1'),
+                                    ],
+                                  ),
+                                ),
+                                const PopupMenuItem<int>(
+                                  value: 1,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.flag, color: Colors.yellow),
+                                      Text('Priority 2'),
+                                    ],
+                                  ),
+                                ),
+                                const PopupMenuItem<int>(
+                                  value: 2,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.flag, color: Colors.blue),
+                                      Text('Priority 3'),
+                                    ],
+                                  ),
+                                ),
+                                const PopupMenuItem<int>(
+                                  value: 3,
+                                  child: Row(
+                                    children: [
+                                      Icon(Icons.flag),
+                                      Text('Priority 4'),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                              elevation: 8.0,
+                            ).then((value) {
+                              if (value != null) {
+                                if (value == 0) {
+                                  setState(() {
+                                    priority = 'priority 1';
+                                    flagColor = Colors.red;
+                                  });
+                                } else if (value == 1) {
+                                  setState(() {
+                                    priority = 'priority 2';
+                                    flagColor = Colors.yellow;
+                                  });
+                                } else if (value == 2) {
+                                  setState(() {
+                                    priority = 'priority 3';
+                                    flagColor = Colors.blue;
+                                  });
+                                } else {
+                                  setState(() {
+                                    priority = 'priority 4';
+                                    flagColor = Colors.black;
+                                  });
+                                }
+                              }
+                            });
+                          },
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.flag,
+                                color: flagColor,
+                              ),
+                              Text(priority),
+                            ],
                           ),
-                          Offset.zero & overlay.size,
-                        );
-                        showMenu(
-                          context: context,
-                          position: position,
-                          items: <PopupMenuEntry<int>>[
-                            const PopupMenuItem<int>(
-                              value: 0,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.flag, color: Colors.red),
-                                  Text('Priority 1'),
-                                ],
-                              ),
-                            ),
-                            const PopupMenuItem<int>(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.flag, color: Colors.yellow),
-                                  Text('Priority 2'),
-                                ],
-                              ),
-                            ),
-                            const PopupMenuItem<int>(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.flag, color: Colors.blue),
-                                  Text('Priority 3'),
-                                ],
-                              ),
-                            ),
-                            const PopupMenuItem<int>(
-                              value: 1,
-                              child: Row(
-                                children: [
-                                  Icon(Icons.flag),
-                                  Text('Priority 4'),
-                                ],
-                              ),
-                            ),
-                          ],
-                          elevation: 8.0,
-                        ).then((value) {
-                          if (value != null) {
-                            if (value == 0) {
-                              // Handle Priority 1
-                            } else if (value == 1) {
-                              // Handle Priority 2
-                            }
-                          }
-                        });
-                      },
-                      child: buildCard(
-                          'Priority', Icons.flag_outlined, Colors.green),
+                        ),
+                      ),
                     ),
                     // buildCard(
                     //     'Reminder', Icons.alarm_on_outlined, Colors.orange),
                     const Spacer(),
-                    IconButton(
-                      onPressed: () async {
-                        if (widget.task != null) {
-                          Task updatetask = Task(
-                            id: widget.task!.id,
-                            title: title.text,
-                            description: description.text,
-                            date: selectedDate,
-                            priority: 'High',
-                            label: 'Work',
-                            remember: true,
-                            completed: false,
-                          );
-                          BlocProvider.of<TaskBloc>(context)
-                              .add(UpdateTaskEvent(updatetask));
-                        } else {
-                          Task createtask = Task(
-                            title: title.text,
-                            description: description.text,
-                            date: selectedDate,
-                            priority: 'High',
-                            label: 'Work',
-                            remember: true,
-                            completed: false,
-                          );
-                          BlocProvider.of<TaskBloc>(context)
-                              .add(CreateTaskEvent(createtask));
-                        }
+                    // IconButton(
+                    //   onPressed: () async {
+                    //     if (widget.task != null) {
+                    //       Task updatetask = Task(
+                    //         id: widget.task!.id,
+                    //         title: title.text,
+                    //         description: description.text,
+                    //         date: selectedDate,
+                    //         priority: priority,
+                    //         label: 'Work',
+                    //         remember: true,
+                    //         completed: false,
+                    //       );
+                    //       BlocProvider.of<TaskBloc>(context)
+                    //           .add(UpdateTaskEvent(updatetask));
+                    //     } else {
+                    //       Task createtask = Task(
+                    //         title: title.text,
+                    //         description: description.text,
+                    //         date: selectedDate,
+                    //         priority: priority,
+                    //         label: 'Work',
+                    //         remember: true,
+                    //         completed: false,
+                    //       );
+                    //       BlocProvider.of<TaskBloc>(context)
+                    //           .add(CreateTaskEvent(createtask));
+                    //     }
 
-                        Navigator.pop(context);
-                        title.clear();
-                        description.clear();
-                      },
-                      icon: const Icon(Icons.send, color: Colors.blue),
-                    )
+                    //     Navigator.pop(context);
+                    //     title.clear();
+                    //     description.clear();
+                    //   },
+                    //   icon: const Icon(Icons.send, color: Colors.blue),
+                    // )
                   ],
                 ),
                 const Divider(color: Colors.grey),
-                const Padding(
+                Padding(
                   padding: EdgeInsets.all(8.0),
                   child: Row(
                     children: [
-                      Icon(Icons.inbox),
-                      Text('inbox'),
-                      Icon(Icons.expand_more)
+                      const Padding(
+                        padding: EdgeInsets.all(8.0),
+                        child: Row(
+                          children: [
+                            Icon(Icons.inbox),
+                            Text('inbox'),
+                            Icon(Icons.expand_more)
+                          ],
+                        ),
+                      ),
+                      const Spacer(),
+                      ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                            title.clear();
+                            description.clear();
+                          },
+                          child: Text('Cancle')),
+                      ElevatedButton(
+                          style: ButtonStyle(
+                            backgroundColor:
+                                MaterialStateProperty.all<Color>(Colors.blue),
+                            foregroundColor:
+                                MaterialStateProperty.all<Color>(Colors.white),
+                          ),
+                          onPressed: () async {
+                            if (widget.task != null) {
+                              Task updatetask = Task(
+                                id: widget.task!.id,
+                                title: title.text,
+                                description: description.text,
+                                date: selectedDate,
+                                priority: priority,
+                                label: 'Work',
+                                remember: true,
+                                completed: false,
+                              );
+                              print("modify task button pressed");
+                              print(updatetask.title);
+                              BlocProvider.of<TaskBloc>(context)
+                                  .add(UpdateTaskEvent(updatetask));
+                            } else {
+                              Task createtask = Task(
+                                title: title.text,
+                                description: description.text,
+                                date: selectedDate,
+                                priority: priority,
+                                label: 'Work',
+                                remember: true,
+                                completed: false,
+                              );
+
+                              BlocProvider.of<TaskBloc>(context)
+                                  .add(CreateTaskEvent(createtask));
+                            }
+                            Navigator.pop(context);
+                            title.clear();
+                            description.clear();
+                          },
+                          child: title.text.isEmpty
+                              ? Text('Add Task')
+                              : Text('Modify Task'))
                     ],
                   ),
                 )

@@ -26,19 +26,6 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       try {
         await _taskRepository.createTask(event.task);
         List<Task> listtask = await _taskRepository.fetchTasks();
-        print('----------------------------------');
-        print("inside bloc create task");
-        print('tital :- ${event.task.title}');
-        print('description :- ${event.task.description}');
-        print('priority :- ${event.task.priority}');
-        print('remember :- ${event.task.remember}');
-        print('Date :- ${event.task.date}');
-        print('----------------------------------');
-        Fluttertoast.showToast(
-            msg: "This is Top Short Toast",
-            toastLength: Toast.LENGTH_SHORT,
-            gravity: ToastGravity.TOP,
-            timeInSecForIosWeb: 1);
 
         emit(TaskSuccessState(listtask));
       } catch (e) {
@@ -48,6 +35,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<UpdateTaskEvent>(((event, emit) async {
       try {
+        print(event.task.title);
         await _taskRepository.updateTask(event.task);
         List<Task> listtask = await _taskRepository.fetchTasks();
         emit(TaskSuccessState(listtask));

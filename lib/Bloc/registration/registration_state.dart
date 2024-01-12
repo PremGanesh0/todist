@@ -49,10 +49,14 @@ class RegistrationFailure extends RegistrationState {
 
 class VerifyEmailFailed extends RegistrationState {
   final String error;
-  const VerifyEmailFailed({required this.error}) : super(username: '', email: '');
+  const VerifyEmailFailed({required this.error})
+      : super(username: '', email: '');
 }
 
 class VerifyEmailLoading extends RegistrationState {
   const VerifyEmailLoading({required super.username, required super.email});
 }
 
+class VerifyEmailSucessfull extends RegistrationState {
+  const VerifyEmailSucessfull({required super.username, required super.email});
+}

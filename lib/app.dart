@@ -5,6 +5,7 @@ import 'package:todist/Bloc/task/database_provider.dart';
 import 'package:todist/Bloc/task/repo.dart';
 import 'package:todist/Bloc/task/task_bloc.dart';
 import 'package:todist/screens/home_screen.dart';
+import 'package:todist/screens/otp_page.dart';
 import 'package:todist/screens/welcome_screen.dart';
 import 'package:todist/utils.dart';
 
@@ -55,6 +56,9 @@ class _MyAppState extends State<MyApp> {
           darkTheme: darkTheme,
           home: BlocBuilder<LoginBloc, LoginState>(
             builder: (context, state) {
+              if (state is VerifyEmail) {
+                return const OtpPage(email: '');
+              }
               if (state is LoginInitial) {
                 context.read<LoginBloc>().add(CheckLoginEvent());
               }
