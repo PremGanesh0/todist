@@ -37,6 +37,15 @@ class DatabaseProvider {
 
   Future<void> insertTask(Task task) async {
     final db = await database;
+    print('----------------Inserting task------------------');
+    print("inside bloc create task");
+    print("Task created with ID: ${task.serverid}");
+    print('tital :- ${task.title}');
+    print('description :- ${task.description}');
+    print('priority :- ${task.priority}');
+    print('remember :- ${task.remember}');
+    print('Date :- ${task.date}');
+    print('----------------------------------');
     await db.insert(
       'tasks',
       task.toMap(),

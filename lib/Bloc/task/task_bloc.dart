@@ -35,7 +35,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<UpdateTaskEvent>(((event, emit) async {
       try {
-        print(event.task.title);
+        // print(event.task.title);
+        // print('severid:-${event.task.serverid}');
         await _taskRepository.updateTask(event.task);
         List<Task> listtask = await _taskRepository.fetchTasks();
         emit(TaskSuccessState(listtask));
@@ -46,7 +47,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<DeleteTaskEvent>((event, emit) async {
       try {
-        await _taskRepository.deleteTask(event.taskId);
+        await _taskRepository.deleteTask(event.task);
         List<Task> listtask = await _taskRepository.fetchTasks();
         Fluttertoast.showToast(
           msg: "Task deleted ",

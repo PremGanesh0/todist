@@ -61,6 +61,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
     }
   }
 
+// Add a variable to track the button text
+  String getButtonText() {
+    return widget.task != null ? 'Modify Task' : 'Add Task';
+  }
+
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
@@ -288,49 +293,51 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           },
                           child: Text('Cancle')),
                       ElevatedButton(
-                          style: ButtonStyle(
-                            backgroundColor:
-                                MaterialStateProperty.all<Color>(Colors.blue),
-                            foregroundColor:
-                                MaterialStateProperty.all<Color>(Colors.white),
-                          ),
-                          onPressed: () async {
-                            if (widget.task != null) {
-                              Task updatetask = Task(
-                                id: widget.task!.id,
-                                title: title.text,
-                                description: description.text,
-                                date: selectedDate,
-                                priority: priority,
-                                label: 'Work',
-                                remember: true,
-                                completed: false,
-                              );
-                              print("modify task button pressed");
-                              print(updatetask.title);
-                              BlocProvider.of<TaskBloc>(context)
-                                  .add(UpdateTaskEvent(updatetask));
-                            } else {
-                              Task createtask = Task(
-                                title: title.text,
-                                description: description.text,
-                                date: selectedDate,
-                                priority: priority,
-                                label: 'Work',
-                                remember: true,
-                                completed: false,
-                              );
+                        style: ButtonStyle(
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
+                        ),
+                        onPressed: () async {
+                          if (widget.task != null) {
+                            Task updatetask = Task(
+                              id: widget.task!.id,
+                              serverid: widget.task!.serverid,
+                              title: title.text,
+                              description: description.text,
+                              date: selectedDate,
+                              priority: priority,
+                              label: 'Work',
+                              remember: true,
+                              completed: false,
+                            );
+                            print("modify task button pressed");
+                            print(updatetask.title);
+                            BlocProvider.of<TaskBloc>(context)
+                                .add(UpdateTaskEvent(updatetask));
+                          } else {
+                            Task createtask = Task(
+                              title: title.text,
+                              description: description.text,
+                              date: selectedDate,
+                              priority: priority,
+                              label: 'Work',
+                              remember: true,
+                              completed: false,
+                            );
 
-                              BlocProvider.of<TaskBloc>(context)
-                                  .add(CreateTaskEvent(createtask));
-                            }
-                            Navigator.pop(context);
-                            title.clear();
-                            description.clear();
-                          },
-                          child: title.text.isEmpty
-                              ? Text('Add Task')
-                              : Text('Modify Task'))
+                            BlocProvider.of<TaskBloc>(context)
+                                .add(CreateTaskEvent(createtask));
+                          }
+                          Navigator.pop(context);
+                          title.clear();
+                          description.clear();
+                        },
+                        child: title.text.isEmpty
+                            ? const Text('Add Task')
+                            : Text(getButtonText()),
+                      )
                     ],
                   ),
                 )
