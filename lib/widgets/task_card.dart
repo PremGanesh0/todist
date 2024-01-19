@@ -66,7 +66,7 @@ class TaskCard extends StatelessWidget {
         },
         onDismissed: (direction) {
           if (direction == DismissDirection.startToEnd) {
-            BlocProvider.of<TaskBloc>(context).add(CompleteTaskEvent(task.id!));
+            BlocProvider.of<TaskBloc>(context).add(CompleteTaskEvent(task));
           } else if (direction == DismissDirection.endToStart) {
             BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task));
           }

@@ -36,14 +36,19 @@ class Task {
   }
 
   factory Task.fromJson(Map<String, dynamic> json) {
+    String dateString = json['date'];
+    DateTime dateTime = DateTime.parse(dateString);
+    print(dateTime);
+    print(dateTime.runtimeType);
+    print('date ${dateTime} runtime typw ${dateTime.runtimeType}');
     return Task(
       id: json['id'],
       serverid: json['serverid'],
       title: json['title'],
       description: json['description'],
-      date: DateTime.fromMillisecondsSinceEpoch(json['date']),
+      date: dateTime,
       priority: json['priority'],
-      label: json['label'],
+      label: json['labels'][0],
       remember: json['remember'] == 1,
       completed: json['completed'] == 1,
     );

@@ -25,8 +25,7 @@ Future<ApiResponse> createTaskApi({required Task task}) async {
   var accessToken = await LocalStorage.getAccessToken();
 
   try {
-    print(
-        "date checking in ${DateFormat('yyyy-MM-dd').format(task.date).toString()}");
+
     var headers = {
       'Authorization': accessToken['accessToken'].toString(),
       'Content-Type': 'application/json',
@@ -46,7 +45,7 @@ Future<ApiResponse> createTaskApi({required Task task}) async {
     request.headers.addAll(headers);
 
     http.StreamedResponse response = await request.send();
-    print('status code ${response.statusCode}');
+    // print('status code ${response.statusCode}');
 
     if (response.statusCode == 201) {
       var data = await response.stream.bytesToString();
@@ -62,7 +61,7 @@ Future<ApiResponse> createTaskApi({required Task task}) async {
     } else {
       return ApiResponse(
         message: response.reasonPhrase ?? 'Failed to create task',
-        status: response.statusCode ?? 500,
+        status: response.statusCode,
         data: null,
       );
     }

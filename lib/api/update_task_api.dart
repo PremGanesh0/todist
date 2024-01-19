@@ -9,7 +9,7 @@ Future<void> updateTaskApi({required Task task}) async {
 
   try {
     var accessToken = await LocalStorage.getAccessToken();
-    print(accessToken);
+    // print(accessToken);
     String apiUrl =
         'https://dev.taskpareto.com/api/task/updateTask/${task.serverid}';
 
@@ -17,7 +17,7 @@ Future<void> updateTaskApi({required Task task}) async {
       'Authorization': accessToken['accessToken'].toString(),
       'Content-Type': 'application/json',
     };
-
+    
     var body = {
       "title": task.title,
       "description": task.description,
@@ -35,15 +35,15 @@ Future<void> updateTaskApi({required Task task}) async {
       body: json.encode(body),
     );
 
-    print(response.statusCode);
+    // print(response.statusCode);
     if (response.statusCode == 200) {
       var data = await response.body;
       print(data);
-      print('.................Task updated................');
+      // print('.................Task updated................');
     } else {
-      print('jagan:-${response.statusCode}');
+      // print('jagan:-${response.statusCode}');
     }
   } catch (error) {
-    print('Error during task update: $error');
+    // print('Error during task update: $error');
   }
 }

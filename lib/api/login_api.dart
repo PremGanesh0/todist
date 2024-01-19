@@ -25,9 +25,9 @@ Future<void> loginApi(
       User userdata = User.fromJson(data['data']['user']);
       getUserDetails(userId: userdata.id);
       saveUserData(userdata);
-      print('------------------login Api------------');
-      print('access token ${data['data']['accessToken']}');
-      print('------------------login Api------------');
+      // print('------------------login Api------------');
+      // print('access token ${data['data']['accessToken']}');
+      // print('------------------login Api------------');
       saveAccessToken(data['data']['accessToken']);
       saveRefreshToken(data['data']['refreshToken']);
       emit(LoginSuccess(user: userdata));

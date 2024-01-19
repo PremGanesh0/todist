@@ -21,9 +21,9 @@ class DeleteTaskEvent extends TaskEvent {
 }
 
 class CompleteTaskEvent extends TaskEvent {
-  final int taskId;
+  final Task task;
 
-  CompleteTaskEvent(this.taskId);
+  CompleteTaskEvent(this.task);
 }
 
 class ReadTasksEvent extends TaskEvent {}

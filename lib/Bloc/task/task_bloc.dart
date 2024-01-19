@@ -1,8 +1,6 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todist/Bloc/task/repo.dart';
-import 'package:todist/api/create_task_api.dart';
 import 'package:todist/model/task_model.dart';
 
 part 'task_event.dart';
@@ -62,7 +60,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<CompleteTaskEvent>((event, emit) async {
       try {
-        await _taskRepository.completeTask(event.taskId);
+        await _taskRepository.completeTask(event.task);
         List<Task> listtask = await _taskRepository.fetchTasks();
         Fluttertoast.showToast(
           msg: "Task deleted ",

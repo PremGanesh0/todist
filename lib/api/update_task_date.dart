@@ -21,11 +21,11 @@ Future<void> UpdateTaskDate({required String id, required String newDate}) async
     http.StreamedResponse response = await request.send();
 
     if (response.statusCode == 200) {
-      print(await response.stream.bytesToString());
+     // print(await response.stream.bytesToString());
     } else {
-      print(response.reasonPhrase);
+     // print(response.reasonPhrase);
     }
   } catch (error) {
-    print('Error during task date update: $error');
+     // print('Error during task date update: $error');
   }
 }

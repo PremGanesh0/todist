@@ -127,7 +127,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                             : buildCard('Today', Icons.today, Colors.blue),
                       ),
                     ),
-                    SizedBox(width: 10),
+                    const SizedBox(width: 10),
                     Card(
                       child: Padding(
                         padding: const EdgeInsets.all(8.0),
@@ -271,7 +271,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                 ),
                 const Divider(color: Colors.grey),
                 Padding(
-                  padding: EdgeInsets.all(8.0),
+                  padding: const EdgeInsets.all(8.0),
                   child: Row(
                     children: [
                       const Padding(
@@ -291,7 +291,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                             title.clear();
                             description.clear();
                           },
-                          child: Text('Cancle')),
+                          child: const Text('Cancle')),
                       ElevatedButton(
                         style: ButtonStyle(
                           backgroundColor:
@@ -312,8 +312,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               remember: true,
                               completed: false,
                             );
-                            print("modify task button pressed");
-                            print(updatetask.title);
+                            // print("modify task button pressed");
+                            // print(updatetask.title);
                             BlocProvider.of<TaskBloc>(context)
                                 .add(UpdateTaskEvent(updatetask));
                           } else {
