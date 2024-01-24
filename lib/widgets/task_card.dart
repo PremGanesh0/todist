@@ -70,10 +70,6 @@ class TaskCard extends StatelessWidget {
           } else if (direction == DismissDirection.endToStart) {
             BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task));
           }
-          // Remove the task from the list
-          // setState(() {
-          //   state.tasks.removeAt(index);
-          // });
         },
         child: Card(
           child: ListTile(
@@ -101,7 +97,7 @@ class TaskCard extends StatelessWidget {
                 ),
               ],
             ),
-            trailing: task.completed == false
+            trailing: task.completed
                 ? const Icon(
                     Icons.check_circle,
                     color: Colors.green,

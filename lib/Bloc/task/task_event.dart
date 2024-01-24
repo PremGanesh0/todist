@@ -32,4 +32,6 @@ class CompleteTaskEvent extends TaskEvent {
   CompleteTaskEvent(this.task);
 }
 
-class ReadTasksEvent extends TaskEvent {}
+class ReadTasksEvent extends TaskEvent {
+  ReadTasksEvent();
+}

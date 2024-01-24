@@ -13,7 +13,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<ReadTasksEvent>((event, emit) async {
       emit(TaskLoadingState());
       try {
-        final tasks = await _taskRepository.fetchTasks();
+        final tasks = await _taskRepository.fetchTasksfromserver();
         emit(TaskSuccessState(tasks));
       } catch (e) {
         emit(TaskErrorState('Failed to load tasks: $e'));
@@ -23,7 +23,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<CreateTaskEvent>((event, emit) async {
       try {
         await _taskRepository.createTask(event.task);
-        List<Task> listtask = await _taskRepository.fetchTasks();
+        List<Task> listtask = await _taskRepository.fetchTaskslocal();
 
         emit(TaskSuccessState(listtask));
       } catch (e) {
@@ -33,10 +33,8 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
 
     on<UpdateTaskEvent>(((event, emit) async {
       try {
-        // print(event.task.title);
-        // print('severid:-${event.task.serverid}');
         await _taskRepository.updateTask(event.task);
-        List<Task> listtask = await _taskRepository.fetchTasks();
+        List<Task> listtask = await _taskRepository.fetchTaskslocal();
         emit(TaskSuccessState(listtask));
       } catch (e) {
         emit(TaskErrorState("Failed to update the task"));
@@ -46,7 +44,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<DeleteTaskEvent>((event, emit) async {
       try {
         await _taskRepository.deleteTask(event.task);
-        List<Task> listtask = await _taskRepository.fetchTasks();
+        List<Task> listtask = await _taskRepository.fetchTaskslocal();
         Fluttertoast.showToast(
           msg: "Task deleted ",
           toastLength: Toast.LENGTH_SHORT,
@@ -60,7 +58,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<UndoTaskEvent>((event, emit) async {
       try {
         await _taskRepository.undoTask(event.task);
-        List<Task> listtask = await _taskRepository.fetchTasks();
+        List<Task> listtask = await _taskRepository.fetchTaskslocal();
         Fluttertoast.showToast(
           msg: "Task Undo ",
           toastLength: Toast.LENGTH_SHORT,
@@ -75,12 +73,7 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
     on<CompleteTaskEvent>((event, emit) async {
       try {
         await _taskRepository.completeTask(event.task);
-        List<Task> listtask = await _taskRepository.fetchTasks();
-        Fluttertoast.showToast(
-          msg: "Task deleted ",
-          toastLength: Toast.LENGTH_SHORT,
-          gravity: ToastGravity.TOP,
-        );
+        List<Task> listtask = await _taskRepository.fetchTaskslocal();
         emit(TaskSuccessState(listtask));
       } catch (e) {
         emit(TaskErrorState('Failed to delete task'));

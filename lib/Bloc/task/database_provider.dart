@@ -35,30 +35,6 @@ class DatabaseProvider {
 ''');
   }
 
-  Future<void> insertTask(Task task) async {
-    final db = await database;
-    // print('----------------Inserting task------------------');
-    // print("inside bloc create task");
-    // print("Task created with ID: ${task.serverid}");
-    // print('tital :- ${task.title}');
-    // print('description :- ${task.description}');
-    // print('priority :- ${task.priority}');
-    // print('remember :- ${task.remember}');
-    // print('Date :- ${task.date}');
-    // print('----------------------------------');
-    await db.insert(
-      'tasks',
-      task.toMap(),
-      conflictAlgorithm: ConflictAlgorithm.replace,
-    );
-  }
-
-  Future<void> updateTask(Task task) async {
-    final db = await database;
-    await db
-        .update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
-  }
-
   Future<List<Task>> getAllTasks() async {
     final db = await database;
     final List<Map<String, dynamic>> maps = await db.query('tasks');
@@ -73,5 +49,34 @@ class DatabaseProvider {
           remember: maps[i]['remember'] == 1,
           completed: maps[i]['completed'] == 0);
     });
+  }
+
+  Future<void> insertTask(Task task) async {
+    final db = await database;
+    await db.insert(
+      'tasks',
+      task.toMap(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+  }
+
+  Future<void> updateTask(Task task) async {
+    final db = await database;
+    await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
+  }
+
+  Future<void> deleteTask(Task task) async {
+    final db = await database;
+    await db.delete('tasks', where: 'id = ?', whereArgs: [task.id]);
+  }
+
+  Future<void> deleteAllTask() async {
+    final db = await database;
+    await db.delete('tasks');
+  }
+
+  Future<void> undoTask(Task task) async {
+    final db = await database;
+    await db.update('tasks', task.toMap(), where: 'id = ?', whereArgs: [task.id]);
   }
 }
