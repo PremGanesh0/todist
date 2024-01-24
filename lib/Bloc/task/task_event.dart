@@ -20,6 +20,12 @@ class DeleteTaskEvent extends TaskEvent {
   DeleteTaskEvent(this.task);
 }
 
+class UndoTaskEvent extends TaskEvent {
+  final Task task;
+  
+  UndoTaskEvent(this.task);
+}
+
 class CompleteTaskEvent extends TaskEvent {
   final Task task;
 

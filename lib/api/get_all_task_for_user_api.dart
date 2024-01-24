@@ -3,7 +3,7 @@ import 'package:http/http.dart' as http;
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/model/task_model.dart';
- 
+
 Future<List<Task>> getalltaskapi() async {
   try {
     var accessToken = await LocalStorage.getAccessToken();
@@ -19,47 +19,43 @@ Future<List<Task>> getalltaskapi() async {
     );
 
     request.headers.addAll(headers);
-
     http.StreamedResponse response = await request.send();
-    print(
-        "api task type --------------${response.statusCode}-------------------");
-
+    // print(
+    // " get all api task type -------status code -------${response.statusCode}-------------------");
     if (response.statusCode == 200) {
       var data = await response.stream.bytesToString();
-
       var responseData = json.decode(data);
-
-      if (responseData['status'] == 1) {
-        if (responseData['tasks'] != null) {
-          List<Task> taskList = [];
-
-          for (var taskJson in responseData['tasks']) {
-            Task task = Task(
-              serverid: taskJson['id'],
-              title: taskJson['title'],
-              description: taskJson['description'],
-              date: DateTime.now(),
-              priority: taskJson['priority'],
-              label: taskJson['label'],
-              remember: taskJson['remember'] == 1,
-              completed: taskJson['completed'] == 0,
-            );
-            taskList.add(task);
-          }
-
-          print(taskList);
-
-          return taskList;
-        } else {
-          print('No tasks found in the response.');
-          return [];
-        }
-      } else {
-        print('API returned an error: ${responseData['message']}');
-        return [];
+      // print('status ${responseData['status']}');
+      // print('task ${responseData['tasks']}');
+      List<Task> taskList = [];
+      for (var taskJson in responseData['tasks']) {
+        // print('---------------task-----${taskJson['date']}--------');
+        // print(taskJson);
+        // print('Task Id :-${taskJson['id']}');
+        // print('Title :- ${taskJson['title']}');
+        // print('Description :- ${taskJson['description']}');
+        // print('Priority :- ${taskJson['priority']}');
+        // print('Task Complete :- ${taskJson['completed']}');
+        // print('Reminder :- ${taskJson['remember']}');
+        // print('date ${taskJson['date']}');
+        String dateString = taskJson['date'];
+        DateTime dateTime = DateTime.parse(dateString);
+        // print('date ${dateTime} runtime typw ${dateTime.runtimeType}');
+        Task task = Task(
+          serverid: taskJson['id'],
+          title: taskJson['title'],
+          description: taskJson['description'],
+          date: dateTime,
+          priority: taskJson['priority'],
+          label: 'colors',
+          remember: false,
+          completed: taskJson['completed'],
+        );
+        taskList.add(task);
       }
+      return taskList;
     } else {
-      print('API request failed: ${response.reasonPhrase}');
+      print('No tasks found in the response.');
       return [];
     }
   } catch (error) {

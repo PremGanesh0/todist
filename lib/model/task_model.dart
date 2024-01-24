@@ -36,6 +36,7 @@ class Task {
   }
 
   factory Task.fromJson(Map<String, dynamic> json) {
+    print("---------------from json---------------");
     String dateString = json['date'];
     DateTime dateTime = DateTime.parse(dateString);
     print(dateTime);

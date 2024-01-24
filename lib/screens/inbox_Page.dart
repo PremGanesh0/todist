@@ -5,6 +5,7 @@ import 'package:todist/Bloc/task/task_bloc.dart';
 import 'package:todist/Widgets/bottom_sheet.dart';
 import 'package:todist/Widgets/task_card.dart';
 import 'package:todist/model/task_model.dart';
+import 'package:todist/widgets/undo_task_card.dart';
 
 class InboxPage extends StatelessWidget {
   const InboxPage({super.key});
@@ -54,7 +55,7 @@ class InboxPage extends StatelessWidget {
                               .map((task) => Padding(
                                     padding: const EdgeInsets.only(
                                         left: 20.0, right: 20),
-                                    child: TaskCard(
+                                    child: UndoTaskCard(
                                       task: task,
                                     ),
                                   ))

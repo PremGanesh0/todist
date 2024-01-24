@@ -20,6 +20,13 @@ Future<void> undoCompleteTaskApi({required Task task}) async {
 
     http.StreamedResponse response = await request.send();
     print('-----------${response.statusCode}--------------');
+    print('-------------------create task api--------------');
+    print('Task Id :-${task.id}');
+    print('Title :- ${task.title}');
+    print('Description :- ${task.description}');
+    print('Priority :- ${task.priority}');
+    print('Task Complete :- ${task.completed}');
+    print('Reminder :- ${task.remember}');
     if (response.statusCode == 200) {
       var data = await response.stream.bytesToString();
       print(data);

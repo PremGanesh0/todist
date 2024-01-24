@@ -25,7 +25,6 @@ Future<ApiResponse> createTaskApi({required Task task}) async {
   var accessToken = await LocalStorage.getAccessToken();
 
   try {
-
     var headers = {
       'Authorization': accessToken['accessToken'].toString(),
       'Content-Type': 'application/json',
@@ -49,8 +48,14 @@ Future<ApiResponse> createTaskApi({required Task task}) async {
 
     if (response.statusCode == 201) {
       var data = await response.stream.bytesToString();
-      // print('-------------------create task api--------------');
-      // print(data);
+      print('-------------------create task api--------------');
+      print('Task Id :-${task.id}');
+      print('Title :- ${task.title}');
+      print('Description :- ${task.description}');
+      print('Priority :- ${task.priority}');
+      print('Task Complete :- ${task.completed}');
+      print('Reminder :- ${task.remember}');
+      print(data);
       var jsonData = json.decode(data);
 
       return ApiResponse(

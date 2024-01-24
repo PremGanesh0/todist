@@ -17,7 +17,7 @@ Future<void> updateTaskApi({required Task task}) async {
       'Authorization': accessToken['accessToken'].toString(),
       'Content-Type': 'application/json',
     };
-    
+
     var body = {
       "title": task.title,
       "description": task.description,
@@ -38,6 +38,13 @@ Future<void> updateTaskApi({required Task task}) async {
     // print(response.statusCode);
     if (response.statusCode == 200) {
       var data = await response.body;
+      print('-------------------create task api--------------');
+      print('Task Id :-${task.id}');
+      print('Title :- ${task.title}');
+      print('Description :- ${task.description}');
+      print('Priority :- ${task.priority}');
+      print('Task Complete :- ${task.completed}');
+      print('Reminder :- ${task.remember}');
       print(data);
       // print('.................Task updated................');
     } else {

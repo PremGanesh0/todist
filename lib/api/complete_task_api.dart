@@ -22,6 +22,13 @@ Future<void> completeTaskApi({required Task task}) async {
     print('-----------${response.statusCode}--------------');
     if (response.statusCode == 200) {
       var data = await response.stream.bytesToString();
+      print('-------------------create task api--------------');
+      print('Task Id :-${task.id}');
+      print('Title :- ${task.title}');
+      print('Description :- ${task.description}');
+      print('Priority :- ${task.priority}');
+      print('Task Complete :- ${task.completed}');
+      print('Reminder :- ${task.remember}');
       print(data);
       var data1 = json.decode(data);
       Fluttertoast.showToast(msg: data1['message']);

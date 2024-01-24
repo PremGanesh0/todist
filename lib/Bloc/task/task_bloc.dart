@@ -57,6 +57,20 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
         emit(TaskErrorState('Failed to delete task'));
       }
     });
+    on<UndoTaskEvent>((event, emit) async {
+      try {
+        await _taskRepository.undoTask(event.task);
+        List<Task> listtask = await _taskRepository.fetchTasks();
+        Fluttertoast.showToast(
+          msg: "Task Undo ",
+          toastLength: Toast.LENGTH_SHORT,
+          gravity: ToastGravity.TOP,
+        );
+        emit(TaskSuccessState(listtask));
+      } catch (e) {
+        emit(TaskErrorState('Failed to Undo task'));
+      }
+    });
 
     on<CompleteTaskEvent>((event, emit) async {
       try {
