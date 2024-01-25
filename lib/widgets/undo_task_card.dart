@@ -11,33 +11,29 @@ class UndoTaskCard extends StatefulWidget {
   const UndoTaskCard({Key? key, required this.task, this.index}) : super(key: key);
 
   @override
+  // ignore: library_private_types_in_public_api
   _UndoTaskCardState createState() => _UndoTaskCardState();
 }
 
 class _UndoTaskCardState extends State<UndoTaskCard> {
   bool deleteVisible = false;
-  int swipeCounter = 0;
+   int swipeCounter = 0;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onHorizontalDragUpdate: (details) {
-        // Check the direction of the swipe
         if (details.primaryDelta! > 0) {
-          // Increment the swipe counter
           setState(() {
             swipeCounter++;
-            // Show delete icon when swiped at least 20%
             deleteVisible = swipeCounter >= 20;
           });
         }
       },
       onTap: () {
         if (deleteVisible) {
-          // If delete icon is visible, delete the task
           BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(widget.task));
         } else {
-          // If not, open the bottom sheet for editing the task
           showModalBottomSheet(
             isScrollControlled: true,
             context: context,
@@ -94,7 +90,6 @@ class _UndoTaskCardState extends State<UndoTaskCard> {
           ),
         ),
         confirmDismiss: (direction) async {
-          // Allow dismiss when swiped at least 20%
           return deleteVisible;
         },
         child: Card(

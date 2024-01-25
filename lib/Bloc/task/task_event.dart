@@ -35,3 +35,10 @@ class CompleteTaskEvent extends TaskEvent {
 class ReadTasksEvent extends TaskEvent {
   ReadTasksEvent();
 }
+
+
+class SearchTasksEvent extends TaskEvent {
+  final String query;
+
+  SearchTasksEvent(this.query);
+}

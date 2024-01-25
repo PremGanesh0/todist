@@ -21,7 +21,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   String priority = 'priority 1';
   Color flagColor = Colors.red;
 
-  Flagcolor(String priority) {
+  getflagcolor(String priority) {
     if (priority == 'priority 1') {
       return Colors.red;
     } else if (priority == 'priority 2') {
@@ -41,7 +41,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
       description.text = widget.task!.description;
       selectedDate = widget.task!.date;
       priority = widget.task!.priority;
-      flagColor = Flagcolor(widget.task!.priority);
+      flagColor = getflagcolor(widget.task!.priority);
     } else {
       updatecheck = true;
     }

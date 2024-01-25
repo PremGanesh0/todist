@@ -70,6 +70,15 @@ class TaskBloc extends Bloc<TaskEvent, TaskState> {
       }
     });
 
+    on<SearchTasksEvent>((event, emit) async {
+      try {
+        final tasks = await _taskRepository.searchTasks(event.query);
+        emit(TaskSuccessState(tasks));
+      } catch (e) {
+        emit(TaskErrorState('Failed to load tasks: $e'));
+      }
+    });
+
     on<CompleteTaskEvent>((event, emit) async {
       try {
         await _taskRepository.completeTask(event.task);

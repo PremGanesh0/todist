@@ -28,7 +28,6 @@ class ProfileScreenState extends State<ProfileScreen> {
     User user = await LocalStorage.getUserData();
     usernameController.text = user.username;
     emailController.text = user.email;
-    // print('user details ${user.email}   ${user.id} ${user.username}  ${user.profileImage}');
   }
 
   @override
@@ -64,7 +63,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         fadeOutDuration: const Duration(milliseconds: 100),
                         placeholderErrorBuilder: (context, error, stackTrace) {
                           return const Center(
-                            child: CircularProgressIndicator(), // Show a loading indicator
+                            child: CircularProgressIndicator(),
                           );
                         },
                       ),
@@ -113,12 +112,10 @@ class ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 20),
               ElevatedButton(
                 onPressed: () {
-                  updateUserProfile(
+                  updateUserProfileApi(
                     username: usernameController.text,
                     email: emailController.text,
                     profileImage: widget.user.profileImage,
-
-                    // Add the profileImage parameter if needed
                   );
                 },
                 child: const Text('Edit'),
@@ -135,7 +132,6 @@ class ProfileScreenState extends State<ProfileScreen> {
                     foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
                   ),
                   onPressed: () {
-                    // show dailogbox for confirmation
                     showDialog(
                       context: context,
                       builder: (BuildContext context) {
@@ -145,15 +141,13 @@ class ProfileScreenState extends State<ProfileScreen> {
                           actions: [
                             TextButton(
                               onPressed: () {
-                                // Perform the delete account logic here
-                                // ...
-                                Navigator.of(context).pop(); // Close the dialog
+                                Navigator.of(context).pop();
                               },
                               child: const Text('Yes'),
                             ),
                             TextButton(
                               onPressed: () {
-                                Navigator.of(context).pop(); // Close the dialog
+                                Navigator.of(context).pop();
                               },
                               child: const Text('No'),
                             ),

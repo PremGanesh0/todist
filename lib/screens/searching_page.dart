@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:todist/Bloc/task/task_bloc.dart';
+import 'package:todist/Widgets/task_card.dart';
 
 class SearchingPage extends StatelessWidget {
-  const SearchingPage({
-    super.key,
-  });
+  SearchingPage({super.key});
 
+  final TextEditingController _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    // ThemeData theme = Theme.of(context);
-
     return Scaffold(
       appBar: AppBar(
         title: const Text(
@@ -17,26 +17,57 @@ class SearchingPage extends StatelessWidget {
         ),
       ),
       body: SafeArea(
-        child: SizedBox(
-          height: 70,
-          width: double.infinity, // Adjust the width as needed
-          child: Padding(
-            padding: const EdgeInsets.all(16.0),
-            child: Row(
-              children: [
-                Expanded(
-                  child: TextField(
-                    decoration: InputDecoration(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Row(
+                children: [
+                  Expanded(
+                    child: TextField(
+                      controller: _searchController,
+                      decoration: InputDecoration(
                         hintText: 'Search...',
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),
                         ),
-                        suffixIcon: const Icon(Icons.search)),
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                  IconButton(
+                    icon: const Icon(Icons.search),
+                    onPressed: () {
+                      BlocProvider.of<TaskBloc>(context)
+                          .add(SearchTasksEvent(_searchController.text));
+                      print(_searchController.text);
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
+            Expanded(
+              child: BlocBuilder<TaskBloc, TaskState>(
+                builder: (context, state) {
+                  if (state is TaskSuccessState) {
+                    return ListView.builder(
+                      itemCount: state.tasks.length,
+                      itemBuilder: (context, index) {
+                        return TaskCard(task: state.tasks[index]);
+                      },
+                    );
+                  } else if (state is TaskErrorState) {
+                    return Center(
+                      child: Text(state.errorMessage),
+                    );
+                  } else {
+                    return const Center(
+                      child: CircularProgressIndicator(),
+                    );
+                  }
+                },
+              ),
+            ),
+          ],
         ),
       ),
     );

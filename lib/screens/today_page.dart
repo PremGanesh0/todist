@@ -142,7 +142,6 @@ class _TodayPageState extends State<TodayPage> {
                     ),
                   ],
                 ),
-                // add message when there is no task for today
                 check == true
                     ? const Padding(
                         padding: EdgeInsets.all(8.0),

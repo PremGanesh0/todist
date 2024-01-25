@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todist/screens/bin/create_task_page.dart';
-import 'package:todist/screens/searching_page.dart';
 import 'package:todist/screens/bin/task_add_page.dart';
+import 'package:todist/screens/searching_page.dart';
 import 'package:todist/screens/up_coming_page.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -18,9 +18,8 @@ class DrawerPage extends StatelessWidget {
               Column(
                 children: [
                   Container(
-                    decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        color: Colors.blue),
+                    decoration:
+                        BoxDecoration(borderRadius: BorderRadius.circular(10), color: Colors.blue),
                     child: const Padding(
                       padding: EdgeInsets.all(8.0),
                       child: Row(
@@ -35,8 +34,7 @@ class DrawerPage extends StatelessWidget {
                             children: [
                               Text(
                                 'Welcome,',
-                                style: TextStyle(
-                                    fontSize: 12, fontWeight: FontWeight.w500),
+                                style: TextStyle(fontSize: 12, fontWeight: FontWeight.w500),
                               ),
                               Text(
                                 'Task pareto',
@@ -60,14 +58,12 @@ class DrawerPage extends StatelessWidget {
                             onPressed: () {
                               Navigator.push(
                                 context,
-                                MaterialPageRoute(
-                                    builder: (context) =>const  CreateTaskPage()),
+                                MaterialPageRoute(builder: (context) => const CreateTaskPage()),
                               );
                             },
                             child: const Text(
                               '+  Add Task',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700),
+                              style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                             ))),
                   ),
                   const SizedBox(height: 10),
@@ -75,8 +71,7 @@ class DrawerPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const SearchingPage()),
+                        MaterialPageRoute(builder: (context) => SearchingPage()),
                       );
                     },
                     child: Padding(
@@ -85,8 +80,7 @@ class DrawerPage extends StatelessWidget {
                         height: 50,
                         width: 300,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.blue),
+                            borderRadius: BorderRadius.circular(5), color: Colors.blue),
                         child: const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(
@@ -101,8 +95,7 @@ class DrawerPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const CreateTaskPage()),
+                        MaterialPageRoute(builder: (context) => const CreateTaskPage()),
                       );
                     },
                     child: Padding(
@@ -111,8 +104,7 @@ class DrawerPage extends StatelessWidget {
                         height: 50,
                         width: 300,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.blue),
+                            borderRadius: BorderRadius.circular(5), color: Colors.blue),
                         child: const Padding(
                           padding: EdgeInsets.only(left: 16.0, right: 16.0),
                           child: Row(
@@ -127,8 +119,7 @@ class DrawerPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const TaskAddPage()),
+                        MaterialPageRoute(builder: (context) => const TaskAddPage()),
                       );
                     },
                     child: Padding(
@@ -137,8 +128,7 @@ class DrawerPage extends StatelessWidget {
                         height: 50,
                         width: 300,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.blue),
+                            borderRadius: BorderRadius.circular(5), color: Colors.blue),
                         child: const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(
@@ -153,8 +143,7 @@ class DrawerPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                            builder: (context) => const CalendarPage()),
+                        MaterialPageRoute(builder: (context) => const CalendarPage()),
                       );
                     },
                     child: Padding(
@@ -163,8 +152,7 @@ class DrawerPage extends StatelessWidget {
                         height: 50,
                         width: 300,
                         decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(5),
-                            color: Colors.blue),
+                            borderRadius: BorderRadius.circular(5), color: Colors.blue),
                         child: const Padding(
                           padding: EdgeInsets.all(16.0),
                           child: Row(
@@ -180,9 +168,8 @@ class DrawerPage extends StatelessWidget {
                     child: Container(
                       height: 50,
                       width: 300,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.blue),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.blue),
                       child: const Padding(
                         padding: EdgeInsets.all(16.0),
                         child: Row(
@@ -195,16 +182,14 @@ class DrawerPage extends StatelessWidget {
                     padding: EdgeInsets.all(16.0),
                     child: Text(
                       'Favorites',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ),
                   const Padding(
                     padding: EdgeInsets.all(16.0),
                     child: Text(
                       'Work space',
-                      style:
-                          TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                      style: TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
                     ),
                   ),
                   Padding(
@@ -212,16 +197,12 @@ class DrawerPage extends StatelessWidget {
                     child: Container(
                       height: 100,
                       width: 300,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(5),
-                          color: Colors.blue),
+                      decoration:
+                          BoxDecoration(borderRadius: BorderRadius.circular(5), color: Colors.blue),
                       child: const Padding(
                         padding: EdgeInsets.all(32.0),
                         child: Row(
-                          children: [
-                            Icon(Icons.work_sharp),
-                            Text('Work space')
-                          ],
+                          children: [Icon(Icons.work_sharp), Text('Work space')],
                         ),
                       ),
                     ),

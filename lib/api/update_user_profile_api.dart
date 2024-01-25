@@ -5,18 +5,19 @@ import 'package:http/http.dart' as http;
 import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/utils.dart';
 
-Future<void> updateUserProfile({
+Future<void> updateUserProfileApi({
   required String username,
   required String email,
   required String profileImage,
 }) async {
   String apiUrl = '$baseUrl/updateUserProfile';
-  Map<String, String> accessToken = await LocalStorage.getAccessToken();
-
+  print('apiUrl: $apiUrl');
   try {
+    var accessToken = await LocalStorage.getAccessToken();
+    print('  ${accessToken['accessToken'].toString()}');
     var headers = {
       'Content-Type': 'application/json',
-      'Authorization': 'Bearer ${accessToken['token']}',
+      'Authorization': ' ${accessToken['accessToken'].toString()}',
     };
     var url = Uri.parse(apiUrl);
 
@@ -31,13 +32,14 @@ Future<void> updateUserProfile({
     );
 
     if (response.statusCode == 200) {
-
+      print('if response.body:${response.statusCode} ${response.body}');
       Fluttertoast.showToast(
         msg: response.body,
         toastLength: Toast.LENGTH_SHORT,
         gravity: ToastGravity.TOP,
       );
     } else {
+      print(' else response.body:${response.statusCode} ${response.body}');
       Fluttertoast.showToast(
         msg: response.body,
         toastLength: Toast.LENGTH_SHORT,
@@ -45,6 +47,7 @@ Future<void> updateUserProfile({
       );
     }
   } catch (error) {
+    print('error: $error');
     Fluttertoast.showToast(
       msg: error.toString(),
       toastLength: Toast.LENGTH_SHORT,

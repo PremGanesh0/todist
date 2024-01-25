@@ -60,7 +60,6 @@ class TaskRepository {
 
     List<Task> tasks = [];
     for (var map in updatedLocalTasks) {
-      print('map: $map');
       Task task = Task(
         id: map['id'],
         serverid: map['serverid'],
@@ -176,5 +175,32 @@ class TaskRepository {
       gravity: ToastGravity.TOP,
       timeInSecForIosWeb: 1,
     );
+  }
+
+   Future<List<Task>> searchTasks(String query) async {
+    final db = await _databaseProvider.database;
+    final List<Map<String, dynamic>> maps = await db.query(
+      'tasks',
+      where: 'title LIKE ?',
+      whereArgs: ['%$query%'],
+    );
+
+    List<Task> tasks = [];
+    for (var map in maps) {
+      Task task = Task(
+        id: map['id'],
+        serverid: map['serverid'],
+        title: map['title'],
+        description: map['description'],
+        date: DateTime.fromMillisecondsSinceEpoch(map['date']),
+        priority: map['priority'],
+        label: map['label'],
+        remember: map['remember'] == 1,
+        completed: map['completed'] == 1,
+      );
+      tasks.add(task);
+    }
+    print('search task based on queiy ${tasks[0].title}${tasks[0].description}');
+    return tasks;
   }
 }

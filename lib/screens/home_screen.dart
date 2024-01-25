@@ -73,9 +73,9 @@ class _HomeScreenState extends State<HomeScreen> {
       case 0:
         return const TodayPage();
       case 1:
-        return InboxPage();
+        return const InboxPage();
       case 2:
-        return const SearchingPage();
+        return SearchingPage();
       case 3:
         return const BrowsePage();
       default:
