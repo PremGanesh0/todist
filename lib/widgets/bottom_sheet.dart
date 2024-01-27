@@ -51,7 +51,7 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
     final DateTime? picked = await showDatePicker(
       context: context,
       initialDate: selectedDate,
-      firstDate: widget.task!.date ?? DateTime(2015, 8),
+      firstDate: DateTime(2015, 8),
       lastDate: DateTime(2101),
     );
 
@@ -70,7 +70,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
   Widget build(BuildContext context) {
     return SingleChildScrollView(
       child: Padding(
-        padding: EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
+        padding:
+            EdgeInsets.only(bottom: MediaQuery.of(context).viewInsets.bottom),
         child: SizedBox(
           child: Center(
             child: Column(
@@ -81,12 +82,14 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   padding: const EdgeInsets.only(left: 16.0),
                   child: TextField(
                     controller: title,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w700),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w700),
                     autofocus: true,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Task Name',
-                      hintStyle: TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
+                      hintStyle:
+                          TextStyle(fontSize: 16, fontWeight: FontWeight.w900),
                     ),
                   ),
                 ),
@@ -94,12 +97,14 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                   padding: const EdgeInsets.only(left: 16.0),
                   child: TextField(
                     controller: description,
-                    style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w400),
+                    style: const TextStyle(
+                        fontSize: 16, fontWeight: FontWeight.w400),
                     maxLines: null,
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Description',
-                      hintStyle: TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
+                      hintStyle:
+                          TextStyle(fontSize: 12, fontWeight: FontWeight.w400),
                     ),
                   ),
                 ),
@@ -128,15 +133,17 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                         padding: const EdgeInsets.all(8.0),
                         child: GestureDetector(
                           onTap: () {
-                            final RenderBox overlay =
-                                Overlay.of(context).context.findRenderObject() as RenderBox;
+                            final RenderBox overlay = Overlay.of(context)
+                                .context
+                                .findRenderObject() as RenderBox;
                             final RelativeRect position = RelativeRect.fromRect(
                               Rect.fromPoints(
                                 overlay.localToGlobal(
                                   overlay.size.bottomRight(Offset.zero),
                                   ancestor: overlay,
                                 ),
-                                overlay.localToGlobal(overlay.size.bottomRight(Offset.zero),
+                                overlay.localToGlobal(
+                                        overlay.size.bottomRight(Offset.zero),
                                         ancestor: overlay) +
                                     const Offset(200.0, 0.0),
                               ),
@@ -233,7 +240,11 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                       const Padding(
                         padding: EdgeInsets.all(8.0),
                         child: Row(
-                          children: [Icon(Icons.inbox), Text('inbox'), Icon(Icons.expand_more)],
+                          children: [
+                            Icon(Icons.inbox),
+                            Text('inbox'),
+                            Icon(Icons.expand_more)
+                          ],
                         ),
                       ),
                       const Spacer(),
@@ -246,8 +257,10 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                           child: const Text('Cancle')),
                       ElevatedButton(
                         style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(Colors.blue),
-                          foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                          backgroundColor:
+                              MaterialStateProperty.all<Color>(Colors.blue),
+                          foregroundColor:
+                              MaterialStateProperty.all<Color>(Colors.white),
                         ),
                         onPressed: () async {
                           if (widget.task != null) {
@@ -264,7 +277,8 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                             );
                             // print("modify task button pressed");
                             // print(updatetask.title);
-                            BlocProvider.of<TaskBloc>(context).add(UpdateTaskEvent(updatetask));
+                            BlocProvider.of<TaskBloc>(context)
+                                .add(UpdateTaskEvent(updatetask));
                           } else {
                             Task createtask = Task(
                               title: title.text,
@@ -276,13 +290,16 @@ class _CustomBottomSheetState extends State<CustomBottomSheet> {
                               completed: false,
                             );
 
-                            BlocProvider.of<TaskBloc>(context).add(CreateTaskEvent(createtask));
+                            BlocProvider.of<TaskBloc>(context)
+                                .add(CreateTaskEvent(createtask));
                           }
                           Navigator.pop(context);
                           title.clear();
                           description.clear();
                         },
-                        child: title.text.isEmpty ? const Text('Add Task') : Text(getButtonText()),
+                        child: title.text.isEmpty
+                            ? const Text('Add Task')
+                            : Text(getButtonText()),
                       )
                     ],
                   ),

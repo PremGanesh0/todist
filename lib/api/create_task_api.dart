@@ -48,6 +48,7 @@ Future<ApiResponse> createTaskApi({required Task task}) async {
 
     if (response.statusCode == 201) {
       var data = await response.stream.bytesToString();
+      print(accessToken);
       print('-------------------create task api--------------');
       print('Task Id :-${task.id}');
       print('Title :- ${task.title}');

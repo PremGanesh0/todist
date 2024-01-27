@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/api/get_user_details_api.dart';
 import 'package:todist/api/update_user_profile_api.dart';
@@ -16,7 +19,9 @@ class ProfileScreen extends StatefulWidget {
 class ProfileScreenState extends State<ProfileScreen> {
   late TextEditingController usernameController = TextEditingController();
   late TextEditingController emailController = TextEditingController();
+  final ImagePicker imagePicker = ImagePicker();
 
+  dynamic _image;
   @override
   void initState() {
     super.initState();
@@ -44,14 +49,32 @@ class ProfileScreenState extends State<ProfileScreen> {
             children: [
               Stack(
                 children: [
-                  const CircleAvatar(
-                    radius: 100.0,
-                    backgroundColor: Colors.transparent,
+                  InkWell( 
+                    onTap: () async {
+                      final imagePicker = ImagePicker();
+                      XFile? image = await imagePicker.pickImage(
+                        source: ImageSource.gallery,
+                        imageQuality: 50,
+                      );
+
+                      if (image != null) {
+                        setState(() {
+                          _image = File(image.path);
+                        });
+                      } else {}
+                    },
+                    child: CircleAvatar(
+                        radius: 100.0,
+                        backgroundImage: _image != null
+                            ? FileImage(_image!) // Assuming _image is a File
+                            : null, // Set to null if _image is null
+                        child: _image),
                   ),
                   Positioned.fill(
-                    child: ClipOval(
+                    child: ClipOval( 
                       child: FadeInImage(
-                        placeholder: const AssetImage('assert/progilr image.webp'),
+                        placeholder:
+                            const AssetImage('assert/progilr image.webp'),
                         image: NetworkImage(widget.user.profileImage),
                         imageErrorBuilder: (context, error, stackTrace) {
                           return Image.asset('assert/progilr image.webp');
@@ -74,16 +97,26 @@ class ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Username :- '),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 55),
+                      child: Align(
+                          alignment: Alignment.topLeft,
+                          child: const Text(
+                            'Username',
+                            style: TextStyle(
+                                fontSize: 15, fontWeight: FontWeight.w900),
+                          )),
+                    ),
                     SizedBox(
                       height: 40,
                       width: 250,
                       child: TextField(
                         controller: usernameController,
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                        decoration:
+                            const InputDecoration(border: OutlineInputBorder()),
                       ),
                     ),
                   ],
@@ -92,34 +125,80 @@ class ProfileScreenState extends State<ProfileScreen> {
               const SizedBox(height: 20),
               Padding(
                 padding: const EdgeInsets.only(left: 16.0, right: 16.0),
-                child: Row(
+                child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    const Text('Email :- '),
+                    Padding(
+                      padding: const EdgeInsets.only(left: 55),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: const Text(
+                          'Email',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                    ),
                     SizedBox(
                       height: 40,
                       width: 250,
-                      child: TextField(
-                        readOnly: true,
-                        controller: emailController,
-                        decoration: const InputDecoration(border: OutlineInputBorder()),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: TextField(
+                          readOnly: true,
+                          controller: emailController,
+                          decoration: const InputDecoration(
+                              border: OutlineInputBorder()),
+                        ),
                       ),
                     ),
                   ],
                 ),
               ),
-              const SizedBox(height: 20),
-              const SizedBox(height: 20),
-              ElevatedButton(
-                onPressed: () {
-                  updateUserProfileApi(
-                    username: usernameController.text,
-                    email: emailController.text,
-                    profileImage: widget.user.profileImage,
-                  );
-                },
-                child: const Text('Edit'),
+              SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.only(left: 16, right: 16),
+                child: Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.only(left: 55),
+                      child: Align(
+                        alignment: Alignment.topLeft,
+                        child: Text(
+                          'Password',
+                          style: TextStyle(
+                              fontSize: 15, fontWeight: FontWeight.w900),
+                        ),
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.only(left: 55),
+                          child: Align(
+                            alignment: Alignment.topLeft,
+                            child: ElevatedButton(
+                                onPressed: () {},
+                                child: Text('Change Password')),
+                          ),
+                        ),
+                        const SizedBox(width: 20),
+                        ElevatedButton(
+                          onPressed: () {
+                            updateUserProfileApi(
+                              username: usernameController.text,
+                              email: emailController.text,
+                              profileImage: widget.user.profileImage,
+                            );
+                          },
+                          child: const Text('Edit'),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
               ),
+              const SizedBox(height: 20),
               const SizedBox(
                 height: 20,
               ),
@@ -128,8 +207,10 @@ class ProfileScreenState extends State<ProfileScreen> {
                 width: 300,
                 child: ElevatedButton(
                   style: ButtonStyle(
-                    backgroundColor: MaterialStateProperty.all<Color>(Colors.red),
-                    foregroundColor: MaterialStateProperty.all<Color>(Colors.white),
+                    backgroundColor:
+                        MaterialStateProperty.all<Color>(Colors.red),
+                    foregroundColor:
+                        MaterialStateProperty.all<Color>(Colors.white),
                   ),
                   onPressed: () {
                     showDialog(
@@ -137,7 +218,8 @@ class ProfileScreenState extends State<ProfileScreen> {
                       builder: (BuildContext context) {
                         return AlertDialog(
                           title: const Text('Confirmation'),
-                          content: const Text('Are you sure you want to delete your account?'),
+                          content: const Text(
+                              'Are you sure you want to delete your account?'),
                           actions: [
                             TextButton(
                               onPressed: () {

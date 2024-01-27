@@ -48,7 +48,7 @@ class _RegistrationFormState extends State<RegistrationForm> {
   }
 
   dynamic _image;
-  @override
+  @override 
   Widget build(BuildContext context) {
     return BlocConsumer<RegistrationBloc, RegistrationState>(
       listener: (context, state) {
