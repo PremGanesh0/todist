@@ -4,6 +4,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:todist/Bloc/task/database_provider.dart';
 import 'package:todist/Bloc/task/repo.dart';
 import 'package:todist/Bloc/task/task_bloc.dart';
+import 'package:todist/screens/change_password_page.dart';
 import 'package:todist/screens/home_screen.dart';
 import 'package:todist/screens/otp_page.dart';
 import 'package:todist/screens/welcome_screen.dart';

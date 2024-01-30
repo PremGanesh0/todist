@@ -3,11 +3,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:todist/Bloc/task/task_bloc.dart';
 import 'package:todist/Widgets/bottom_sheet.dart';
 import 'package:todist/model/task_model.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 
 class TaskCard extends StatelessWidget {
   final Task task;
   final int? index;
-  const TaskCard({super.key, required this.task, this.index});
+  const TaskCard({Key? key, required this.task, this.index}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,54 +24,45 @@ class TaskCard extends StatelessWidget {
           },
         );
       },
-      child: Dismissible(
+      child: Slidable(
         key: UniqueKey(),
-        background: Container(
-          color: Colors.green,
-          alignment: Alignment.centerLeft,
-          padding: const EdgeInsets.only(left: 20.0),
-          child: const Icon(Icons.check, color: Colors.white),
-        ),
-        secondaryBackground: Container(
-          color: Colors.red,
-          alignment: Alignment.centerRight,
-          padding: const EdgeInsets.only(right: 20.0),
-          child: const Icon(Icons.delete, color: Colors.white),
-        ),
-        confirmDismiss: (direction) async {
-          if (direction == DismissDirection.endToStart ||
-              direction == DismissDirection.startToEnd) {
-            return showDialog<bool>(
-              context: context,
-              builder: (BuildContext context) {
-                return AlertDialog(
-                  title: const Text('Confirm'),
-                  content: Text(direction == DismissDirection.endToStart
-                      ? 'Do you want to delete this task?'
-                      : 'Mark this task as done?'),
-                  actions: <Widget>[
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(false),
-                      child: const Text('Cancel'),
-                    ),
-                    TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('Yes'),
-                    ),
-                  ],
-                );
+        startActionPane: ActionPane(
+          motion: ScrollMotion(),
+          dismissible: DismissiblePane(
+            onDismissed: () {
+              BlocProvider.of<TaskBloc>(context).add(CompleteTaskEvent(task));
+            },
+          ),
+          children: [
+            SlidableAction(
+              onPressed: (context) {
+                BlocProvider.of<TaskBloc>(context).add(CompleteTaskEvent(task));
               },
-            );
-          }
-          return null;
-        },
-        onDismissed: (direction) {
-          if (direction == DismissDirection.startToEnd) {
-            BlocProvider.of<TaskBloc>(context).add(CompleteTaskEvent(task));
-          } else if (direction == DismissDirection.endToStart) {
-            BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task));
-          }
-        },
+              backgroundColor: Color(0xFF7BC043),
+              foregroundColor: Colors.white,
+              icon: Icons.archive,
+              spacing: 1,
+            ),
+          ],
+        ),
+        endActionPane: ActionPane(
+          motion: const ScrollMotion(),
+          dismissible: DismissiblePane(
+            onDismissed: () {
+              BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task));
+            },
+          ),
+          children: [
+            SlidableAction(
+              onPressed: (Context) {
+                BlocProvider.of<TaskBloc>(context).add(DeleteTaskEvent(task));
+              },
+              backgroundColor: Color(0xFFFE4A49),
+              foregroundColor: Colors.white,
+              icon: Icons.delete,
+            ),
+          ],
+        ),
         child: Card(
           child: ListTile(
             title: Text(

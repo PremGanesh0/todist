@@ -54,4 +54,6 @@ class Task {
       completed: json['completed'] == 1,
     );
   }
+
+  static void removeAt() {}
 }

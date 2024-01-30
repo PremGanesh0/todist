@@ -6,6 +6,7 @@ import 'package:todist/Bloc/repo/local_storage_shared_preferences.dart';
 import 'package:todist/api/get_user_details_api.dart';
 import 'package:todist/api/update_user_profile_api.dart';
 import 'package:todist/model/user_model.dart';
+import 'package:todist/screens/change_password_page.dart';
 
 class ProfileScreen extends StatefulWidget {
   final User user;
@@ -49,7 +50,7 @@ class ProfileScreenState extends State<ProfileScreen> {
             children: [
               Stack(
                 children: [
-                  InkWell( 
+                  InkWell(
                     onTap: () async {
                       final imagePicker = ImagePicker();
                       XFile? image = await imagePicker.pickImage(
@@ -71,7 +72,7 @@ class ProfileScreenState extends State<ProfileScreen> {
                         child: _image),
                   ),
                   Positioned.fill(
-                    child: ClipOval( 
+                    child: ClipOval(
                       child: FadeInImage(
                         placeholder:
                             const AssetImage('assert/progilr image.webp'),
@@ -157,7 +158,7 @@ class ProfileScreenState extends State<ProfileScreen> {
               ),
               SizedBox(height: 20),
               Padding(
-                padding: const EdgeInsets.only(left: 16, right: 16),
+                padding: EdgeInsets.only(left: 16, right: 16),
                 child: Column(
                   children: [
                     Padding(
@@ -174,11 +175,21 @@ class ProfileScreenState extends State<ProfileScreen> {
                     Row(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 55),
+                          padding: EdgeInsets.only(left: 55),
                           child: Align(
                             alignment: Alignment.topLeft,
                             child: ElevatedButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                  Navigator.push<void>(
+                                    context,
+                                    MaterialPageRoute<void>(
+                                      builder: (BuildContext context) =>
+                                          ChangePassword(
+                                        user: widget.user,
+                                      ),
+                                    ),
+                                  );
+                                },
                                 child: Text('Change Password')),
                           ),
                         ),
